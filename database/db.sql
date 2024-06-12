@@ -1,5 +1,4 @@
 CREATE DATABASE SurveyManagement;
-
 USE SurveyManagement;
 
 CREATE TABLE users (
@@ -11,7 +10,15 @@ CREATE TABLE users (
     genderID INT,
     areaID INT,
     sectorID INT,
-    role ENUM('admin', 'user') NOT NULL DEFAULT 'user'
+    role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+    educationID INT,
+    incomeID INT,
+    FOREIGN KEY (educationID) REFERENCES education_levels (educationID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (incomeID) REFERENCES family_income_levels (incomeID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (ageID) REFERENCES ages (ageID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (genderID) REFERENCES genders (genderID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (areaID) REFERENCES areas (areaID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (sectorID) REFERENCES sectors (sectorID) ON UPDATE RESTRICT ON DELETE SET NULL
 );
 
 CREATE TABLE passwords (
@@ -34,9 +41,20 @@ CREATE TABLE areas (
     area VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE family_income_levels (
+    incomeID INT AUTO_INCREMENT PRIMARY KEY,
+    startRange INT NOT NULL,
+    endRange INT NOT NULL
+);
+
 CREATE TABLE genders (
     genderID INT AUTO_INCREMENT PRIMARY KEY,
     gender VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE education_levels (
+    educationID INT AUTO_INCREMENT PRIMARY KEY,
+    education_level VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE sectors (
@@ -44,85 +62,116 @@ CREATE TABLE sectors (
     sector VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE surveyanswers (
-    answerCode INT AUTO_INCREMENT PRIMARY KEY,
-    questionCode INT NOT NULL,
-    answer TEXT NOT NULL
-);
-
 CREATE TABLE surveys (
     surveyCode INT AUTO_INCREMENT PRIMARY KEY,
     surveyTitle VARCHAR(255) NOT NULL,
-    userCode INT NOT NULL,
+    managerCode INT NOT NULL,
     report TEXT,
     showResults BOOLEAN NOT NULL DEFAULT TRUE,
-    FOREIGN KEY (userCode) REFERENCES users(userCode)
+    FOREIGN KEY (managerCode) REFERENCES users(userCode) ON UPDATE RESTRICT ON DELETE CASCADE
 );
 
 CREATE TABLE surveysquestions (
     questionCode INT AUTO_INCREMENT PRIMARY KEY,
     question TEXT NOT NULL,
     surveyCode INT NOT NULL,
-    FOREIGN KEY (surveyCode) REFERENCES surveys(surveyCode)
+    FOREIGN KEY (surveyCode) REFERENCES surveys(surveyCode) ON UPDATE RESTRICT ON DELETE CASCADE
 );
 
-CREATE TABLE surveydata (
+CREATE TABLE surveyCloseAnswers (
+    answerCode INT AUTO_INCREMENT PRIMARY KEY,
+    questionCode INT NOT NULL,
+    answer TEXT NOT NULL,
+    FOREIGN KEY (questionCode) REFERENCES surveysquestions(questionCode) ON UPDATE RESTRICT ON DELETE CASCADE
+);
+
+CREATE TABLE surveyOpenAnswers (
+    answerCode INT AUTO_INCREMENT PRIMARY KEY,
+    questionCode INT NOT NULL,
+    answer TEXT NOT NULL,
+    userCode INT NOT NULL,
+    FOREIGN KEY (userCode) REFERENCES users(userCode) ON UPDATE RESTRICT ON DELETE CASCADE,
+    FOREIGN KEY (questionCode) REFERENCES surveysquestions(questionCode) ON UPDATE RESTRICT ON DELETE CASCADE
+);
+
+CREATE TABLE surveyCloseData (
     surveyDataCode INT AUTO_INCREMENT PRIMARY KEY,
     userCode INT NOT NULL,
     answerCode INT NOT NULL,
-    FOREIGN KEY (userCode) REFERENCES users(userCode),
-    FOREIGN KEY (answerCode) REFERENCES surveyanswers(answerCode)
+    FOREIGN KEY (userCode) REFERENCES users(userCode) ON UPDATE RESTRICT ON DELETE CASCADE,
+    FOREIGN KEY (answerCode) REFERENCES surveyCloseAnswers(answerCode) ON UPDATE RESTRICT ON DELETE CASCADE
 );
 
 
--- הוספת משתמשים
-INSERT INTO users (username, email, name, ageID, genderID, areaID, sectorID, role) VALUES
-('user1', 'user1@example.com', 'User One', 1, 1, 1, 1, 'user'),
-('user2', 'user2@example.com', 'User Two', 2, 2, 2, 2, 'user'),
-('admin', 'admin@example.com', 'Admin User', 3, 1, 3, 1, 'admin');
 
--- הוספת סיסמאות למשתמשים
+INSERT INTO education_levels (education_level) VALUES ('תיכונית');
+INSERT INTO education_levels (education_level) VALUES ('על תיכונית');
+INSERT INTO education_levels (education_level) VALUES ('תואר ראשון');
+INSERT INTO education_levels (education_level) VALUES ('תואר שני');
+INSERT INTO education_levels (education_level) VALUES ('תואר שלישי');
+-- הוספת משתמשים
+-- Insert statements for education levels
+INSERT INTO education_levels (education_level) VALUES 
+('תיכונית'), 
+('על תיכונית'), 
+('תואר ראשון'), 
+('תואר שני'), 
+('תואר שלישי');
+
+-- Insert statements for users
+INSERT INTO users (username, email, name, ageID, genderID, areaID, sectorID, role, educationID, incomeID) VALUES
+('user1', 'user1@example.com', 'User One', 1, 1, 1, 1, 'user', 1, 1),
+('user2', 'user2@example.com', 'User Two', 2, 2, 2, 2, 'user', 2, 2),
+('admin', 'admin@example.com', 'Admin User', 3, 1, 3, 1, 'admin', 3, 3);
+
+-- Insert statements for ages
+INSERT INTO ages (startYear, endYear) VALUES
+(16, 18),
+(18, 25),
+(25, 35);
+
+-- Insert statements for passwords
 INSERT INTO passwords (user_id, user_password) VALUES
 (1, 'password1'),
 (2, 'password2'),
 (3, 'adminpassword');
 
--- הוספת גילאים
-INSERT INTO ages (startYear, endYear) VALUES
-(1990, 2000),
-(2001, 2010),
-(2011, 2020);
-
--- הוספת אזורים
+-- Insert statements for areas
 INSERT INTO areas (area) VALUES
 ('North'),
 ('Center'),
 ('South');
 
--- הוספת מגדרים
+-- Insert statements for family income levels
+INSERT INTO family_income_levels (startRange, endRange) VALUES
+(0, 1500),
+(1500, 4000),
+(4000, 8000);
+
+-- Insert statements for genders
 INSERT INTO genders (gender) VALUES
 ('Male'),
 ('Female');
 
--- הוספת מגזרים
+-- Insert statements for sectors
 INSERT INTO sectors (sector) VALUES
 ('Public'),
 ('Private');
 
--- הוספת סקרים
-INSERT INTO surveys (surveyTitle, userCode, report, showResults) VALUES
+-- Insert statements for surveys
+INSERT INTO surveys (surveyTitle, managerCode, report, showResults) VALUES
 ('Customer Satisfaction Survey', 1, 'Annual customer satisfaction survey', TRUE),
 ('Employee Feedback Survey', 2, 'Quarterly employee feedback survey', TRUE);
 
--- הוספת שאלות לסקרים
+-- Insert statements for survey questions
 INSERT INTO surveysquestions (question, surveyCode) VALUES
 ('How satisfied are you with our service?', 1),
 ('Would you recommend our company to others?', 1),
 ('How do you rate your work-life balance?', 2),
 ('Do you feel valued at work?', 2);
 
--- הוספת תשובות לשאלות
-INSERT INTO surveyanswers (questionCode, answer) VALUES
+-- Insert statements for survey close answers
+INSERT INTO surveyCloseAnswers (questionCode, answer) VALUES
 (1, 'Very satisfied'),
 (1, 'Satisfied'),
 (1, 'Neutral'),
@@ -140,9 +189,14 @@ INSERT INTO surveyanswers (questionCode, answer) VALUES
 (4, 'Not really'),
 (4, 'Not at all');
 
--- הוספת תשובות של משתמשים לסקרים
-INSERT INTO surveydata (userCode, answerCode) VALUES
+-- Insert statements for survey close data
+INSERT INTO surveyCloseData (userCode, answerCode) VALUES
 (1, 1), -- user1 answered 'Very satisfied' to question 1
 (1, 6), -- user1 answered 'Yes, definitely' to question 2
 (2, 10), -- user2 answered 'Good' to question 3
 (2, 13); -- user2 answered 'Yes, very much' to question 4
+
+-- Insert statements for survey open answers
+INSERT INTO surveyOpenAnswers (questionCode, answer, userCode) VALUES
+(1, 'Open-ended answer from user1 for question 1', 1),
+(2, 'Open-ended answer from user2 for question 2', 2);
