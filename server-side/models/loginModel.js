@@ -9,7 +9,7 @@ async function postLogin(body) {
         console.log("model password: " + body_password);
 
 
-        const sql = `SELECT * FROM users INNER JOIN passwords ON users.user_id = passwords.user_id WHERE users.username = ${body_username}`;
+        const sql = `SELECT * FROM users INNER JOIN passwords ON users.userCode = passwords.user_id WHERE users.username = ${body_username}`;
         const result = await pool.query(sql);
         console.log(result[0][0]);
 
