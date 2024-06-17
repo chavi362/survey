@@ -38,8 +38,8 @@ async function postSignup(body) {
 
         console.log("body password:" + password);
 
-        const addressId = await findOrCreateAddress(address);
-        const companyId = await findOrCreateCompany(company);
+        //const addressId = await findOrCreateAddress(address);
+        //const companyId = await findOrCreateCompany(company);
 
         const userInsertQuery = `INSERT INTO users (fullname, username, email, address_id, company_id, phone, website)
             VALUES ('${fullname}', '${username}', '${email}', ${addressId}, ${companyId}, '${phone}', '${website}')`;

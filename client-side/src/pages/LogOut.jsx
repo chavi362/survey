@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from './UserContext';
+//import { UserContext } from './UserContext';
 
 const LogOut = () => {
-    const { setUser } = useContext(UserContext);
+    //const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const handleLogout = (logout) => {
         if (logout) {
-            setUser(null);
+            //setUser(null);
             navigate("/home");
         }
         else {
