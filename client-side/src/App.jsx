@@ -1,40 +1,34 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import "./App.css";
-import Navigates from "./pages/Navigates";
-import Login from "./pages/Login"; // Adjust the import path if necessary
-import RegisterPage from "./pages/RegisterPage";
-import CompleteRegistration from './pages/CompleteRegistration';
-// import UserDetails from "./pages/UserDetails";
-import LogOut from "./pages/LogOut";
-// import { OrderProvider } from "./pages/OrderContext";
-// import { UserProvider } from "./pages/UserContext";
-import HomePage from "./pages/HomePage";
-
+import React from 'react';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { createContext } from 'react';
+import useLocalStorage from './hooks/useLocalStorage';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from './pages/Login';
+import Register from './pages/RegisterPage';
+import AddUserDetails from './pages/AddUserDetails';
+import './App.css'
+export const UserContext = createContext();
 function App() {
+  const [user, setUser, claerLocalStorage] = useLocalStorage('user', null);
+  const deleteUser = () => {
+    claerLocalStorage();
+    setUser(null);
+  }
   return (
-    <>
-      <div>
-        <BrowserRouter>
-          <Navigates />
-          <Routes>
-            <Route path="/" element={<Navigate to="/home" />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<LogOut />} />
-            <Route path="/signup" element={<RegisterPage />} />
-            <Route path="/complete-registration" component={CompleteRegistration} />
-            {/* <Route path="/userDetails" element={<UserDetails />} />
-            <Route path="/orders" element={<UserOrders />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/orderManagement" element={<OrderManagement />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/winners" element={<Winners />} />
-            <Route path="/Lottery" element={<Lotteries />} /> */}
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </>
+    <BrowserRouter>
+      <UserContext.Provider value={user}>
+        <Routes>
+          <Route path="/" element={<Layout deleteUser={deleteUser} />}>
+            <Route path="/login" element={<Login updateUserContext={setUser} />} />
+            <Route path="/register" element={<Register updateUserContext={setUser} />} />
+            <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
+            <Route path="users/:userId/"  >
+            </Route>
+            <Route path="*" element={<Error />} />
+          </Route>
+        </Routes>
+      </UserContext.Provider>
+    </BrowserRouter>
   );
 }
-
 export default App;

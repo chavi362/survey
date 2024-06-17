@@ -10,8 +10,6 @@ async function postSignup(body) {
         throw err;
     }
 };
-
-
 async function getSignup(body) {
     try {
         return model.getSignup(body);
@@ -20,5 +18,4 @@ async function getSignup(body) {
         throw err;
     }
 };
-
 module.exports = { postSignup, getSignup }
