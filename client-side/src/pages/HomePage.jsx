@@ -44,7 +44,7 @@ const HomePage = () => {
       </section>
 
       <footer>
-        <p>Project developed by [Your Studio/Developer/Company Name]</p>
+        <p>Project developed by havi and avital</p>
       </footer>
     </div>
   );
