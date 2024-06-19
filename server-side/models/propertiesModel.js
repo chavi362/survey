@@ -1,33 +1,12 @@
-const db = require('./db');
-const config = require('./config');
- const users= require('../routes/properties');
 
- async function getSectors() {
-
-    let sectors = await db.query(
-        "SELECT * FROM sectors"
-    );
-    return sectors;
+const {  getObjects } = require("./queryModel.js")
+ async function getProperty(property) {
+    const sql = getObjects(property );
+    const [rows, fields] = await pool.query(sql);
+    return rows;
 }
-
-async function getGenders() {
-
-    let genders = await db.query(
-        "SELECT * FROM genders"
-    );
-    return genders;
-}
-
-
-async function getAreas() {
-
-    let areas = await db.query(
-        "SELECT * FROM areas"
-    );
-    return areas;
-}
-
  module.exports = {
-    getSectors, getGenders, getAreas
+    getProperty
 }
+
 
