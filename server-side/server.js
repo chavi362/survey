@@ -6,42 +6,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 const propertiesRouter=require("./routes/propertiesRouter")
-const port = config.NODE_PORT;                   
+const loginRouter = require('./routes/loginRouter');
+const registerRouter=require('./routes/registerRouter');
+const userRouter = require('./routes/usersRouter');
+const port = config.NODE_PORT;  
+app.use("/login", loginRouter);
+app.use("/users", userRouter);
+app.use("/register", registerRouter);    
+app.use("/properties", propertiesRouter);               
 app.get('/', (req, res) => { res.send("goodluck!!! omeyn!!"); })
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
-});
-
-
-
-const mysql = require('mysql');
-
-
-
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '556260982',
-  database: 'SurveyManagement'
-});
-
-connection.connect();
-
-app.get('/api/education-levels', (req, res) => {
-  connection.query('SELECT * FROM education_levels', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
-
-app.get('/api/surveys', (req, res) => {
-  connection.query('SELECT * FROM surveys', (error, results) => {
-    if (error) throw error;
-    res.json(results);
-  });
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
 });
