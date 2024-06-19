@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Register from './pages/RegisterPage';
 import AddUserDetails from './pages/AddUserDetails';
+import SurveysPage from './SurveysPage';
 import './App.css'
 export const UserContext = createContext();
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login updateUserContext={setUser} />} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
+            <Route path="/surveys" component={SurveysPage} />
             <Route path="users/:userId/"  >
             </Route>
             <Route path="*" element={<Error />} />
