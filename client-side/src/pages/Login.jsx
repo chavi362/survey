@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../API';
-import '../css/Login.css';
-
+import api from '../Api';
+import '../sass/form.scss'
 const Login = (props) => {
   const navigate = useNavigate();
   const [formUser, setFormUser] = useState({
     email: '',
     password: '',
   });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/login', {
-        email: formUser.email,
+    const response = await api.post('/login', {
+        userName: formUser.userName,
         password: formUser.password
       });
-
+  
       const user = response.data;
       if (response.error) {
         console.error('Error fetching user:', response.error);
@@ -28,20 +26,25 @@ const Login = (props) => {
         const userContextData = {
           id: user.id,
           name: user.name,
-          email: user.email
+          userName: user.userName,
+          email: user.email,
+          address: user.address,
+          phone: user.phone,
+          company: user.company,
         };
-        console.log("userContextData ", userContextData);
-
+        console.log("userContextData ",userContextData);
+      
         props.updateUserContext(userContextData);
         navigate(`/users/${user.id}/home`);
       } else {
-        console.log('User not found or incorrect email/password');
+        alert('User not found or incorrect email/password');
       }
     } catch (error) {
       console.error('Error in handleSubmit:', error);
       navigate('/error');
     }
   };
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -78,15 +81,16 @@ const Login = (props) => {
                         <p>Please login to your account</p>
                         <div className="form-outline mb-4">
                           <input
+
                             id="form2Example11"
                             className="form-control"
-                            placeholder="Email"
-                            value={formUser.email}
+                            placeholder="userName"
+                            value={formUser.userName}
                             onChange={handleChange}
-                            name="email"
+                            name="userName"
                           />
                           <label className="form-label" htmlFor="form2Example11">
-                            Email
+                            Username
                           </label>
                         </div>
 
@@ -140,7 +144,7 @@ const Login = (props) => {
             </div>
           </div>
         </div>
-      </section>
+      </section >
     </>
   );
 };
