@@ -4,7 +4,7 @@ const config = require('./config/config')
 const pool = mysql.createPool({
   host: config.DB_HOST,
   user: 'root',
-  database: 'db',
+  database: config.DB_NAME,
   port: config.DB_PORT,
   password: config.DB_PASSWORD,
 }).promise();
