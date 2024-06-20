@@ -1,4 +1,4 @@
-const config = require('./config/config')
+const config = require('../config/config')
 const db = config.DB_NAME;
 function createObject(table_name, values, columnsNum) {
     const query = `INSERT INTO ${db}.${table_name} (${values}) VALUES (${columnsNum})`;

@@ -1,7 +1,7 @@
 
 const express = require("express");
 const userRouter = express.Router();
-const {getAllUsers,getUsersByUserName,updateUser} = require('../controllers/usersController')
+const {getAllUsers,getUsersByUserName,updateUser} = require('../controllers/userController')
  
 userRouter.get("/", async(req, res)=>{
   if(req.query.userName){

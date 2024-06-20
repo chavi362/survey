@@ -1,7 +1,7 @@
 
 const express = require("express");
 const registerRouter = express.Router();
-const {registerUser} = require('../controllers/usersController');
+const {registerUser} = require('../controllers/userController');
 registerRouter.post("/", (async(req,res)=>
     {
         console.log("**************",req.body);

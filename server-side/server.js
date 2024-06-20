@@ -8,7 +8,7 @@ app.use(cors());
 const propertiesRouter=require("./routes/propertiesRouter")
 const loginRouter = require('./routes/loginRouter');
 const registerRouter=require('./routes/registerRouter');
-const userRouter = require('./routes/usersRouter');
+const userRouter = require('./routes/userRouter');
 const port = config.NODE_PORT;  
 app.use("/login", loginRouter);
 app.use("/users", userRouter);

@@ -1,7 +1,7 @@
 
 const express = require("express");
 const loginRouter = express.Router();
-const {loginUser} = require('../controllers/usersController');
+const {loginUser} = require('../controllers/userController');
 loginRouter.post("/", (async(req,res)=>
 
 {

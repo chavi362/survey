@@ -1,4 +1,4 @@
-const model = require('../model/loginModel');
+const model = require('../models/loginModel');
 
 
 async function postLogin(body) {

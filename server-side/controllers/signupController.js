@@ -1,4 +1,4 @@
-const model = require('../model/signupModel');
+const model = require('../models/signupModel');
 
 
 async function postSignup(body) {
