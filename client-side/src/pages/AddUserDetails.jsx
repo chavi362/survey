@@ -1,44 +1,37 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../sass/form.scss';
+import React, { useState, useEffect ,useContext} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import '../sass/form.scss'
 import api from '../Api';
 import { UserContext } from '../App';
-import useGetData from '../hooks/useGetData';
-
 const AddUserDetails = ({ updateUserContext }) => {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const [formUser, setFormUser] = useState({
-    name: "",
+    firstName: "",
+    lastName:"",
     email: "",
-    phone: "",
-    address: "",
-    company: "",
-    ageID: "",
-    sectorID: ""
+    ageID:"",
+    genderID:"",
+    areaID: "",
+    sectorID:""
   });
-
-  const [ages, ageError, ageLoading] = useGetData('/properties/ages');
-  const [sectors, sectorError, sectorLoading] = useGetData('/properties/sectors');
-
   useEffect(() => {
     setFormUser((prevFormUser) => ({
-      id: user.id,
+      id:user.id,
       userName: user.userName,
       ...prevFormUser,
     }));
   }, [user]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const updatedFormUser = { ...formUser, id: user.id };
       const response = await api.put(`users/${user.id}`, updatedFormUser);
-
+  
       if (response.error) {
         console.error('Error updating user details:', response.error);
       } else {
-        const updatedUser = formUser;
+        const updatedUser =formUser;
         updateUserContext(updatedUser);
         navigate(`/users/${updatedUser.id}/home`);
       }
@@ -46,7 +39,7 @@ const AddUserDetails = ({ updateUserContext }) => {
       console.error('Error updating user details:', error);
     }
   };
-
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormUser((prevUser) => ({
@@ -54,7 +47,6 @@ const AddUserDetails = ({ updateUserContext }) => {
       [name]: value,
     }));
   };
-
   return (
     <section className="h-100 gradient-form" style={{ backgroundColor: '#eee' }}>
       <div className="container py-5 h-100">
@@ -79,13 +71,13 @@ const AddUserDetails = ({ updateUserContext }) => {
                         <input
                           id="email"
                           className="form-control"
-                          placeholder="Your email"
+                          placeholder="Your user name"
                           value={formUser.email}
                           onChange={handleChange}
                           name="email"
                         />
                         <label className="form-label" htmlFor="email">
-                          Email
+                          email
                         </label>
                       </div>
                       <div className="form-outline mb-4">
@@ -98,7 +90,7 @@ const AddUserDetails = ({ updateUserContext }) => {
                           name="phone"
                         />
                         <label className="form-label" htmlFor="phone">
-                          Phone
+                          phone
                         </label>
                       </div>
                       <div className="form-outline mb-4">
@@ -115,65 +107,48 @@ const AddUserDetails = ({ updateUserContext }) => {
                         </label>
                       </div>
                       <div className="form-outline mb-4">
-                        {ageLoading ? (
-                          <p>Loading ages...</p>
-                        ) : ageError ? (
-                          <p>Error loading ages: {ageError}</p>
-                        ) : (
-                          <select
-                            id="age"
-                            className="form-control"
-                            value={formUser.ageID}
+                        <div className="d-flex">
+                          <input
+                            className="form-control me-2"
+                            placeholder="adrees"
+                            value={formUser.address}
                             onChange={handleChange}
-                            name="ageID"
-                          >
-                            <option value="">Select Age</option>
-                            {ages.map(age => (
-                              <option key={age.ageID} value={age.ageID}>
-                                {age.startYear} - {age.endYear}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                        <label className="form-label" htmlFor="age">
-                          Age
-                        </label>
+                            name="address"
+                          />
+                        
+                        </div>
                       </div>
                       <div className="form-outline mb-4">
-                        {sectorLoading ? (
-                          <p>Loading sectors...</p>
-                        ) : sectorError ? (
-                          <p>Error loading sectors: {sectorError}</p>
-                        ) : (
-                          <select
-                            id="sector"
-                            className="form-control"
-                            value={formUser.sectorID}
-                            onChange={handleChange}
-                            name="sectorID"
-                          >
-                            <option value="">Select Sector</option>
-                            {sectors.map(sector => (
-                              <option key={sector.sectorID} value={sector.sectorID}>
-                                {sector.sector}
-                              </option>
-                            ))}
-                          </select>
-                        )}
-                        <label className="form-label" htmlFor="sector">
-                          Sector
+                        <input
+                          id="company"
+                          className="form-control"
+                          placeholder="Your company"
+                          value={formUser.company}
+                          onChange={handleChange}
+                          name="company"
+                        />
+                        <label className="form-label" htmlFor="company">
+                          Company
                         </label>
                       </div>
-                      <button type="submit" className="btn btn-primary btn-block mb-4">
-                        Submit
-                      </button>
+                    
+                        <br /><br />
+                        <button
+                          className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                          type="submit"
+                        >
+                          Create Account
+                        </button>
                     </form>
                   </div>
                 </div>
                 <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                   <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                    <h4 className="mb-4">We are more than just a company</h4>
-                    <p className="small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <h4 className="mb-4">Discover a World of Opportunities/</h4>
+                    <p className="small mb-0">
+                      Welcome to our platform where you can explore and connect with a community driven by innovation and collaboration.
+                      Unleash your potential as we strive to make a positive impact together. Join us on this exciting journey!
+                    </p>
                   </div>
                 </div>
               </div>
@@ -184,5 +159,4 @@ const AddUserDetails = ({ updateUserContext }) => {
     </section>
   );
 };
-
 export default AddUserDetails;
