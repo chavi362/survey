@@ -1,45 +1,51 @@
-import React, { useState, useEffect ,useContext} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import '../sass/form.scss'
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../sass/form.scss';
 import api from '../Api';
 import { UserContext } from '../App';
+
 const AddUserDetails = ({ updateUserContext }) => {
   const user = useContext(UserContext);
   const navigate = useNavigate();
   const [formUser, setFormUser] = useState({
-    firstName: "",
-    lastName:"",
+    username: "",
     email: "",
-    ageID:"",
-    genderID:"",
+    firstName: "",
+    lastName: "",
+    ageID: "",
+    genderID: "",
     areaID: "",
-    sectorID:""
+    sectorID: "",
+    role: "user",
+    educationID: "",
+    incomeID: ""
   });
+
   useEffect(() => {
     setFormUser((prevFormUser) => ({
-      id:user.id,
-      userName: user.userName,
       ...prevFormUser,
+      id: user.id,
+      username: user.username
     }));
   }, [user]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const updatedFormUser = { ...formUser, id: user.id };
       const response = await api.put(`users/${user.id}`, updatedFormUser);
-  
+
       if (response.error) {
         console.error('Error updating user details:', response.error);
       } else {
-        const updatedUser =formUser;
-        updateUserContext(updatedUser);
-        navigate(`/users/${updatedUser.id}/home`);
+        updateUserContext(updatedFormUser);
+        navigate(`/users/${updatedFormUser.id}/home`);
       }
     } catch (error) {
       console.error('Error updating user details:', error);
     }
   };
-  
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormUser((prevUser) => ({
@@ -47,6 +53,7 @@ const AddUserDetails = ({ updateUserContext }) => {
       [name]: value,
     }));
   };
+
   return (
     <section className="h-100 gradient-form" style={{ backgroundColor: '#eee' }}>
       <div className="container py-5 h-100">
@@ -67,87 +74,171 @@ const AddUserDetails = ({ updateUserContext }) => {
 
                     <form onSubmit={handleSubmit}>
                       <p>Let's take more details....</p>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          id="username"
+                          className="form-control"
+                          placeholder="Your username"
+                          value={formUser.username}
+                          onChange={handleChange}
+                          name="username"
+                          required
+                        />
+                        <label className="form-label" htmlFor="username">
+                          Username
+                        </label>
+                      </div>
+
                       <div className="form-outline mb-4">
                         <input
                           id="email"
                           className="form-control"
-                          placeholder="Your user name"
+                          placeholder="Your email"
                           value={formUser.email}
                           onChange={handleChange}
                           name="email"
+                          required
                         />
                         <label className="form-label" htmlFor="email">
-                          email
+                          Email
                         </label>
                       </div>
+
                       <div className="form-outline mb-4">
                         <input
-                          id="phone"
+                          id="firstName"
                           className="form-control"
-                          placeholder="Your phone"
-                          value={formUser.phone}
+                          placeholder="Your first name"
+                          value={formUser.firstName}
                           onChange={handleChange}
-                          name="phone"
+                          name="firstName"
+                          required
                         />
-                        <label className="form-label" htmlFor="phone">
-                          phone
+                        <label className="form-label" htmlFor="firstName">
+                          First Name
                         </label>
                       </div>
+
                       <div className="form-outline mb-4">
                         <input
-                          id="full-name"
+                          id="lastName"
                           className="form-control"
-                          placeholder="Your name"
-                          value={formUser.name}
+                          placeholder="Your last name"
+                          value={formUser.lastName}
                           onChange={handleChange}
-                          name="name"
+                          name="lastName"
+                          required
                         />
-                        <label className="form-label" htmlFor="full-name">
-                          Full Name
+                        <label className="form-label" htmlFor="lastName">
+                          Last Name
                         </label>
                       </div>
-                      <div className="form-outline mb-4">
-                        <div className="d-flex">
-                          <input
-                            className="form-control me-2"
-                            placeholder="adrees"
-                            value={formUser.address}
-                            onChange={handleChange}
-                            name="address"
-                          />
-                        
-                        </div>
-                      </div>
+
                       <div className="form-outline mb-4">
                         <input
-                          id="company"
+                          id="ageID"
                           className="form-control"
-                          placeholder="Your company"
-                          value={formUser.company}
+                          placeholder="Your age ID"
+                          value={formUser.ageID}
                           onChange={handleChange}
-                          name="company"
+                          name="ageID"
+                          required
                         />
-                        <label className="form-label" htmlFor="company">
-                          Company
+                        <label className="form-label" htmlFor="ageID">
+                          Age ID
                         </label>
                       </div>
-                    
-                        <br /><br />
-                        <button
-                          className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                          type="submit"
-                        >
-                          Create Account
-                        </button>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          id="genderID"
+                          className="form-control"
+                          placeholder="Your gender ID"
+                          value={formUser.genderID}
+                          onChange={handleChange}
+                          name="genderID"
+                          required
+                        />
+                        <label className="form-label" htmlFor="genderID">
+                          Gender ID
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          id="areaID"
+                          className="form-control"
+                          placeholder="Your area ID"
+                          value={formUser.areaID}
+                          onChange={handleChange}
+                          name="areaID"
+                          required
+                        />
+                        <label className="form-label" htmlFor="areaID">
+                          Area ID
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          id="sectorID"
+                          className="form-control"
+                          placeholder="Your sector ID"
+                          value={formUser.sectorID}
+                          onChange={handleChange}
+                          name="sectorID"
+                          required
+                        />
+                        <label className="form-label" htmlFor="sectorID">
+                          Sector ID
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          id="educationID"
+                          className="form-control"
+                          placeholder="Your education ID"
+                          value={formUser.educationID}
+                          onChange={handleChange}
+                          name="educationID"
+                          required
+                        />
+                        <label className="form-label" htmlFor="educationID">
+                          Education ID
+                        </label>
+                      </div>
+
+                      <div className="form-outline mb-4">
+                        <input
+                          id="incomeID"
+                          className="form-control"
+                          placeholder="Your income ID"
+                          value={formUser.incomeID}
+                          onChange={handleChange}
+                          name="incomeID"
+                          required
+                        />
+                        <label className="form-label" htmlFor="incomeID">
+                          Income ID
+                        </label>
+                      </div>
+
+                      <button
+                        className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                        type="submit"
+                      >
+                        Create Account
+                      </button>
                     </form>
                   </div>
                 </div>
                 <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                   <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                    <h4 className="mb-4">Discover a World of Opportunities/</h4>
+                    <h4 className="mb-4">Discover a World of Opportunities</h4>
                     <p className="small mb-0">
-                      Welcome to our platform where you can explore and connect with a community driven by innovation and collaboration.
-                      Unleash your potential as we strive to make a positive impact together. Join us on this exciting journey!
+                      Welcome to our platform where you can explore and connect with a community driven by innovation and collaboration. Unleash your potential as we strive to make a positive impact together. Join us on this exciting journey!
                     </p>
                   </div>
                 </div>
@@ -159,4 +250,5 @@ const AddUserDetails = ({ updateUserContext }) => {
     </section>
   );
 };
+
 export default AddUserDetails;
