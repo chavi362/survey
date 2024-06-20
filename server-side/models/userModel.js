@@ -3,7 +3,7 @@ const { createObject, getObjectByPram, deleteObject, updateObject, getObjects } 
 
 async function loginUser(userName, password) {
   try {
-    const sql = 'SELECT * FROM Passwords natural join Users WHERE Users.userName = ? AND Passwords.password = ? ';
+    const sql = 'SELECT * FROM Passwords natural join Users WHERE Users.userName = ? AND Passwords.user_password = ? ';
     const [rows, fields] = await pool.query(sql, [userName, password]);
     if (rows.length > 0) {
       return rows[0];
@@ -40,7 +40,7 @@ async function getUsersByUserName(userName, start = 0, limit = 2) {
   }
 }
 async function getAllUsers() {
-  const sql = getObjects("users", 0, 100);
+  const sql = getObjects("users");
   const [rows, fields] = await pool.query(sql);
   return rows;
 }
