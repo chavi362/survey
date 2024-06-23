@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { serverRequests } from "../Api";
+import SurveyToConfirm from "./SurveyToConfirm";
 
 const SurveysToConfirm = () => {
   let getAmount = 10;
@@ -60,7 +61,7 @@ const SurveysToConfirm = () => {
     }
     // updateFlags();
     setNumOfSurveys(numOfSurveys+getAmount);
-    setAllSurveys(tempSurveys);
+    //setAllSurveys(tempSurveys);
     } catch (error) {
       console.error("Error in log function:", error);
       alert("שגיאה בשרת");
@@ -98,9 +99,7 @@ const SurveysToConfirm = () => {
         <ul>
           {allSurveys.map((survey) => (
             <li key={survey.surveyCode}>
-              <span>{survey.surveyTitle}</span>
-              <button onClick={() => handleView(survey.surveyCode)}>צפיה</button>
-              <button onClick={() => handleApprove(survey.surveyCode)}>אשר</button>
+              <SurveyToConfirm survey = {survey} />
             </li>
           ))}
         </ul>
