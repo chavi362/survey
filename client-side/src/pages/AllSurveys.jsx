@@ -75,9 +75,9 @@ let changeFlags = (i) => {
       </h1>
       {allSurveys.map((survey,i) => {
                   return (<div id="reportLink">
-                   <button class="linkToSurveys" onClick={()=>{changeFlags(i)}}>{survey.surveyTitle}</button>
+                   <button className="linkToSurveys" onClick={()=>{changeFlags(i)}}>{survey.surveyTitle}</button>
           {
-            flags[i] && <div class="ShowSurvey"><ShowSurvey survey={survey} isManager="true"/></div>
+            flags[i] && <div className="ShowSurvey"><ShowSurvey survey={survey} isManager="true"/></div>
           }
               </div>);
 

@@ -9,9 +9,9 @@ import AddUserDetails from './pages/AddUserDetails';
 import SurveysPage from './pages/SurveysPage';
 import HomePage from './pages/HomePage';
 import ManagerPage from './pages/ManagerPage';
-import AllUsers from './pages/AllUsers';
 import './App.css'
 import Error from './pages/Error'
+import SurveysToConfirm from './pages/SurveysToConfirm';
 export const UserContext = createContext();
 function App() {
   const [user, setUser, claerLocalStorage] = useLocalStorage('user', null);
@@ -26,7 +26,7 @@ function App() {
           <Route path="/" element={<Navigate to='/login' deleteUser={deleteUser} />}/> 
             <Route path="/login" element={<Login updateUserContext={setUser} />} />
             <Route path="/managerPage" element={<ManagerPage />} />
-            <Route path="manager/allUsers" element={<AllUsers />}></Route>
+            <Route path="/manager/surveysToConfirm" element={<SurveysToConfirm />}></Route>
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
             <Route path="/surveys" component={SurveysPage} />

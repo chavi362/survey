@@ -15,7 +15,7 @@ function ManagerORUser() {
 
     return (
         <div>
-        <div class='nav' >
+        <div className='nav' >
             <button className='navLinks linkBtn' onClick={() => { navigate("/home/") }}>היכנס כמשתמש</button>
             <button className='navLinks linkBtn' onClick={() => { navigate("/managerPage") }}>ראשי</button>
             <button className='navLinks linkBtn' onClick={() => { navigate("/manager/allSurveys/") }}>כל הסקרים</button>

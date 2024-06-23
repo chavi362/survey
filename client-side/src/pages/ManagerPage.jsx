@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AllSurveys from "./AllSurveys";
 import Reports from "./Reports";
-import AllUsers from './AllUsers';
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,6 +10,8 @@ import {
   useNavigate
 } from "react-router-dom";
 import ManagerNav from "./ManagerNav";
+import SurveysToConfirm from './SurveysToConfirm';
+
 
 function ManagerPage() {
   sessionStorage.setItem("isManager", true);
@@ -22,7 +23,7 @@ function ManagerPage() {
       <ManagerNav />
       <div className='firstPadding'></div>
     
-      <AllUsers />
+      <SurveysToConfirm />
  
     </div>
   );

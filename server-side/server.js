@@ -69,8 +69,8 @@ app.use("/login", loginRouter);
 // const signupRouter = require("./routes/signupRouter")
 // app.use("/signup", signupRouter);
 
- const allUsersRouter = require("./routes/allUsersRouter")
- app.use("/allUsers", allUsersRouter);
+ const surveysRouter = require("./routes/surveysRouter")
+ app.use("/surveysToConfirm", surveysRouter);
 
 // const todosRouter = require("./routes/todosRouter")
 // app.use("/todos", todosRouter);

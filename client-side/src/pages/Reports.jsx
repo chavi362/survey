@@ -39,7 +39,7 @@ function Reports() {
             {flagReports && <div>{reports.map((report,i) => {
                 return (<div id="reportLink">
               
-                     <button class="linkToSurveys" onClick={()=>{changeFlags(i)}}> {report.surveyTitle}</button>
+                     <button className="linkToSurveys" onClick={()=>{changeFlags(i)}}> {report.surveyTitle}</button>
             {
               flags[i] && <ManagerShowSurvey survey={report}/>
             }
