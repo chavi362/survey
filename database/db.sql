@@ -68,6 +68,7 @@ CREATE TABLE surveys (
     managerCode INT NOT NULL,
     report TEXT,
     showResults BOOLEAN NOT NULL DEFAULT TRUE,
+    confirmed BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (managerCode) REFERENCES users(userCode) ON UPDATE RESTRICT ON DELETE CASCADE
 );
 
