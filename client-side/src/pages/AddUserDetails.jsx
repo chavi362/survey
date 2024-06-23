@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../sass/form.scss';
-import api from '../Api';
+import { serverRequests } from "../Api";
 import { UserContext } from '../App';
 
 const AddUserDetails = ({ updateUserContext }) => {

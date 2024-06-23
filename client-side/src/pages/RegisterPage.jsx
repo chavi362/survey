@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../sass/form.scss'
-import api from '../Api';
+import { serverRequests } from "../Api";
 const Register = ({ updateUserContext }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState({
