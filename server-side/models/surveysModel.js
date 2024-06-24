@@ -67,7 +67,7 @@ async function getSurveyById(id) {
 
 async function getSurveys() {
   try {
-    const sql = `SELECT * FROM surveys WHERE confirmed = FALSE`;
+    const sql = `SELECT * FROM surveys WHERE confirmed = FALSE` ;
     const result = await pool.query(sql);
 
     console.log(result[0]);

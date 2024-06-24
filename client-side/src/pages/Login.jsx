@@ -155,11 +155,12 @@
 
 // export default Login;
 
+
+
 import React, { useState } from "react";
-// import api from '../Api';
-import { serverRequests } from "../Api";
-// import ManagerORUser from './ManagerORUser';
 import { useNavigate } from "react-router-dom";
+import { serverRequests } from "../Api";
+import '../css/Login.css';
 
 function LogIn() {
   let navigate = useNavigate();
@@ -247,7 +248,6 @@ function LogIn() {
   return (
     <div>
       <h1 className="webTitle">סקרים</h1>
-      {/* <img src={image}/> */}
       <div className="logInBox">
         <h1 className="logIn">משתמש קיים</h1>
         <input
@@ -256,7 +256,7 @@ function LogIn() {
           onChange={(event) => {
             setUserEmail(event.target.value);
           }}
-        ></input>
+        />
         <br />
         <input
           type="password"
@@ -264,10 +264,8 @@ function LogIn() {
           onChange={(event) => {
             setUserPassword(event.target.value);
           }}
-        ></input>
+        />
         <br />
-        <br></br>
-
         <div className="submitBtn">
           <button id="logInBtn" className="logInBtn" onClick={log}>
             היכנס
@@ -282,8 +280,7 @@ function LogIn() {
           </button>
         </div>
       </div>
-    </div>
-  );
+    </div>)
 }
 
 export default LogIn;

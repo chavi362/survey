@@ -29,6 +29,7 @@ function App() {
             <Route path="/managerPage" element={<ManagerPage />} />
             <Route path="/manager/surveysToConfirm" element={<SurveysToConfirm />}></Route>
             <Route path="/manager/surveysToConfirm/:surveyCode" element={<SurveyDetail />} />
+            <Route path="/home" element={<HomePage/>} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
             <Route path="/surveys" component={SurveysPage} />
