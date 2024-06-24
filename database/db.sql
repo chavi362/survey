@@ -76,6 +76,7 @@ CREATE TABLE surveysquestions (
     questionCode INT AUTO_INCREMENT PRIMARY KEY,
     question TEXT NOT NULL,
     surveyCode INT NOT NULL,
+    questionType ENUM('open', 'close') NOT NULL,
     FOREIGN KEY (surveyCode) REFERENCES surveys(surveyCode) ON UPDATE RESTRICT ON DELETE CASCADE
 );
 
@@ -102,6 +103,8 @@ CREATE TABLE surveyCloseData (
     FOREIGN KEY (userCode) REFERENCES users(userCode) ON UPDATE RESTRICT ON DELETE CASCADE,
     FOREIGN KEY (answerCode) REFERENCES surveyCloseAnswers(answerCode) ON UPDATE RESTRICT ON DELETE CASCADE
 );
+
+
 
 
 
@@ -166,63 +169,94 @@ INSERT INTO passwords (user_id, user_password) VALUES
 (4, 'adminpassword'), 
 (5, 'password4');
 
--- Inserting data into surveys table
-INSERT INTO surveys (surveyTitle, managerCode, report, showResults, confirmed) VALUES 
-('סקר שביעות רצון לקוחות', 1, 'דוח סקר שביעות רצון לקוחות', TRUE, FALSE),
-('סקר שכר והטבות', 2, 'דוח סקר שכר והטבות', TRUE, TRUE),
-('סקר שביעות רצון עובדים', 3, 'דוח סקר שביעות רצון עובדים', TRUE, FALSE),
-('סקר שירות לקוחות', 4, 'דוח סקר שירות לקוחות', TRUE, TRUE),
-('סקר חוויית משתמש', 5, 'דוח סקר חוויית משתמש', TRUE, FALSE),
-('סקר תדמית החברה', 1, 'דוח סקר תדמית החברה', TRUE, TRUE),
-('סקר חדשנות טכנולוגית', 2, 'דוח סקר חדשנות טכנולוגית', TRUE, FALSE),
-('סקר שביעות רצון ממוצר', 3, 'דוח סקר שביעות רצון ממוצר', TRUE, TRUE),
-('סקר איכות המוצר', 4, 'דוח סקר איכות המוצר', TRUE, FALSE),
-('סקר נאמנות לקוחות', 5, 'דוח סקר נאמנות לקוחות', TRUE, TRUE),
-('סקר שוק', 1, 'דוח סקר שוק', TRUE, FALSE),
-('סקר מגמות צרכנים', 2, 'דוח סקר מגמות צרכנים', TRUE, TRUE),
-('סקר תחושת ביטחון', 3, 'דוח סקר תחושת ביטחון', TRUE, FALSE),
-('סקר שיפור שירותים', 4, 'דוח סקר שיפור שירותים', TRUE, TRUE),
-('סקר יעילות ארגונית', 5, 'דוח סקר יעילות ארגונית', TRUE, FALSE);
 
--- Inserting data into surveysquestions table
-INSERT INTO surveysquestions (question, surveyCode) VALUES 
-('מה רמת שביעות הרצון שלך מהמוצר?', 1),
-('מהי רמת השירות שקיבלת?', 2),
-('איך היית מדרג את איכות המוצר?', 3),
-('האם היית ממליץ עלינו לחברים?', 4),
-('מה דעתך על ממשק המשתמש שלנו?', 5);
 
--- Inserting data into surveyCloseAnswers table
-INSERT INTO surveyCloseAnswers (questionCode, answer) VALUES 
-(1, 'מאוד מרוצה'),
-(1, 'מרוצה'),
-(1, 'לא מרוצה'),
-(2, 'מצוין'),
-(2, 'טוב'),
-(2, 'סביר'),
-(3, 'גבוהה מאוד'),
-(3, 'גבוהה'),
-(3, 'נמוכה'),
-(4, 'כן'),
-(4, 'לא'),
-(5, 'נוח מאוד'),
-(5, 'נוח'),
-(5, 'לא נוח');
+-- הכנסת נתונים לטבלת הסקרים
+INSERT INTO surveys (surveyTitle, managerCode, report, showResults, confirmed)
+VALUES 
+('סקר 1', 1, 'דוח סקר 1', TRUE, FALSE),
+('סקר 2', 2, 'דוח סקר 2', TRUE, FALSE),
+('סקר 3', 1, 'דוח סקר 3', TRUE, FALSE),
+('סקר 4', 3, 'דוח סקר 4', TRUE, FALSE),
+('סקר 5', 2, 'דוח סקר 5', TRUE, FALSE),
+('סקר 6', 1, 'דוח סקר 6', TRUE, FALSE),
+('סקר 7', 3, 'דוח סקר 7', TRUE, FALSE),
+('סקר 8', 1, 'דוח סקר 8', TRUE, FALSE),
+('סקר 9', 2, 'דוח סקר 9', TRUE, FALSE),
+('סקר 10', 3, 'דוח סקר 10', TRUE, FALSE),
+('סקר 11', 1, 'דוח סקר 11', TRUE, FALSE),
+('סקר 12', 2, 'דוח סקר 12', TRUE, FALSE),
+('סקר 13', 3, 'דוח סקר 13', TRUE, FALSE),
+('סקר 14', 1, 'דוח סקר 14', TRUE, FALSE),
+('סקר 15', 2, 'דוח סקר 15', TRUE, FALSE);
 
--- Inserting data into surveyOpenAnswers table
-INSERT INTO surveyOpenAnswers (questionCode, answer, userCode) VALUES 
-(1, 'המוצר מצוין ומשמש אותי רבות', 1),
-(2, 'השירות היה מהיר ויעיל', 2),
-(3, 'איכות המוצר גבוהה מאוד', 3),
-(4, 'כן, בהחלט אמליץ', 4),
-(5, 'ממשק המשתמש מאוד ידידותי', 5);
+-- הכנסת נתונים לטבלת השאלות
+INSERT INTO surveysquestions (question, surveyCode, questionType)
+VALUES 
+('מה דעתך על השירות?', 1, 'open'),
+('איזה יום היום?', 1, 'close'),
+('מהו גודל המשפחה שלך?', 2, 'open'),
+('מה הצבע האהוב עליך?', 2, 'close'),
+('מהו סוג הבית שלך?', 3, 'open'),
+('איזה חיה אתה הכי אוהב?', 3, 'close'),
+('מהו שם הרחוב שלך?', 4, 'open'),
+('מהי השפה הראשונה שלך?', 4, 'close'),
+('מהו התחביב האהוב עליך?', 5, 'open'),
+('מהי המדינה בה נולדת?', 5, 'close'),
+('כמה זמן לוקח לך להגיע לעבודה?', 6, 'open'),
+('מהו סוג הרכב שלך?', 6, 'close'),
+('מהו סוג המוזיקה המועדף עליך?', 7, 'open'),
+('מהו סוג הספרים האהוב עליך?', 7, 'close'),
+('מהו שם הכלב שלך?', 8, 'open');
 
--- Inserting data into surveyCloseData table
-INSERT INTO surveyCloseData (userCode, answerCode) VALUES 
+-- הכנסת נתונים לטבלת התשובות לשאלות סגורות
+INSERT INTO surveyCloseAnswers (questionCode, answer)
+VALUES 
+(2, 'שני'),
+(2, 'שלישי'),
+(2, 'חמישי'),
+(4, 'אדום'),
+(4, 'כחול'),
+(4, 'ירוק'),
+(6, 'חתול'),
+(6, 'כלב'),
+(6, 'דג'),
+(8, 'עברית'),
+(8, 'אנגלית'),
+(8, 'ערבית'),
+(10, 'ישראל'),
+(10, 'ארה"ב'),
+(10, 'צרפת'),
+(12, 'רכב פרטי'),
+(12, 'אופנוע'),
+(12, 'אופניים'),
+(14, 'רומן'),
+(14, 'מדע בדיוני'),
+(14, 'עיון');
+
+-- הכנסת נתונים לטבלת התשובות לשאלות פתוחות
+INSERT INTO surveyOpenAnswers (questionCode, answer, userCode)
+VALUES 
+(1, 'שירות טוב מאוד', 1),
+(3, '5 נפשות', 2),
+(5, 'דירה', 1),
+(7, 'רחוב הרצל', 3),
+(9, 'נגינה בגיטרה', 2),
+(11, '20 דקות', 3),
+(13, 'פופ', 1),
+(15, 'רקסי', 2);
+
+-- הכנסת נתונים לטבלת הנתונים לתשובות סגורות
+INSERT INTO surveyCloseData (userCode, answerCode)
+VALUES 
 (1, 1),
-(2, 4),
-(3, 7),
-(4, 10),
-(5, 13);
+(1, 4),
+(2, 7),
+(2, 10),
+(3, 13),
+(3, 16),
+(1, 19);
+
+
 
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const surveysRouter = express.Router();
-const { getSurveysAmount, getSurveys } = require('../controllers/surveysController');
+const { getSurveysAmount, getSurveys, getSurveyById, updateSurvey } = require('../controllers/surveysController');
 
 
 
@@ -23,6 +23,26 @@ surveysRouter.get("/amount", async (req, res) => {
   try {
       res.send(await getSurveysAmount());
   } catch (err) {
+      res.status(404).send({ ok: false });
+  }
+});
+
+
+surveysRouter.get("/:id", async (req, res) => {
+  console.log(req.params.id);
+  const id = req.params.id;
+  try {
+      res.send(await getSurveyById(id));
+  } catch (err) {
+      res.status(404).send({ ok: false });
+  }
+});
+
+surveysRouter.put("/:id", async (req, res) => {
+  try {
+      res.send(await updateSurvey(req.body));
+  }
+  catch (err) {
       res.status(404).send({ ok: false });
   }
 });

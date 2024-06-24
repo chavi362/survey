@@ -11,6 +11,16 @@ async function getSurveysAmount() {
     }
 };
 
+async function getSurveyById(id) {
+    console.log("controller body");
+    try {
+        return model.getSurveyById(id);
+    }
+    catch (err) {
+        throw err;
+    }
+};
+
 
 async function getSurveys() {
     console.log("controller body");
@@ -22,5 +32,14 @@ async function getSurveys() {
     }
 };
 
+async function updateSurvey(body) {
+    try {
+        return model.updateSurvey(body);
+    }
+    catch (err) {
+        throw err;
+    }
+};
 
-module.exports = { getSurveysAmount, getSurveys }
+
+module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey }
