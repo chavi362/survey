@@ -1,10 +1,30 @@
-const express = require('express');
+const express = require("express");
 const surveysRouter = express.Router();
-const { getSurveysAmount, getSurveys, getSurveyById, updateSurvey } = require('../controllers/surveysController');
-
-
+const {
+  getSurveysAmount,
+  getAllSurveys,
+  getSurveys,
+  getSurveyById,
+  updateSurvey,
+} = require("../controllers/surveysController");
 
 surveysRouter.post("/", async (req, res) => {
+  console.log("Received POST request to /allSurveys");
+  console.log("Request body:", req.body);
+
+  try {
+    const result = await getAllSurveys(req.body);
+    console.log("surveys successful, sending response...");
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("Error in surveysRouter:", err.message);
+    res.status(404).json({ ok: false, error: err.message });
+  }
+});
+
+
+
+surveysRouter.post("/surveysToConfirm", async (req, res) => {
   console.log("Received POST request to /surveysToConfirm");
   console.log("Request body:", req.body);
 
@@ -18,35 +38,32 @@ surveysRouter.post("/", async (req, res) => {
   }
 });
 
-
 surveysRouter.get("/amount", async (req, res) => {
   try {
-      res.send(await getSurveysAmount());
+    console.log("*********** bbbbbbb in surveysRouter");
+    res.send(await getSurveysAmount());
   } catch (err) {
-      res.status(404).send({ ok: false });
+    res.status(404).send({ ok: false });
   }
 });
-
 
 surveysRouter.get("/:id", async (req, res) => {
   console.log(req.params.id);
   const id = req.params.id;
   try {
-      res.send(await getSurveyById(id));
+    res.send(await getSurveyById(id));
   } catch (err) {
-      res.status(404).send({ ok: false });
+    res.status(404).send({ ok: false });
   }
 });
 
 surveysRouter.put("/:id", async (req, res) => {
   try {
-      res.send(await updateSurvey(req.body));
-  }
-  catch (err) {
-      res.status(404).send({ ok: false });
+    res.send(await updateSurvey(req.body));
+  } catch (err) {
+    res.status(404).send({ ok: false });
   }
 });
-
 
 // surveysRouter.get('/amount', async function (req, res, next) {
 //     console.log("Received GET request to /amount");
@@ -65,7 +82,7 @@ surveysRouter.put("/:id", async (req, res) => {
 // });
 
 // router.post('/answeredSurveys', async function (req, res, next) {
- 
+
 //   let body = req.body;
 //   try {
 //     let surveys = await mySurveys.answeredSurveys(body);
@@ -90,7 +107,6 @@ surveysRouter.put("/:id", async (req, res) => {
 //   }
 
 // });
-
 
 // router.get('/reports', async function (req, res, next) {
 
@@ -117,11 +133,6 @@ surveysRouter.put("/:id", async (req, res) => {
 
 // });
 
-
-
-
-
-
 // router.post('/', async function (req, res, next) {
 
 //   try {
@@ -136,8 +147,6 @@ surveysRouter.put("/:id", async (req, res) => {
 //   }
 
 // });
-
-
 
 // router.get('/questions/:id', async function (req, res, next) {
 
@@ -190,7 +199,6 @@ surveysRouter.put("/:id", async (req, res) => {
 
 // });
 
-
 // router.get('/answers/:questionID',async function (req, res,next){
 
 //     try {
@@ -205,10 +213,7 @@ surveysRouter.put("/:id", async (req, res) => {
 
 // });
 
-
-
 // router.get('/:id', async function (req, res, next) {
-
 
 //   try {
 //     let surveyID = req.params.id;
@@ -235,15 +240,4 @@ surveysRouter.put("/:id", async (req, res) => {
 
 // });
 
-
-
-
-
-
-
-
-
-
-
 module.exports = surveysRouter;
-

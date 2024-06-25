@@ -13,6 +13,7 @@ import './App.css'
 import Error from './pages/Error'
 import SurveysToConfirm from './pages/SurveysToConfirm';
 import SurveyDetail from './pages/SurveyDetail';
+import AllSurveys from './pages/AllSurveys';
 export const UserContext = createContext();
 function App() {
   const [user, setUser, claerLocalStorage] = useLocalStorage('user', null);
@@ -30,6 +31,7 @@ function App() {
             <Route path="/manager/surveysToConfirm" element={<SurveysToConfirm />}></Route>
             <Route path="/manager/surveysToConfirm/:surveyCode" element={<SurveyDetail />} />
             <Route path="/home" element={<HomePage/>} />
+            <Route path="/home/allSurveys" element={<AllSurveys/>} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
             <Route path="/surveys" component={SurveysPage} />

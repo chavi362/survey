@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { serverRequests } from "../Api";
-import SurveyToConfirm from "./SurveyToConfirm";
+import Survey from "./Survey";
 
 const SurveysToConfirm = () => {
   let getAmount = 10;
@@ -13,35 +13,35 @@ const SurveysToConfirm = () => {
   // const [flags, setFlags] = useState([]);
 
   useEffect(() => {
-    getSurveysAmount();
+    getSurveys();
   }, []);
 
-  const getSurveysAmount = async () => {
-    const url = "surveysToConfirm/amount";
-    try {
-      const response = await serverRequests("GET", url, null);
-      console.log(response);
-      if (!response.ok) {
-        alert("לא עובד");
-        return;
-      }
+  // const getSurveysAmount = async () => {
+  //   const url = "surveysToConfirm/amount";
+  //   try {
+  //     const response = await serverRequests("GET", url, null);
+  //     console.log(response);
+  //     if (!response.ok) {
+  //       alert("לא עובד");
+  //       return;
+  //     }
 
-      const data = await response.json();
-      console.log(data);
-      if (data.amount <= getAmount) {
-        setIsMore(false);
-      }
-      setSurveysAmount(data.amount);
-      getSurveys();
-    } catch (error) {
-      console.error("Error in getSurveysAmount function:", error);
-      alert("שגיאה בשרת");
-    }
-  };
+  //     const data = await response.json();
+  //     console.log(data);
+  //     if (data.amount <= getAmount) {
+  //       setIsMore(false);
+  //     }
+  //     setSurveysAmount(data.amount);
+  //     getSurveys();
+  //   } catch (error) {
+  //     console.error("Error in getSurveysAmount function:", error);
+  //     alert("שגיאה בשרת");
+  //   }
+  // };
 
 
   const getSurveys = async () => {
-    const url = "surveysToConfirm";
+    const url = "allSurveys/surveysToConfirm";
     const body = {
       getAmount: getAmount,
       numOfSurveys: numOfSurveys,
@@ -99,7 +99,7 @@ const SurveysToConfirm = () => {
         <ul>
           {allSurveys.map((survey) => (
             <li key={survey.surveyCode}>
-              <SurveyToConfirm survey = {survey} />
+              <Survey survey = {survey} />
             </li>
           ))}
         </ul>

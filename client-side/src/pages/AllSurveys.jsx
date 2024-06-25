@@ -1,88 +1,121 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-// import ManagerShowSurvey from "./ManagerShowSurvey";
-// import ShowSurvey from "./ShowSurvey";
-import ManagerNav from "./ManagerNav"
-import React from 'react'
+import { serverRequests } from "../Api";
+import ManagerNav from "./ManagerNav";
+import Survey from "./Survey";
+import React from "react";
+
+
+
 function AllSurveys() {
+
   let getAmount = 10;
 
   const [allSurveys, setAllSurveys] = useState([]);
-  const [surveyAmount, setSurveyAmount] = useState();
+  const [surveysAmount, setSurveysAmount] = useState();
   const [isMore, setIsmore] = useState(true);
   const [numOfSurveys, setNumOfSurveys] = useState(0);
-  const[flags,setFlags]=useState([]);
+  const [flags, setFlags] = useState([]);
 
   useEffect(() => {
-    getSurveyAmount();
+    getSurveysAmount();
   }, []);
 
-  const getSurveyAmount = async () => {
-    let amount = await fetch("http://localhost:3569/mySurveys/allSurveys/amount");
-    amount = await amount.json();
-    if (amount <= getAmount) {
-      setIsmore(false);
-    }
-    setSurveyAmount(amount);
-    getSurveys();
- 
-  }
+  const getSurveysAmount = async () => {
+    const url = "allSurveys/amount";
+    try {
+      console.log("************ in AllSurveys");
+      const response = await serverRequests("GET", url, null);
+      console.log(response);
+      if (!response.ok) {
+        alert("לא עובד");
+        return;
+      }
 
- 
+      const data = await response.json();
+      console.log(data);
+      if (data.amount <= getAmount) {
+        setIsMore(false);
+      }
+      setSurveysAmount(data.amount);
+      getSurveys();
+    } catch (error) {
+      console.error("Error in getSurveysAmount function:", error);
+      alert("שגיאה בשרת");
+    }
+  };
+
   const getSurveys = async () => {
-    debugger;
-    let surveys = await fetch("http://localhost:3569/mySurveys/allSurveys", {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ "getAmount": getAmount, "numOfSurveys": numOfSurveys })
-    });
-    surveys = await surveys.json();
-    let tempSurveys = [...allSurveys];
-    tempSurveys = [...tempSurveys, ...surveys];
-    if (tempSurveys.length == surveyAmount) {
-      setIsmore(false);
+    // debugger;
+    const url = "allSurveys";
+    const body = {
+      getAmount: getAmount,
+      numOfSurveys: numOfSurveys,
+    };
+
+    try {
+      const response = await serverRequests("POST", url, body);
+      if (!response.ok) {
+        alert("אין סקרים!!");
+        return;
+      }
+      const data = await response.json();
+      let surveys = data.surveys;
+      let tempSurveys = [...allSurveys];
+      tempSurveys = [...tempSurveys, ...surveys];
+      if (tempSurveys.length == surveysAmount) {
+        setIsmore(false);
+      }
+      setNumOfSurveys(numOfSurveys + getAmount);
+      setAllSurveys(tempSurveys);
+    } catch (error) {
+      console.error("Error in log function:", error);
+      alert("שגיאה בשרת");
     }
-    updateFlags();
-    setNumOfSurveys(numOfSurveys+getAmount);
-    setAllSurveys(tempSurveys);
- 
-  }
-const updateFlags=()=>{
-  let newFlags=[];
-  
-  for(let i=0;i<getAmount;i++)
-  {
-    newFlags.push(false);
-  }
-  let tempFlags=[...flags,...newFlags];
-  setFlags(tempFlags);
-}
-let changeFlags = (i) => {
-  let tempFlags=[...flags];
-  tempFlags[i]=! tempFlags[i];
-  setFlags(tempFlags);
-}
+  };
+
   return (
-
-    <div >
-      <ManagerNav/>
+    <div>
+      <ManagerNav />
       <div className="firstPadding"></div>
-      <h1 className='addSurveyTitle'>
-        כל הסקרים
-      </h1>
-      {allSurveys.map((survey,i) => {
-                  return (<div id="reportLink">
-                   <button className="linkToSurveys" onClick={()=>{changeFlags(i)}}>{survey.surveyTitle}</button>
-          {
-            flags[i] && <div className="ShowSurvey"><ShowSurvey survey={survey} isManager="true"/></div>
-          }
-              </div>);
+      <h1 className="addSurveyTitle">כל הסקרים</h1>
 
-      })}
-         <button className="finishBtn moreSurveysBtn" disabled={!isMore} onClick={getSurveys}><p>עוד</p></button>
+      {allSurveys.length === 0 ? (
+        <p>No surveys available</p>
+      ) : (
+        <ul>
+          {allSurveys.map((survey) => (
+            <li key={survey.surveyCode}>
+              <Survey survey = {survey} />
+            </li>
+          ))}
+        </ul>
+      )}
+
+
+      {/* {allSurveys.map((survey, i) => {
+        return (
+          <div id="reportLink">
+            <button
+              className="linkToSurveys"
+              onClick={() => {
+                changeFlags(i);
+              }}
+            >
+              {survey.surveyTitle}
+            </button>
+            {flags[i] && (
+              <div className="ShowSurvey">
+                <ShowSurvey survey={survey} isManager="true" />
+              </div>
+            )}
+          </div>
+        );
+      })} */}
+      {isMore && 
+        <button className="finishBtn moreSurveysBtn" onClick={getSurveys}>
+          <p>עוד</p>
+          </button>
+      }
     </div>
   );
 }

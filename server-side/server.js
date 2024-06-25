@@ -70,10 +70,8 @@ app.use("/login", loginRouter);
 // app.use("/signup", signupRouter);
 
  const surveysRouter = require("./routes/surveysRouter")
- app.use("/surveysToConfirm", surveysRouter);
-
-// const todosRouter = require("./routes/todosRouter")
-// app.use("/todos", todosRouter);
+//  app.use("/surveysToConfirm", surveysRouter);
+app.use("/allSurveys", surveysRouter);
 
 // const postsRouter = require("./routes/postsRouter")
 // app.use("/posts", postsRouter);

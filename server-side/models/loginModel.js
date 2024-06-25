@@ -4,7 +4,8 @@ const pool = require("../DB");
 
 async function postLogin(body) {
   try {
-    body = JSON.parse(body);
+    console.log("in model");
+    console.log(body);
     const body_userEmail = JSON.stringify(body.userEmail);
     const body_password = body.userPassword;
     console.log("model username: " + body_userEmail);

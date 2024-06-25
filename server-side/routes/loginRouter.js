@@ -40,7 +40,8 @@ loginRouter.post("/", async (req, res) => {
   console.log("Request body:", req.body);
 
   try {
-    const result = await postLogin(JSON.stringify(req.body));
+    const result = await postLogin(req.body);
+    console.log(result);
     console.log("Login successful, sending response...");
     res.status(200).json(result);
   } catch (err) {

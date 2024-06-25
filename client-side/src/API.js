@@ -6,12 +6,17 @@
 
 // export default api;
 
-
+import Cookies from 'js-cookie';
 
 export async function serverRequests(method, URL, body) {
+    const token = Cookies.get('token');
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // הוספת ה-JWT לכותרת
+      };
   if (method === 'GET') {
       try {
-          const fetchResponse = await fetch(`http://localhost:3000/${URL}`);
+          const fetchResponse = await fetch(`http://localhost:3000/${URL}`, {method: 'GET', headers,});
           console.log(fetchResponse);
           if (fetchResponse.ok) {
           //     const data = await fetchResponse.json();
@@ -30,9 +35,7 @@ export async function serverRequests(method, URL, body) {
 
      const requestOption = {
       method: method,
-      headers: {
-          'Content-Type': 'application/json',
-      },
+      headers: headers,
       body: JSON.stringify(body)
   };
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import { serverRequests } from "../Api";
 
-const SurveyToConfirm = ({ survey }) => {
+const Survey = ({ survey }) => {
   console.log(survey);
   let navigate = useNavigate();
   const [surveyData, setSurveyData] = useState(null);
@@ -51,11 +51,21 @@ const SurveyToConfirm = ({ survey }) => {
 
   return (
     <div>
+      {/* <section>
+        <div class="column nature">
+          <div class="content">
+            <img src={`http://localhost:3000/images/${gift.imageUrl}`} alt={gift.name} />
+            <h4>{survey.surveyTitle}</h4>
+            <p>Lorem ipsum dolor..</p>
+          </div>
+        </div>
+      </section> */}
       <span>{survey.surveyTitle}</span>
+      <img src={`http://localhost:3000/images/${survey.imageUrl}`} alt={survey.surveyTitle} />
       <button className="navLinks linkBtn" onClick={() => handleView(survey.surveyCode)}>צפיה</button>
       <button className="navLinks linkBtn" onClick={() => handleApprove(survey.surveyCode)}>אשר</button>
     </div>
   );
 };
 
-export default SurveyToConfirm;
+export default Survey;

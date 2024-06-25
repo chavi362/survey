@@ -2,6 +2,7 @@ const pool = require("../DB.js");
 
 async function getSurveysAmount() {
   try {
+    console.log("******** cccccccc in surveysModel");
     const sql = `SELECT count(*) AS surveyCount FROM surveys`;
     const result = await pool.query(sql);
 
@@ -89,6 +90,30 @@ async function getSurveys() {
   }
 }
 
+async function getAllSurveys(body) {
+  try {
+    const sql = `SELECT * FROM surveys limit ${body.getAmount} offset ${body.numOfSurveys}` ;
+    const result = await pool.query(sql);
+
+    console.log(result[0]);
+    console.log("hi ani po2");
+
+    if (result.length > 0) {
+      return {
+        success: true,
+        message: "allSurveys successful",
+        surveys: result[0],
+      };
+    } else {
+      console.log("allSurveys not found");
+      throw new Error(err);
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    throw new Error(err);
+  }
+}
+
 
 async function updateSurvey(body) {
     const { surveyCode, confirmed} = body;
@@ -112,4 +137,4 @@ async function updateSurvey(body) {
     }
 };
 
-module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey };
+module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys };
