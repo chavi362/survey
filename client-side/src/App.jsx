@@ -32,6 +32,7 @@ function App() {
             <Route path="/manager/surveysToConfirm/:surveyCode" element={<SurveyDetail />} />
             <Route path="/home" element={<HomePage/>} />
             <Route path="/home/allSurveys" element={<AllSurveys/>} />
+            <Route path="/surveys/:surveyCode" element={<SurveyDetail/> } /> 
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
             <Route path="/surveys" component={SurveysPage} />

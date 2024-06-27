@@ -49,6 +49,11 @@ const Survey = ({ survey }) => {
     }
   };
 
+  const handleAnswer = (surveyCode) => {
+    navigate(`/surveys/${surveyCode}`, {
+      state: { surveyCode },
+    });
+  };
   return (
     <div>
       {/* <section>
@@ -62,8 +67,9 @@ const Survey = ({ survey }) => {
       </section> */}
       <span>{survey.surveyTitle}</span>
       <img src={`http://localhost:3000/images/${survey.imageUrl}`} alt={survey.surveyTitle} />
-      <button className="navLinks linkBtn" onClick={() => handleView(survey.surveyCode)}>צפיה</button>
-      <button className="navLinks linkBtn" onClick={() => handleApprove(survey.surveyCode)}>אשר</button>
+      {/* <button className="navLinks linkBtn" onClick={() => handleView(survey.surveyCode)}>צפיה</button>
+      <button className="navLinks linkBtn" onClick={() => handleApprove(survey.surveyCode)}>אשר</button> */}
+      <button className="navLinks linkBtn" onClick={() => handleAnswer(survey.surveyCode)}>ענה</button>
     </div>
   );
 };
