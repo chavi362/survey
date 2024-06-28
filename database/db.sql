@@ -1,34 +1,20 @@
-CREATE DATABASE SurveyManagement;
+
+DROP TABLE IF EXISTS surveyCloseData;
+DROP TABLE IF EXISTS surveyOpenAnswers;
+DROP TABLE IF EXISTS surveyCloseAnswers;
+DROP TABLE IF EXISTS surveysquestions;
+DROP TABLE IF EXISTS surveys;
+DROP TABLE IF EXISTS passwords;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS sectors;
+DROP TABLE IF EXISTS education_levels;
+DROP TABLE IF EXISTS genders;
+DROP TABLE IF EXISTS family_income_levels;
+DROP TABLE IF EXISTS areas;
+DROP TABLE IF EXISTS ages;
+-- Creating tables
+CREATE DATABASE IF NOT EXISTS SurveyManagement;
 USE SurveyManagement;
-
-CREATE TABLE users (
-    userCode INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    ageID INT,
-    genderID INT,
-    areaID INT,
-    sectorID INT,
-    role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
-    educationID INT,
-    incomeID INT,
-    FOREIGN KEY (educationID) REFERENCES education_levels (educationID) ON UPDATE RESTRICT ON DELETE SET NULL,
-    FOREIGN KEY (incomeID) REFERENCES family_income_levels (incomeID) ON UPDATE RESTRICT ON DELETE SET NULL,
-    FOREIGN KEY (ageID) REFERENCES ages (ageID) ON UPDATE RESTRICT ON DELETE SET NULL,
-    FOREIGN KEY (genderID) REFERENCES genders (genderID) ON UPDATE RESTRICT ON DELETE SET NULL,
-    FOREIGN KEY (areaID) REFERENCES areas (areaID) ON UPDATE RESTRICT ON DELETE SET NULL,
-    FOREIGN KEY (sectorID) REFERENCES sectors (sectorID) ON UPDATE RESTRICT ON DELETE SET NULL
-);
-
-CREATE TABLE passwords (
-    user_id INT PRIMARY KEY,
-    user_password VARCHAR(255),
-    FOREIGN KEY (user_id) 
-      REFERENCES users (userCode) 
-      ON UPDATE RESTRICT 
-      ON DELETE CASCADE
-);
 
 CREATE TABLE ages (
     ageID INT AUTO_INCREMENT PRIMARY KEY,
@@ -62,15 +48,43 @@ CREATE TABLE sectors (
     sector VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE users (
+    userCode INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    name VARCHAR(255),
+    ageID INT,
+    genderID INT,
+    areaID INT,
+    sectorID INT,
+    role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+    educationID INT,
+    incomeID INT,
+    FOREIGN KEY (educationID) REFERENCES education_levels (educationID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (incomeID) REFERENCES family_income_levels (incomeID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (ageID) REFERENCES ages (ageID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (genderID) REFERENCES genders (genderID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (areaID) REFERENCES areas (areaID) ON UPDATE RESTRICT ON DELETE SET NULL,
+    FOREIGN KEY (sectorID) REFERENCES sectors (sectorID) ON UPDATE RESTRICT ON DELETE SET NULL
+);
+
+CREATE TABLE passwords (
+    user_id INT PRIMARY KEY,
+    user_password VARCHAR(255),
+    FOREIGN KEY (user_id) 
+      REFERENCES users (userCode) 
+      ON UPDATE RESTRICT 
+      ON DELETE CASCADE
+);
+
 CREATE TABLE surveys (
     surveyCode INT AUTO_INCREMENT PRIMARY KEY,
     surveyTitle VARCHAR(255) NOT NULL,
     managerCode INT NOT NULL,
     report TEXT,
-    imageUrl VARCHAR(500) NOT NULL,
-    showResults BOOLEAN NOT NULL DEFAULT TRUE,
+    imageUrl VARCHAR(500) DEFAULT NULL,
     confirmed BOOLEAN NOT NULL DEFAULT FALSE,
-    FOREIGN KEY (managerCode) REFERENCES users(userCode) ON UPDATE RESTRICT ON DELETE CASCADE
+    FOREIGN KEY (managerCode) REFERENCES users(userCode)
 );
 
 CREATE TABLE surveysquestions (
@@ -78,7 +92,7 @@ CREATE TABLE surveysquestions (
     question TEXT NOT NULL,
     surveyCode INT NOT NULL,
     questionType ENUM('open', 'close') NOT NULL,
-    FOREIGN KEY (surveyCode) REFERENCES surveys(surveyCode) ON UPDATE RESTRICT ON DELETE CASCADE
+    FOREIGN KEY (surveyCode) REFERENCES surveys(surveyCode)
 );
 
 CREATE TABLE surveyCloseAnswers (
@@ -104,10 +118,6 @@ CREATE TABLE surveyCloseData (
     FOREIGN KEY (userCode) REFERENCES users(userCode) ON UPDATE RESTRICT ON DELETE CASCADE,
     FOREIGN KEY (answerCode) REFERENCES surveyCloseAnswers(answerCode) ON UPDATE RESTRICT ON DELETE CASCADE
 );
-
-
-
-
 
 -- Inserting data into ages table
 INSERT INTO ages (startYear, endYear) VALUES 
@@ -170,26 +180,24 @@ INSERT INTO passwords (user_id, user_password) VALUES
 (4, 'adminpassword'), 
 (5, 'password4');
 
-
-
 -- הכנסת נתונים לטבלת הסקרים
-INSERT INTO surveys (surveyTitle, managerCode, report, imageUrl, showResults, confirmed)
+INSERT INTO surveys (surveyTitle, managerCode, report, imageUrl, confirmed)
 VALUES 
-('סקר לקוחות', 1, 'דו"ח על שביעות רצון הלקוחות', 'image1.jpg', TRUE, FALSE),
-('סקר עובדים', 2, 'דו"ח על שביעות רצון העובדים', 'image2.jpg', TRUE, FALSE),
-('סקר מוצרים', 3, 'דו"ח על שביעות רצון מהמוצרים', 'image3.jpg', TRUE, FALSE),
-('סקר שירות', 4, 'דו"ח על שביעות רצון מהשירות', 'image4.jpg', TRUE, FALSE),
-('סקר תהליך רכישה', 1, 'דו"ח על תהליך הרכישה', 'image5.jpg', TRUE, FALSE),
-('סקר חווית משתמש', 2, 'דו"ח על חווית המשתמש', 'image6.jpg', TRUE, FALSE),
-('סקר שיווק', 3, 'דו"ח על פעילויות השיווק', 'image7.jpg', TRUE, FALSE),
-('סקר חדשנות', 4, 'דו"ח על חדשנות', 'image8.jpg', TRUE, FALSE),
-('סקר חינוך', 5, 'דו"ח על חינוך', 'image9.jpg', TRUE, FALSE),
-('סקר בריאות', 1, 'דו"ח על בריאות', 'image10.jpg', TRUE, FALSE),
-('סקר כלכלה', 2, 'דו"ח על כלכלה', 'image11.jpg', TRUE, FALSE),
-('סקר סביבה', 3, 'דו"ח על סביבה', 'image12.jpg', TRUE, FALSE),
-('סקר תחבורה', 4, 'דו"ח על תחבורה', 'image13.jpg', TRUE, FALSE),
-('סקר תרבות', 1, 'דו"ח על תרבות', 'image14.jpg', TRUE, FALSE),
-('סקר ספורט', 2, 'דו"ח על ספורט', 'image15.jpg', TRUE, FALSE);
+('סקר לקוחות', 1, 'דו"ח על שביעות רצון הלקוחות', 'image1.jpg', FALSE),
+('סקר עובדים', 2, 'דו"ח על שביעות רצון העובדים', 'image2.jpg',  FALSE),
+('סקר מוצרים', 3, 'דו"ח על שביעות רצון מהמוצרים', 'image3.jpg',  FALSE),
+('סקר שירות', 4, 'דו"ח על שביעות רצון מהשירות', 'image4.jpg', FALSE),
+('סקר תהליך רכישה', 1, 'דו"ח על תהליך הרכישה', 'image5.jpg',  FALSE),
+('סקר חווית משתמש', 2, 'דו"ח על חווית המשתמש', 'image6.jpg',  FALSE),
+('סקר שיווק', 3, 'דו"ח על פעילויות השיווק', 'image7.jpg', FALSE),
+('סקר חדשנות', 4, 'דו"ח על חדשנות', 'image8.jpg',  FALSE),
+('סקר חינוך', 5, 'דו"ח על חינוך', 'image9.jpg',  FALSE),
+('סקר בריאות', 1, 'דו"ח על בריאות', 'image10.jpg', FALSE),
+('סקר כלכלה', 2, 'דו"ח על כלכלה', 'image11.jpg',  FALSE),
+('סקר סביבה', 3, 'דו"ח על סביבה', 'image12.jpg',  FALSE),
+('סקר תחבורה', 4, 'דו"ח על תחבורה', 'image13.jpg', FALSE),
+('סקר תרבות', 1, 'דו"ח על תרבות', 'image14.jpg', FALSE),
+('סקר ספורט', 2, 'דו"ח על ספורט', 'image15.jpg',  FALSE);
 
 -- Insert statements for the surveysquestions table
 INSERT INTO surveysquestions (question, surveyCode, questionType)
@@ -273,8 +281,5 @@ VALUES
 (3, 15),
 (3, 18);
 
-drop table surveys;
-drop table surveysQuestions;
-drop table surveyCloseAnswers;
-drop table surveyCloseData;
-drop table surveyOpenAnswers;
+
+
