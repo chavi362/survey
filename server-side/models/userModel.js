@@ -23,7 +23,7 @@ async function registerUser(userName, password) {
     const [userResult] = await pool.execute(sqlUser, [userName]);
     const userId = userResult.insertId;
     console.log("userId " + userId)
-    const sqlPassword = createObject("passwords", "id,password", "?,?");
+    const sqlPassword = createObject("passwords", "user_id,user_password", "?,?");
     console.log(sqlPassword);
     await pool.execute(sqlPassword, [userId, password]);
     console.log('User registered successfully!');
