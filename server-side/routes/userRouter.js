@@ -1,7 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
 const { getAllUsers, getUsersByUserName, updateUser } = require('../controllers/userController');
-
 userRouter.get("/", async (req, res) => {
     try {
         if (req.query.userName) {
@@ -16,7 +15,6 @@ userRouter.get("/", async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
-
 userRouter.put("/:id", async (req, res) => {
     try {
         const userRes = await updateUser(req.body, req.params.id);
