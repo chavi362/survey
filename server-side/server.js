@@ -25,6 +25,7 @@ const surveysRouter = require("./routes/surveysRouter");
 const surveyRouter = require("./routes/surveyRouter");
 const userRouter=require('./routes/userRouter.js')
 const registerRouter= require('./routes/registerRouter.js')
+const propertiesRouter= require('./routes/propertiesRouter.js')
 // const questionRouter = require("./routes/questionRo");
 
 app.use("/login", loginRouter);
@@ -32,6 +33,7 @@ app.use("/register", registerRouter);
 app.use("/allSurveys", surveysRouter);//kipnis don'y like such
 app.use("/surveys", surveyRouter); 
 app.use("/users", userRouter); 
+app.use("/properties", propertiesRouter); 
 // app.use("/surveys/:surveyId/questions", questionRouter);
 
 app.listen(PORT, () => {

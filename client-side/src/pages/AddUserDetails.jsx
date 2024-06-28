@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../sass/form.scss';
 import { serverRequests } from "../Api";
 import { UserContext } from '../App';
+import useGetData from '../hooks/useGetData'; 
 
 const AddUserDetails = ({ updateUserContext }) => {
   const user = useContext(UserContext);
@@ -21,6 +22,13 @@ const AddUserDetails = ({ updateUserContext }) => {
     incomeID: ""
   });
 
+  const [ages] = useGetData('properties/ages');
+  const [genders] = useGetData('properties/genders');
+  const [areas] = useGetData('properties/areas');
+  const [sectors] = useGetData('properties/sectors');
+  const [educationLevels] = useGetData('properties/education_levels');
+  const [incomeLevels] = useGetData('properties/family_income_levels');
+
   useEffect(() => {
     setFormUser((prevFormUser) => ({
       ...prevFormUser,
@@ -33,7 +41,7 @@ const AddUserDetails = ({ updateUserContext }) => {
     e.preventDefault();
     try {
       const updatedFormUser = { ...formUser, id: user.id };
-      const response = await api.put(`users/${user.id}`, updatedFormUser);
+      const response = await serverRequests('PUT', `users/${user.id}`, updatedFormUser);
 
       if (response.error) {
         console.error('Error updating user details:', response.error);
@@ -136,92 +144,128 @@ const AddUserDetails = ({ updateUserContext }) => {
                       </div>
 
                       <div className="form-outline mb-4">
-                        <input
+                        <select
                           id="ageID"
                           className="form-control"
-                          placeholder="Your age ID"
                           value={formUser.ageID}
                           onChange={handleChange}
                           name="ageID"
                           required
-                        />
+                        >
+                          <option value="">Select Age Range</option>
+                          {ages && ages.map(age => (
+                            <option key={age.ageID} value={age.ageID}>
+                              {age.startYear} - {age.endYear}
+                            </option>
+                          ))}
+                        </select>
                         <label className="form-label" htmlFor="ageID">
-                          Age ID
+                          Age Range
                         </label>
                       </div>
 
                       <div className="form-outline mb-4">
-                        <input
+                        <select
                           id="genderID"
                           className="form-control"
-                          placeholder="Your gender ID"
                           value={formUser.genderID}
                           onChange={handleChange}
                           name="genderID"
                           required
-                        />
+                        >
+                          <option value="">Select Gender</option>
+                          {genders && genders.map(gender => (
+                            <option key={gender.genderID} value={gender.genderID}>
+                              {gender.gender}
+                            </option>
+                          ))}
+                        </select>
                         <label className="form-label" htmlFor="genderID">
-                          Gender ID
+                          Gender
                         </label>
                       </div>
 
                       <div className="form-outline mb-4">
-                        <input
+                        <select
                           id="areaID"
                           className="form-control"
-                          placeholder="Your area ID"
                           value={formUser.areaID}
                           onChange={handleChange}
                           name="areaID"
                           required
-                        />
+                        >
+                          <option value="">Select Area</option>
+                          {areas && areas.map(area => (
+                            <option key={area.areaID} value={area.areaID}>
+                              {area.area}
+                            </option>
+                          ))}
+                        </select>
                         <label className="form-label" htmlFor="areaID">
-                          Area ID
+                          Area
                         </label>
                       </div>
 
                       <div className="form-outline mb-4">
-                        <input
+                        <select
                           id="sectorID"
                           className="form-control"
-                          placeholder="Your sector ID"
                           value={formUser.sectorID}
                           onChange={handleChange}
                           name="sectorID"
                           required
-                        />
+                        >
+                          <option value="">Select Sector</option>
+                          {sectors && sectors.map(sector => (
+                            <option key={sector.sectorID} value={sector.sectorID}>
+                              {sector.sector}
+                            </option>
+                          ))}
+                        </select>
                         <label className="form-label" htmlFor="sectorID">
-                          Sector ID
+                          Sector
                         </label>
                       </div>
 
                       <div className="form-outline mb-4">
-                        <input
+                        <select
                           id="educationID"
                           className="form-control"
-                          placeholder="Your education ID"
                           value={formUser.educationID}
                           onChange={handleChange}
                           name="educationID"
                           required
-                        />
+                        >
+                          <option value="">Select Education Level</option>
+                          {educationLevels && educationLevels.map(education => (
+                            <option key={education.educationID} value={education.educationID}>
+                              {education.education_level}
+                            </option>
+                          ))}
+                        </select>
                         <label className="form-label" htmlFor="educationID">
-                          Education ID
+                          Education Level
                         </label>
                       </div>
 
                       <div className="form-outline mb-4">
-                        <input
+                        <select
                           id="incomeID"
                           className="form-control"
-                          placeholder="Your income ID"
                           value={formUser.incomeID}
                           onChange={handleChange}
                           name="incomeID"
                           required
-                        />
+                        >
+                          <option value="">Select Income Level</option>
+                          {incomeLevels && incomeLevels.map(income => (
+                            <option key={income.incomeID} value={income.incomeID}>
+                              {income.startRange} - {income.endRange}
+                            </option>
+                          ))}
+                        </select>
                         <label className="form-label" htmlFor="incomeID">
-                          Income ID
+                          Income Level
                         </label>
                       </div>
 

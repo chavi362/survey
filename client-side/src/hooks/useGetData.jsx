@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../Api";
+import { serverRequests } from "../Api";
 
 const useGetData = (urlParam) => {
   const [data, setData] = useState(null);
@@ -9,8 +9,8 @@ const useGetData = (urlParam) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true); // Set loading to true before making the request
-        const response = await api.get(urlParam);
+        setLoading(true); 
+      const response = await serverRequests("GET", urlParam)
         setData(response.data);
       } catch (error) {
         setError(error.message);
