@@ -55,6 +55,7 @@ const SurveysToConfirm = () => {
       }
 
       const data = await response.json();
+      console.log(data)
       setAllSurveys(data.surveys);
     if (data.surveys.length >= surveysAmount) {
       setIsmore(false);

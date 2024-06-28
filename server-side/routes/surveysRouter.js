@@ -6,6 +6,7 @@ const {
   getSurveys,
   getSurveyById,
   updateSurvey,
+  createSurvey
 } = require("../controllers/surveysController");
 
 surveysRouter.post("/", async (req, res) => {
@@ -21,9 +22,6 @@ surveysRouter.post("/", async (req, res) => {
     res.status(404).json({ ok: false, error: err.message });
   }
 });
-
-
-
 surveysRouter.post("/surveysToConfirm", async (req, res) => {
   console.log("Received POST request to /surveysToConfirm");
   console.log("Request body:", req.body);

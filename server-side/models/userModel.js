@@ -1,11 +1,13 @@
 const pool = require('../DB.js');
 const { createObject, getObjectByPram, deleteObject, updateObject, getObjects } = require("./queryModel.js")
 
-async function loginUser(userName, password) {
+async function loginUser(password,userName) {
   try {
     const sql = 'SELECT * FROM Passwords natural join Users WHERE Users.userName = ? AND Passwords.user_password = ? ';
+    console.log(sql,userName,password)
     const [rows, fields] = await pool.query(sql, [userName, password]);
     if (rows.length > 0) {
+      console.log(rows[0])
       return rows[0];
     } else {
       return null;

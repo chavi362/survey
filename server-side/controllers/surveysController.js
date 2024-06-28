@@ -41,7 +41,14 @@ async function getAllSurveys(body) {
         throw err;
     }
 };
-
+async function createSurvey(body) {
+    try {
+        console.log(body+ "in controller")
+        return surveyRes =await model.createSurvey(body);
+    } catch (err) {
+        throw err;
+    }
+}
 async function updateSurvey(body) {
     try {
         return model.updateSurvey(body);
@@ -52,4 +59,4 @@ async function updateSurvey(body) {
 };
 
 
-module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys }
+module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey }

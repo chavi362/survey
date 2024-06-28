@@ -22,7 +22,7 @@ const useGetData = (urlParam) => {
     fetchData();
   }, [urlParam]);
 
-  // Expose loading state and a function to set loading externally
+
   return [data, error, loading, setLoading];
 };
 

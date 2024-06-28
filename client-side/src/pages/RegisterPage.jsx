@@ -54,12 +54,6 @@ const Register = ({ updateUserContext }) => {
                   <div className="col-lg-6">
                     <div className="card-body p-md-5 mx-md-4">
                       <div className="text-center">
-                        <img
-                          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                          style={{ width: '185px' }}
-                          alt="logo"
-                        />
-                        <h4 className="mt-1 mb-5 pb-1">We are The Lotus Team</h4>
                       </div>
                       <form onSubmit={handleSubmit}>
                         <p>Please register</p>

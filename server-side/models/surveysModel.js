@@ -1,5 +1,5 @@
 const pool = require("../DB.js");
-
+const { createObject, getObjectByPram, deleteObject, updateObject, getObjects } = require("./queryModel.js")
 async function getSurveysAmount() {
   try {
     console.log("******** cccccccc in surveysModel");
@@ -96,8 +96,6 @@ async function getAllSurveys(body) {
     const result = await pool.query(sql);
 
     console.log(result[0]);
-    console.log("hi ani po2");
-
     if (result.length > 0) {
       return {
         success: true,
@@ -113,7 +111,18 @@ async function getAllSurveys(body) {
     throw new Error(err);
   }
 }
-
+async function createSurvey(survey) {
+  try {
+    const sql = createObject("surveys", "surveyTitle,managerCode,report", "?,?,?");
+    console.log("sql" +sql)
+    const [result] = await pool.execute(sql, [survey.surveyTitle,survey.managerCode,survey.report]);
+    const insertedId = result.insertId; 
+    console.log(insertedId+"inserted")
+    return insertedId;
+  } catch (err) {
+    throw err;
+  }
+}
 
 async function updateSurvey(body) {
     const { surveyCode, confirmed} = body;
@@ -137,4 +146,4 @@ async function updateSurvey(body) {
     }
 };
 
-module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys };
+module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey };

@@ -7,9 +7,7 @@ import React from "react";
 
 
 function AllSurveys() {
-
   let getAmount = 10;
-
   const [allSurveys, setAllSurveys] = useState([]);
   const [surveysAmount, setSurveysAmount] = useState();
   const [isMore, setIsmore] = useState(true);
@@ -23,14 +21,12 @@ function AllSurveys() {
   const getSurveysAmount = async () => {
     const url = "allSurveys/amount";
     try {
-      console.log("************ in AllSurveys");
       const response = await serverRequests("GET", url, null);
       console.log(response);
       if (!response.ok) {
         alert("לא עובד");
         return;
       }
-
       const data = await response.json();
       console.log(data);
       if (data.amount <= getAmount) {
@@ -45,7 +41,6 @@ function AllSurveys() {
   };
 
   const getSurveys = async () => {
-    // debugger;
     const url = "allSurveys";
     const body = {
       getAmount: getAmount,
@@ -54,11 +49,13 @@ function AllSurveys() {
 
     try {
       const response = await serverRequests("POST", url, body);
+      console.log(response)
       if (!response.ok) {
         alert("אין סקרים!!");
         return;
       }
       const data = await response.json();
+      console.log(data)
       let surveys = data.surveys;
       let tempSurveys = [...allSurveys];
       tempSurveys = [...tempSurveys, ...surveys];

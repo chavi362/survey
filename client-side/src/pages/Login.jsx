@@ -6,34 +6,31 @@ import '../css/Login.css';
 
 function LogIn() {
   let navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
   const log = async () => {
-    if (userEmail == "" || userPassword == "") {
+    if (userName === "" || userPassword === "") {
       alert("חובה למלא את כל הפרטים!");
       return;
     }
 
     const url = "login";
     const body = {
-      userEmail: userEmail,
+      userName: userName,
       userPassword: userPassword,
     };
-
-
     try {
       const response = await serverRequests("POST", url, body);
       if (!response.ok) {
         alert("משתמש לא קיים או שאחד הפרטים שגויים ");
         return;
       }
-
       const data = await response.json();
+      console.log(data)
       Cookies.set('token', data.token, { expires: 1 });
-
-      sessionStorage.setItem("userCode", data.userCode);
-      if (data.user.role === "admin") {
+      Cookies.set('userCode', data.userCode, { expires: 1 });
+      if (data.role === "admin") {
         navigate("/managerPage");
       } else {
         navigate("/home");
@@ -51,18 +48,14 @@ function LogIn() {
         <h1 className="logIn">משתמש קיים</h1>
         <input
           type="text"
-          placeholder="הכנס כתובת אימייל"
-          onChange={(event) => {
-            setUserEmail(event.target.value);
-          }}
+          placeholder="הכנס שם משתמש"
+          onChange={(event) => setUserName(event.target.value)}
         />
         <br />
         <input
           type="password"
           placeholder="הכנס סיסמא"
-          onChange={(event) => {
-            setUserPassword(event.target.value);
-          }}
+          onChange={(event) => setUserPassword(event.target.value)}
         />
         <br />
         <div className="submitBtn">
@@ -71,15 +64,14 @@ function LogIn() {
           </button>
           <button
             className="logInBtn"
-            onClick={() => {
-              navigate("/signUp");
-            }}
+            onClick={() => navigate("/register")}
           >
             משתמש חדש
           </button>
         </div>
       </div>
-    </div>)
+    </div>
+  );
 }
 
 export default LogIn;
