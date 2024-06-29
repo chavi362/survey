@@ -32,8 +32,9 @@ const questionsRouter = require("./routes/questionsRouter.js");
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 app.use("/surveys/:surveyId/questions", questionsRouter);
-app.use("/allSurveys", surveysRouter);
 app.use("/surveys", surveyRouter); 
+app.use("/allSurveys", surveysRouter);
+
 app.use("/users", userRouter); 
 app.use("/properties", propertiesRouter); 
 

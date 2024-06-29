@@ -29,7 +29,9 @@ function LogIn() {
       const data = await response.json();
       console.log(data)
       Cookies.set('token', data.token, { expires: 1 });
+
       Cookies.set('userCode', data.userCode, { expires: 1 });
+      debugger;
       if (data.role === "admin") {
         navigate("/managerPage");
       } else {

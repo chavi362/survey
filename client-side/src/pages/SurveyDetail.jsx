@@ -29,6 +29,7 @@ const SurveyDetail = () => {
 
   return (
     <div>
+      <h1>rehrth</h1>
       <h1>{surveyData[0].surveyTitle}</h1>
       {questions.map((question, index) => (
         <div key={index} style={{ marginBottom: '20px' }}>

@@ -1,16 +1,14 @@
 const express = require("express");
-const questionsRouter = express.Router();
+const questionsRouter = express.Router({ mergeParams: true });
 const controller = require("../controllers/questionsController");
 const surveyMiddleware = require("../middlwares/surveyMiddleware");
-
 questionsRouter.use(surveyMiddleware);
-
 questionsRouter.post("/", async (req, res) => {
   console.log("Request body:", req.body);
   console.log("Survey ID:", req.surveyId);
 
   try {
-    const result = await controller.createQuestion({ ...req.body, surveyId: req.surveyId });
+    const result = await controller.createQuestion({ ...req.body, surveyCode: req.surveyId });
     res.status(200).json(result);
   } catch (err) {
     console.error("Error in questionsRouter:", err.message);

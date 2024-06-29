@@ -73,7 +73,6 @@ const AddUserDetails = ({ updateUserContext }) => {
     try {
       const updatedFormUser = { ...formUser, id: user.id };
       const response = await serverRequests('PUT', `users/${user.id}`, updatedFormUser);
-
       if (response.error) {
         console.error('Error updating user details:', response.error);
       } else {
