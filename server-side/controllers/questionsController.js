@@ -18,7 +18,15 @@ async function getQuestionsOfSurvey(surveyCode) {
         throw err;
     }
 };
-
+async function getAnswersOfCloseQuestion(questionCode) {
+    console.log("controller body");
+    try {
+        return await model.getAnswersOfCloseQuestion(questionCode);
+    }
+    catch (err) {
+        throw err;
+    }
+};
 async function createQuestion(body) {
     try {
         console.log(body + " in controller");
@@ -46,4 +54,4 @@ async function deleteQuestion(id) {
     }
 };
 
-module.exports = { getQuestionById, createQuestion, updateQuestion, deleteQuestion ,getQuestionsOfSurvey};
+module.exports = { getQuestionById, createQuestion, updateQuestion, deleteQuestion ,getQuestionsOfSurvey,getAnswersOfCloseQuestion};

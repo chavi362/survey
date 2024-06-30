@@ -29,6 +29,15 @@ async function createQuestion(question) {
       throw err;
     }
   }
+  async function getAnswersOfCloseQuestion(questionId) {
+    try {
+      const sql = getObjectByPram("surveycloseanswers", "questionCode");
+      const [rows, fields] = await pool.query(sql, questionId);
+      return rows;
+    } catch (err) {
+      throw err;
+    }
+  }
   async function updateQuestion(updatedQuestion, id) {
     try {
       const sql = updateObject("surveysquestions", "question = ?, surveyCode = ?, questionType = ?", "questionCode");
@@ -52,6 +61,7 @@ async function createQuestion(question) {
     getQuestionById,
     updateQuestion,
     deleteQuestion,
-    getQuestionsOfSurvey
+    getQuestionsOfSurvey,
+    getAnswersOfCloseQuestion
   };
           
