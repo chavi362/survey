@@ -8,12 +8,11 @@ import React from "react";
 
 function AllSurveys() {
   let getAmount = 10;
+  debugger;
   const [allSurveys, setAllSurveys] = useState([]);
   const [surveysAmount, setSurveysAmount] = useState();
   const [isMore, setIsmore] = useState(true);
   const [numOfSurveys, setNumOfSurveys] = useState(0);
-  const [flags, setFlags] = useState([]);
-
   useEffect(() => {
     getSurveysAmount();
   }, []);
