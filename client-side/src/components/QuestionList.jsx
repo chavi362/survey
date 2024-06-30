@@ -1,14 +1,24 @@
 import React from 'react';
-import Question from './Question';
-
+import OpenQuestion from './OpenQuestion';
+import CloseQuestion from './CloseQuestion';
+import { Form } from 'react-bootstrap';
 const QuestionList = ({ questions }) => {
-  return (
-    <div>
-      {questions.map((question) => (
-        <Question key={question.questionCode} question={question} />
-      ))}
-    </div>
-  );
+    return (
+        <div>
+            {questions.map((question) => (
+                <div key={question.questionCode}>
+                    <Form.Group>
+                        <Form.Label>{question.question}</Form.Label>
+                        {question.questionType === 'close' ? (
+                            <CloseQuestion question={question} />
+                        ) : (
+                            <OpenQuestion question={question} />
+                        )}
+                    </Form.Group>
+                </div>
+            ))}
+        </div>
+    );
 };
 
 export default QuestionList;
