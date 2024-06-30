@@ -10,11 +10,7 @@ async function getSurveysAmount() {
     console.log("hi ani po");
 
     if (result.length > 0) {
-      return {
-        success: true,
-        message: "amount successful",
-        amount: result[0][0].surveyCount,
-      };
+      return result[0][0].surveyCount;
     } else {
       console.log("amount not found");
       throw new Error(err);
@@ -90,12 +86,11 @@ async function getSurveys() {
   }
 }
 
-async function getAllSurveys(body) {
+async function getAllSurveys(limit, offset) {
   try {
-    const sql = `SELECT * FROM surveys limit ${body.getAmount} offset ${body.numOfSurveys}` ;
+    const sql = `SELECT * FROM surveys limit ${limit} offset ${offset}` ;
     const result = await pool.query(sql);
-
-    console.log(result[0]);
+  
     if (result.length > 0) {
       return {
         success: true,

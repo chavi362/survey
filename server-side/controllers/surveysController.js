@@ -1,16 +1,6 @@
 const model = require('../models/surveysModel');
 
 
-async function getSurveysAmount() {
-    console.log("controller body");
-    try {
-        return model.getSurveysAmount();
-    }
-    catch (err) {
-        throw err;
-    }
-};
-
 async function getSurveyById(id) {
     console.log("controller body");
     try {
@@ -32,15 +22,33 @@ async function getSurveys() {
     }
 };
 
-async function getAllSurveys(body) {
-    console.log("controller body");
+async function getAllSurveys(req, res) {
     try {
-        return model.getAllSurveys(body);
+        console.log(req.query)
+        const page = parseInt(req.query.page, 10) || 1; // ברירת מחדל לדף 1
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const offset = (page - 1) * limit;
+
+        const result = await model.getAllSurveys(limit, offset);
+        console.log(result);
+        const totalSurveys = await model.getSurveysAmount();
+        console.log(totalSurveys) // פונקציה נוספת לספירת כל הסקרים (יש לכתוב אותה במודל)
+        console.log(offset + limit )
+        const hasNextPage = offset + limit < totalSurveys;
+    console.log(hasNextPage)
+        const hasPrevPage = offset > 0;
+
+        res.setHeader('Link', [
+            hasNextPage ? `<http://localhost:3000/allSurveys?page=${page + 1}&surveysPerPage=${limit}>; rel="next"` : '',
+            hasPrevPage ? `<http://localhost:3000/allSurveys?page=${page - 1}&surveysPerPage=${limit}>; rel="prev"` : ''
+        ].filter(Boolean).join(', '));
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
     }
-    catch (err) {
-        throw err;
-    }
-};
+}
+
 async function createSurvey(body) {
     try {
         console.log(body+ "in controller")
@@ -59,4 +67,4 @@ async function updateSurvey(body) {
 };
 
 
-module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey }
+module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey }

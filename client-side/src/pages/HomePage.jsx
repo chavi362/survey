@@ -68,7 +68,7 @@ const HomePage = () => {
         </p>
       </section>
       <section>
-        <button className='navLinks linkBtn' onClick={() => { navigate("/home/allSurveys") }}>כל הסקרים</button>
+        <button className='navLinks linkBtn' onClick={() => { navigate("/home/all-surveys") }}>כל הסקרים</button>
       </section>
       <footer>
         <p>Project developed by havi and avital</p>

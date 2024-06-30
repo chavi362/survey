@@ -9,7 +9,7 @@ const SurveyDetail = () => {
     return <div>Loading...</div>;
   }
 
-  // מיפוי השאלות ואופציות התשובות לשאלות סגורות
+
   const questionsMap = surveyData.reduce((acc, item) => {
     const questionCode = item.questionCode;
     if (!acc[questionCode]) {

@@ -9,19 +9,7 @@ const {
   createSurvey
 } = require("../controllers/surveysController");
 
-surveysRouter.post("/", async (req, res) => {
-  console.log("Received POST request to /allSurveys");
-  console.log("Request body:", req.body);
-
-  try {
-    const result = await getAllSurveys(req.body);
-    console.log("surveys successful, sending response...");
-    res.status(200).json(result);
-  } catch (err) {
-    console.error("Error in surveysRouter:", err.message);
-    res.status(404).json({ ok: false, error: err.message });
-  }
-});
+surveysRouter.get('/', getAllSurveys);
 surveysRouter.post("/surveysToConfirm", async (req, res) => {
   console.log("Received POST request to /surveysToConfirm");
   console.log("Request body:", req.body);

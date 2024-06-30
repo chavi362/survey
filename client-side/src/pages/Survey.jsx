@@ -7,7 +7,6 @@ const Survey = ({ survey }) => {
   console.log(survey);
   let navigate = useNavigate();
   const [surveyData, setSurveyData] = useState(null);
-
   const handleView = async (surveyCode) => {
     const url = `surveysToConfirm/${surveyCode}`;
     try {
@@ -67,8 +66,6 @@ const Survey = ({ survey }) => {
       </section> */}
       <span>{survey.surveyTitle}</span>
       <img src={`http://localhost:3000/images/${survey.imageUrl}`} alt={survey.surveyTitle} />
-      {/* <button className="navLinks linkBtn" onClick={() => handleView(survey.surveyCode)}>צפיה</button>
-      <button className="navLinks linkBtn" onClick={() => handleApprove(survey.surveyCode)}>אשר</button> */}
       <button className="navLinks linkBtn" onClick={() => handleAnswer(survey.surveyCode)}>ענה</button>
     </div>
   );

@@ -8,7 +8,6 @@ function LogIn() {
   let navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
-
   const log = async () => {
     if (userName === "" || userPassword === "") {
       alert("חובה למלא את כל הפרטים!");
@@ -29,9 +28,7 @@ function LogIn() {
       const data = await response.json();
       console.log(data)
       Cookies.set('token', data.token, { expires: 1 });
-
       Cookies.set('userCode', data.userCode, { expires: 1 });
-      debugger;
       if (data.role === "admin") {
         navigate("/managerPage");
       } else {
