@@ -10,8 +10,6 @@ async function getSurveyById(id) {
         throw err;
     }
 };
-
-
 async function getSurveys() {
     console.log("controller body");
     try {
@@ -32,17 +30,14 @@ async function getAllSurveys(req, res) {
         const result = await model.getAllSurveys(limit, offset);
         console.log(result);
         const totalSurveys = await model.getSurveysAmount();
-        console.log(totalSurveys) // פונקציה נוספת לספירת כל הסקרים (יש לכתוב אותה במודל)
+        console.log(totalSurveys) 
         console.log(offset + limit )
         const hasNextPage = offset + limit < totalSurveys;
-    console.log(hasNextPage)
         const hasPrevPage = offset > 0;
-
         res.setHeader('Link', [
-            hasNextPage ? `<http://localhost:3000/allSurveys?page=${page + 1}&surveysPerPage=${limit}>; rel="next"` : '',
-            hasPrevPage ? `<http://localhost:3000/allSurveys?page=${page - 1}&surveysPerPage=${limit}>; rel="prev"` : ''
+            hasNextPage ? `<http://localhost:3000/allSurveys?page=${page + 1}&limit=${limit}>; rel="next"` : '',
+            hasPrevPage ? `<http://localhost:3000/allSurveys?page=${page - 1}&limit=${limit}>; rel="prev"` : ''
         ].filter(Boolean).join(', '));
-
         res.json(result);
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });

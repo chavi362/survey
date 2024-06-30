@@ -7,10 +7,14 @@ export async function serverRequests(method, URL, body) {
         Authorization: `Bearer ${token}`,
     };
 
+    console.log(`Sending ${method} request to ${URL}`);
+    console.log('Headers:', headers);
+
     if (method === 'GET') {
         try {
             const fetchResponse = await fetch(`http://localhost:3000/${URL}`, { method: 'GET', headers });
             if (fetchResponse.ok) {
+                console.log('Fetch response headers:', fetchResponse.headers);
                 return fetchResponse;
             } else {
                 throw new Error("user not found");
@@ -29,6 +33,7 @@ export async function serverRequests(method, URL, body) {
     try {
         const fetchResponse = await fetch(`http://localhost:3000/${URL}`, requestOptions);
         if (fetchResponse.ok) {
+            console.log('Fetch response headers:', fetchResponse.headers);
             return fetchResponse;
         } else {
             throw new Error("user not found");

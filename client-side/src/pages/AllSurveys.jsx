@@ -3,71 +3,26 @@ import { serverRequests } from "../Api";
 import ManagerNav from "./ManagerNav";
 import Survey from "./Survey";
 import React from "react";
+import useGetPaginationData from "../hooks/useGetPaginationData"
 
 
 
 function AllSurveys() {
-  let getAmount = 10;
-  debugger;
+  const perPage = 10;
+  const [page, setPage] = useState(1);
   const [allSurveys, setAllSurveys] = useState([]);
-  const [surveysAmount, setSurveysAmount] = useState();
-  const [isMore, setIsmore] = useState(true);
-  const [numOfSurveys, setNumOfSurveys] = useState(0);
+  const [data, error, loading, setLoading, prevPage, setPrevPage, nextPage, setNextPage] = useGetPaginationData(`allSurveys?&page=${page}&limit=${perPage}`);
   useEffect(() => {
-    getSurveysAmount();
-  }, []);
-
-  const getSurveysAmount = async () => {
-    const url = "allSurveys/amount";
-    try {
-      const response = await serverRequests("GET", url, null);
-      console.log(response);
-      if (!response.ok) {
-        alert("לא עובד");
-        return;
-      }
-      const data = await response.json();
-      console.log(data);
-      if (data.amount <= getAmount) {
-        setIsMore(false);
-      }
-      setSurveysAmount(data.amount);
-      getSurveys();
-    } catch (error) {
-      console.error("Error in getSurveysAmount function:", error);
-      alert("שגיאה בשרת");
-    }
-  };
-
-  const getSurveys = async () => {
-    const url = "allSurveys";
-    const body = {
-      getAmount: getAmount,
-      numOfSurveys: numOfSurveys,
-    };
-
-    try {
-      const response = await serverRequests("POST", url, body);
-      console.log(response)
-      if (!response.ok) {
-        alert("אין סקרים!!");
-        return;
-      }
-      const data = await response.json();
-      console.log(data)
+    if (error) {
+        console.error('Error fetching photos:', error);
+    } else if (data) {
       let surveys = data.surveys;
       let tempSurveys = [...allSurveys];
       tempSurveys = [...tempSurveys, ...surveys];
-      if (tempSurveys.length == surveysAmount) {
-        setIsmore(false);
-      }
-      setNumOfSurveys(numOfSurveys + getAmount);
-      setAllSurveys(tempSurveys);
-    } catch (error) {
-      console.error("Error in log function:", error);
-      alert("שגיאה בשרת");
+      setAllSurveys(tempSurveys)
     }
-  };
+}, [data, error]);
+
 
   return (
     <div>
@@ -87,27 +42,7 @@ function AllSurveys() {
         </ul>
       )}
 
-
-      {/* {allSurveys.map((survey, i) => {
-        return (
-          <div id="reportLink">
-            <button
-              className="linkToSurveys"
-              onClick={() => {
-                changeFlags(i);
-              }}
-            >
-              {survey.surveyTitle}
-            </button>
-            {flags[i] && (
-              <div className="ShowSurvey">
-                <ShowSurvey survey={survey} isManager="true" />
-              </div>
-            )}
-          </div>
-        );
-      })} */}
-      {isMore && 
+      {nextPage && 
         <button className="finishBtn moreSurveysBtn" onClick={getSurveys}>
           <p>עוד</p>
           </button>

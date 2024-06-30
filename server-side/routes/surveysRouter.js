@@ -24,14 +24,6 @@ surveysRouter.post("/surveysToConfirm", async (req, res) => {
   }
 });
 
-surveysRouter.get("/amount", async (req, res) => {
-  try {
-    console.log("*********** bbbbbbb in surveysRouter");
-    res.send(await getSurveysAmount());
-  } catch (err) {
-    res.status(404).send({ ok: false });
-  }
-});
 
 surveysRouter.get("/:id", async (req, res) => {
   console.log(req.params.id);
