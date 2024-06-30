@@ -36,7 +36,7 @@ const AddUserDetails = ({ updateUserContext }) => {
   const [educationLevelsData, educationLevelsError, educationLevelsLoading] = useGetData('properties/education_levels');
   const [incomeLevelsData, incomeLevelsError, incomeLevelsLoading] = useGetData('properties/family_income_levels');
 
-  useEffect(() => {debugger;
+  useEffect(() => {
     if (agesData) setAges(agesData);
   }, [agesData]);
 
@@ -72,6 +72,7 @@ const AddUserDetails = ({ updateUserContext }) => {
     e.preventDefault();
     try {
       const updatedFormUser = { ...formUser, id: user.id };
+      debugger;
       const response = await serverRequests('PUT', `users/${user.id}`, updatedFormUser);
       if (response.error) {
         console.error('Error updating user details:', response.error);
@@ -83,7 +84,6 @@ const AddUserDetails = ({ updateUserContext }) => {
       console.error('Error updating user details:', error);
     }
   };
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormUser((prevUser) => ({

@@ -23,7 +23,7 @@ async function getSurveys() {
 async function getAllSurveys(req, res) {
     try {
         console.log(req.query)
-        const page = parseInt(req.query.page, 10) || 1; // ברירת מחדל לדף 1
+        const page = parseInt(req.query.page, 10) || 1; 
         const limit = parseInt(req.query.limit, 10) || 10;
         const offset = (page - 1) * limit;
 

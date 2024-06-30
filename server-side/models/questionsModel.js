@@ -24,7 +24,7 @@ async function createQuestion(question) {
     try {
       const sql = getObjectByPram("surveysquestions", "surveyCode");
       const [rows, fields] = await pool.query(sql, surveyId);
-      return rows[0];
+      return rows;
     } catch (err) {
       throw err;
     }

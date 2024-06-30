@@ -15,7 +15,7 @@ const useGetData = (urlParam) => {
       } catch (error) {
         setError(error.message);
       } finally {
-        setLoading(false); // Set loading to false regardless of success or error
+        setLoading(false); 
       }
     };
 

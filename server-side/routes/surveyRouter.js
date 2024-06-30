@@ -1,9 +1,7 @@
 const express = require("express");
 const surveyRouter = express.Router();
 const { createSurvey } = require("../controllers/surveysController");
-
 surveyRouter.post("/", async (req, res) => {
-  console.log("Received POST request to /surveysToConfirm");
   console.log("Request body:", req.body);
 
   try {
