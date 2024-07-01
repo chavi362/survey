@@ -18,10 +18,9 @@ const CreateSurvey = () => {
   const handleSaveSurvey = () => {
     const survey = {
       title: surveyTitle,
-      questions: questions.map(q => q.data), // assuming each CreateQuestion component will update its parent with question data
+      questions: questions.map(q => q.data), 
     };
     console.log('Saving survey:', survey);
-    // handleSaveSurvey(survey); // Add logic to save the survey
   };
 
   const updateQuestion = (index, data) => {

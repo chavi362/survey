@@ -9,6 +9,7 @@ import AddUserDetails from './pages/AddUserDetails';
 import SurveysPage from './pages/SurveysPage';
 import HomePage from './pages/HomePage';
 import ManagerPage from './pages/ManagerPage';
+import CreateSurvey from './pages/CreateSurvey';
 import './App.css';
 import Error from './pages/Error';
 import SurveysToConfirm from './pages/SurveysToConfirm';
@@ -38,6 +39,7 @@ function App() {
             <Route path="/manager/surveysToConfirm/:surveyCode" element={<SurveyDetail />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/home/all-surveys" element={<AllSurveys />} />
+            <Route path="/home/craete-survey" element={<CreateSurvey />} />
             <Route path="/surveys/:surveyCode" element={<SurveyDetail />} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
