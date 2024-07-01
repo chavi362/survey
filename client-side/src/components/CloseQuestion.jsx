@@ -4,7 +4,6 @@ import useGetData from '../hooks/useGetData';
 const CloseQuestion = ({ question }) => {
     const [answers, setAnswers] = useState([]);
     const [data, error, loading, setLoading] = useGetData(`surveys/${question.surveyCode}/questions/${question.questionCode}/answers`);
-
     useEffect(() => {
         if (error) {
             console.error('Error fetching answers:', error);

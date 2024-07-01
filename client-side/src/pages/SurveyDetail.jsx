@@ -20,42 +20,11 @@ console.log(survey)
         console.log(data)
       }
     }, [data, error]);
-
-
-    // const questionsMap = survey.reduce((acc, item) => {
-    //     const questionCode = item.questionCode;
-    //     if (!acc[questionCode]) {
-    //         acc[questionCode] = {
-    //             question: item.question,
-    //             questionType: item.questionType,
-    //             options: [],
-    //         };
-    //     }
-    //     if (item.questionType === 'close' && item.optionText) {
-    //         acc[questionCode].options.push(item.optionText);
-    //     }
-    //     return acc;
-    // }, {});
-
-    // const questions = Object.values(questionsMap);
     const QuestionsListWithLoader = WithLoader(QuestionList)
     return (
         <div>
           <h1>{survey.surveyTitle}</h1>
           <QuestionsListWithLoader loading={loading} questions={questions}/>
-            {/* <h1>{survey[0].surveyTitle}</h1>
-            {questions.map((question, index) => (
-                <div key={index} style={{ marginBottom: '20px' }}>
-                    <h3>{question.question}</h3>
-                    {question.questionType === 'close' && question.options.length > 0 && (
-                        <ul>
-                            {question.options.map((option, idx) => (
-                                <li key={idx}>{option}</li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-            ))} */}
         </div>
     );
 };
