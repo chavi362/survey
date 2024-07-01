@@ -28,8 +28,7 @@ const Register = ({ updateUserContext }) => {
         const registerResponse = await serverRequests("POST", 'register', { userName: user.userName, password: user.password });
         const data = await registerResponse.json(); // parse the JSON response
         const userContextData = {
-          id: data.id,
-          userName: data.userName
+          userCode: data.userCode
         };
         updateUserContext(userContextData);
         navigate(`/create-account`);

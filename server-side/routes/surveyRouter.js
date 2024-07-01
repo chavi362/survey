@@ -5,7 +5,7 @@ surveyRouter.post("/", async (req, res) => {
   console.log("Request body:", req.body);
 
   try {
-    const result = await createSurvey(req.body); // Assuming req.body is already a JSON object
+    const result = await createSurvey(req.body); 
     console.log("Survey creation successful, sending response...");
     res.status(200).json(result);
   } catch (err) {

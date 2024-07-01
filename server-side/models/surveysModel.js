@@ -108,9 +108,9 @@ async function getAllSurveys(limit, offset) {
 }
 async function createSurvey(survey) {
   try {
-    const sql = createObject("surveys", "surveyTitle,managerCode,report", "?,?,?");
+    const sql = createObject("surveys", "surveyTitle,managerCode", "?,?");
     console.log("sql" +sql)
-    const [result] = await pool.execute(sql, [survey.surveyTitle,survey.managerCode,survey.report]);
+    const [result] = await pool.execute(sql, [survey.title,survey.managerCode]);
     const insertedId = result.insertId; 
     console.log(insertedId+"inserted")
     return insertedId;

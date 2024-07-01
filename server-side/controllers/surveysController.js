@@ -47,7 +47,7 @@ async function getAllSurveys(req, res) {
 async function createSurvey(body) {
     try {
         console.log(body+ "in controller")
-        return surveyRes =await model.createSurvey(body);
+        return await model.createSurvey(body);
     } catch (err) {
         throw err;
     }

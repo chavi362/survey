@@ -4,7 +4,7 @@ import { serverRequests } from "../Api";
 import Cookies from 'js-cookie';
 import '../css/Login.css';
 
-function LogIn() {
+function LogIn({ updateUserContext }) {
   let navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -27,6 +27,10 @@ function LogIn() {
       }
       const data = await response.json();
       console.log(data)
+      const userContextData = {
+        userCode: data.userCode,
+      };
+      updateUserContext(userContextData);
       Cookies.set('token', data.token, { expires: 1 });
       Cookies.set('userCode', data.userCode, { expires: 1 });
       if (data.role === "admin") {

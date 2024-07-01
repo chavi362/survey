@@ -21,12 +21,10 @@ export const UserContext = createContext();
 
 function App() {
   const [user, setUser, clearLocalStorage] = useLocalStorage('user', null);
-
   const deleteUser = () => {
     clearLocalStorage();
     setUser(null);
   };
-
   return (
     <BrowserRouter>
       <UserContext.Provider value={user}>
