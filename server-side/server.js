@@ -5,10 +5,10 @@ const path = require('path');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173', // החלף את זה לכתובת המקור הנכונה של הלקוח
+  origin: 'http://localhost:5173',
   methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
   allowedHeaders: 'Content-Type, Authorization',
-  credentials: true // וודא שזה מוגדר כדי לאפשר credentials
+  credentials: true 
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,9 +24,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'React', 'index.html'));
-});
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, '..', 'React', 'index.html'));
+// });
 
 const loginRouter = require("./routes/loginRouter");
 const surveysRouter = require("./routes/surveysRouter");
@@ -35,9 +35,11 @@ const userRouter = require('./routes/userRouter.js');
 const registerRouter = require('./routes/registerRouter.js');
 const propertiesRouter = require('./routes/propertiesRouter.js');
 const questionsRouter = require("./routes/questionsRouter.js");
+const answersRouter = require("./routes/answersRouter.js"); // Import the answers router
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
+app.use("/surveys/:surveyId/questions/:questionCode/answers", answersRouter);
 app.use("/surveys/:surveyId/questions", questionsRouter);
 app.use("/surveys", surveyRouter); 
 app.use("/allSurveys", surveysRouter);

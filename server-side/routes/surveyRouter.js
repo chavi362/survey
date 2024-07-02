@@ -1,12 +1,12 @@
 const express = require("express");
-const authenticateToken = require('../middlwares/authenticateToken');
+const authenticateToken = require('../middlewares/authenticateToken');
 const surveyRouter = express.Router();
-const { createSurvey,patchSurveyTitle } = require("../controllers/surveysController");
+const { createSurvey, patchSurveyTitle } = require("../controllers/surveysController");
 surveyRouter.post("/", async (req, res) => {
   console.log("Request body:", req.body);
 
   try {
-    const result = await createSurvey(req.body); 
+    const result = await createSurvey(req.body);
     console.log("Survey creation successful, sending response...");
     res.status(200).json(result);
   } catch (err) {

@@ -1,20 +1,11 @@
 const express = require("express");
 const questionsRouter = express.Router({ mergeParams: true });
 const controller = require("../controllers/questionsController");
-const authenticateToken = require('../middlwares/authenticateToken');
-const surveyMiddleware = require("../middlwares/surveyMiddleware");
+const authenticateToken = require('../middlewares/authenticateToken');
+const surveyMiddleware = require("../middlewares/surveyMiddleware");
 questionsRouter.use(surveyMiddleware);
-questionsRouter.post("/", async (req, res) => {
-  console.log("Request body:", req.body);
-  console.log("Survey ID:", req.surveyId);
-
-  try {
-    const result = await controller.createQuestion({ ...req.body, surveyCode: req.surveyId });
-    res.status(200).json(result);
-  } catch (err) {
-    console.error("Error in questionsRouter:", err.message);
-    res.status(500).json({ ok: false, error: err.message });
-  }
+questionsRouter.post("/", authenticateToken, async (req, res) => {
+  await controller.createQuestion(req, res);
 });
 
 questionsRouter.get("/:id/answers", async (req, res, next) => {
