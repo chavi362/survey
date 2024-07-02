@@ -1,16 +1,18 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import { serverRequests } from "../Api";
+import { useSurvey } from "../components/SurveyContext";
 import Survey from "./Survey";
 
 const SurveysToConfirm = () => {
+  const { setSurvey } = useSurvey();
   let getAmount = 10;
-
+  const navigate = useNavigate();
   const [allSurveys, setAllSurveys] = useState([]);
   const [surveysAmount, setSurveysAmount] = useState();
   const [isMore, setIsMore] = useState(true);
   const [numOfSurveys, setNumOfSurveys] = useState(0);
-  // const [flags, setFlags] = useState([]);
 
   useEffect(() => {
     getSurveys();
@@ -42,13 +44,9 @@ const SurveysToConfirm = () => {
 
   const getSurveys = async () => {
     const url = "allSurveys/surveysToConfirm";
-    const body = {
-      getAmount: getAmount,
-      numOfSurveys: numOfSurveys,
-    };
 
     try {
-      const response = await serverRequests("POST", url, body);
+      const response = await serverRequests("GET", url, null);
       if (!response.ok) {
         alert("אין סקרים!!");
         return;
@@ -57,12 +55,6 @@ const SurveysToConfirm = () => {
       const data = await response.json();
       console.log(data)
       setAllSurveys(data.surveys);
-    if (data.surveys.length >= surveysAmount) {
-      setIsmore(false);
-    }
-    // updateFlags();
-    setNumOfSurveys(numOfSurveys+getAmount);
-    //setAllSurveys(tempSurveys);
     } catch (error) {
       console.error("Error in log function:", error);
       alert("שגיאה בשרת");
@@ -70,25 +62,12 @@ const SurveysToConfirm = () => {
   };
 
 
+  const handleView =  (survey) => {
+    setSurvey(survey);
+        navigate(`/surveys/${survey.surveyCode}`);
+   
+};
 
-// const updateFlags=()=>{
-//   let newFlags=[];
-  
-//   for(let i=0;i<getAmount;i++)
-//   {
-//     newFlags.push(false);
-//   }
-//   let tempFlags=[...flags,...newFlags];
-//   setFlags(tempFlags);
-// }
-// let changeFlags = (i) => {
-//   let tempFlags=[...flags];
-//   tempFlags[i]=! tempFlags[i];
-//   setFlags(tempFlags);
-// }
-
-
- 
 
   return (
 
@@ -97,15 +76,15 @@ const SurveysToConfirm = () => {
       {allSurveys.length === 0 ? (
         <p>No surveys available</p>
       ) : (
-        <ul>
+        <div>
           {allSurveys.map((survey) => (
-            <li key={survey.surveyCode}>
+            <section key={survey.surveyCode}>
               <Survey survey = {survey} />
-            </li>
+              <button className="navLinks linkBtn" onClick={() => handleView(survey)}>צפיה</button>
+            </section>
           ))}
-        </ul>
+        </div>
       )}
-      {isMore && <button className="finishBtn moreSurveysBtn" onClick={getSurveys}><p>טען עוד</p></button>}
       
     </div>
 

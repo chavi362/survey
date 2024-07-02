@@ -10,7 +10,9 @@ const {
 } = require("../controllers/surveysController");
 
 surveysRouter.get('/', getAllSurveys);
-surveysRouter.post("/surveysToConfirm", async (req, res) => {
+
+
+surveysRouter.get("/surveysToConfirm", async (req, res) => {
   console.log("Received POST request to /surveysToConfirm");
   console.log("Request body:", req.body);
 
