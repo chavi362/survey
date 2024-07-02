@@ -19,8 +19,8 @@ const Survey = ({ survey }) => {
     return (
         <div>
             <span>{survey.surveyTitle}</span>
-            <img src={`http://localhost:3000/images/${survey.imageUrl}`} alt={survey.surveyTitle} />
-            <button className="navLinks linkBtn" onClick={() => handleAnswer(survey)}>ענה</button>
+            {/* <img src={`http://localhost:3000/images/${survey.imageUrl}`} alt={survey.surveyTitle} /> */}
+            {/* <button className="navLinks linkBtn" onClick={() => handleAnswer(survey)}>ענה</button> */}
         </div>
     );
 };

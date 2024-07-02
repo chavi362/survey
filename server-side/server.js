@@ -41,10 +41,3 @@ app.use("/properties", propertiesRouter);
 app.listen(PORT, () => {
   console.log(`SERVER: http://localhost:${PORT}`);
 });
-
-// app.get('/logIn', (req, res) => {
-//   res.sendFile(path.join(__dirname, '..', 'React', 'login.jsx'));
-// });
-
-// const usersRouter = require("./routes/usersRouter")
-// app.use("/users", usersRouter);

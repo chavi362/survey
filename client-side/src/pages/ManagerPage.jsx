@@ -2,29 +2,19 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AllSurveys from "./AllSurveys";
-import Reports from "./Reports";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ManagerNav from "./ManagerNav";
 import SurveysToConfirm from './SurveysToConfirm';
 
 
 function ManagerPage() {
   sessionStorage.setItem("isManager", true);
-  let navigate = useNavigate()
-  const [flagReports, setFlagReports] = useState(false);
-
+  let navigate = useNavigate();
   return (
     <div id='managerPage'>
       <ManagerNav />
       <div className='firstPadding'></div>
-    
-      <SurveysToConfirm />
- 
+      <button className='navLinks linkBtn' onClick={() => { navigate("/manager/surveysToConfirm") }}>סקרים הממתינים לאישור</button>
     </div>
   );
 }
