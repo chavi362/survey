@@ -1,6 +1,7 @@
 const express = require("express");
+const authenticateToken = require('../middlwares/authenticateToken');
 const surveyRouter = express.Router();
-const { createSurvey } = require("../controllers/surveysController");
+const { createSurvey,patchSurveyTitle } = require("../controllers/surveysController");
 surveyRouter.post("/", async (req, res) => {
   console.log("Request body:", req.body);
 
@@ -13,5 +14,5 @@ surveyRouter.post("/", async (req, res) => {
     res.status(500).json({ ok: false, error: err.message });
   }
 });
-
+surveyRouter.patch('/:surveyCode/title', authenticateToken, patchSurveyTitle);
 module.exports = surveyRouter;

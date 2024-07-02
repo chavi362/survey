@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import CreateQuestion from '../components/CreateQuestion';
-import { FaPlus, FaEdit } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from '../App';
 import { serverRequests } from "../Api";
@@ -19,10 +19,10 @@ const CreateSurvey = () => {
 
   const handleSaveSurvey = async () => {
     const survey = {
-    title: surveyTitle,
+      title: surveyTitle,
       managerCode: user.userCode,
     };
-    console.log(survey)
+    console.log(survey);
     try {
       const response = await serverRequests("POST", 'surveys', survey);
       const result = await response.json();
@@ -51,7 +51,21 @@ const CreateSurvey = () => {
     setIsEditingTitle(true);
   };
 
-  const handleSaveTitle = () => {
+  const handleSaveTitle = async () => {
+    try {
+      const response = await serverRequests('PATCH', `surveys/${surveyId}/title`, { title: surveyTitle });
+      if (response.ok) {
+        console.log('Title updated successfully');
+        setIsEditingTitle(false);
+      } else {
+        console.error('Failed to update title');
+      }
+    } catch (error) {
+      console.error('Error updating title:', error);
+    }
+  };
+
+  const handleCancelEdit = () => {
     setIsEditingTitle(false);
   };
 
@@ -69,9 +83,13 @@ const CreateSurvey = () => {
                   placeholder="Enter survey title"
                   value={surveyTitle}
                   onChange={handleSurveyTitleChange}
+                  className="me-2"
                 />
-                <Button onClick={handleSaveTitle} className="btn btn-success ms-2">
-                  Save Title
+                <Button onClick={handleSaveTitle} className="btn btn-success me-2">
+                  <FaSave /> Save Title
+                </Button>
+                <Button onClick={handleCancelEdit} className="btn btn-secondary">
+                  <FaTimes /> Cancel
                 </Button>
               </div>
             </Form.Group>

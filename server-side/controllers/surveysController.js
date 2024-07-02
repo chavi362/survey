@@ -52,6 +52,42 @@ async function createSurvey(body) {
         throw err;
     }
 }
+async function createSurvey(body) {
+    try {
+        console.log(body+ "in controller")
+        return await model.createSurvey(body);
+    } catch (err) {
+        throw err;
+    }
+}
+const patchSurveyTitle = async (req, res) => {
+    const { surveyCode } = req.params;
+    const { title } = req.body;
+    debugger;
+    if (!title) {
+      return res.status(400).json({ error: 'Title is required' });
+    }
+    try {
+      const survey = await getSurveyById(surveyCode);
+      if (!survey) {
+        return res.status(404).json({ error: 'Survey not found' });
+      }
+  
+      if (survey.managerCode !== req.user.id) {
+        return res.status(403).json({ error: 'User is not authorized to update this survey' });
+      }
+  
+      const result = await updateSurveyTitle(surveyCode, title);
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'Survey not found' });
+      }
+      res.status(200).json({ message: 'Survey title updated successfully' });
+    } catch (error) {
+      console.error('Error updating survey title:', error);
+      res.status(500).json({ error: 'An error occurred while updating the survey title' });
+    }
+  };
+  
 async function updateSurvey(body) {
     try {
         return model.updateSurvey(body);
@@ -62,4 +98,4 @@ async function updateSurvey(body) {
 };
 
 
-module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey }
+module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey,patchSurveyTitle }

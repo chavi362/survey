@@ -118,7 +118,16 @@ async function createSurvey(survey) {
     throw err;
   }
 }
-
+async function updateSurveyTitle(surveyCode, newTitle) {
+  try {
+    const sql = updateObject("surveys", "surveyTitle=?", "surveyCode");
+    console.log("sql: " + sql);
+    const [result] = await pool.execute(sql, [newTitle, surveyCode]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
 async function updateSurvey(body) {
     const { surveyCode, confirmed} = body;
     try {
@@ -141,4 +150,4 @@ async function updateSurvey(body) {
     }
 };
 
-module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey };
+module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey,updateSurveyTitle };

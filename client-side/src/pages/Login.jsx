@@ -32,7 +32,6 @@ function LogIn({ updateUserContext }) {
       };
       updateUserContext(userContextData);
       Cookies.set('token', data.token, { expires: 1 });
-      Cookies.set('userCode', data.userCode, { expires: 1 });
       if (data.role === "admin") {
         navigate("/managerPage");
       } else {

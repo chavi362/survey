@@ -1,6 +1,7 @@
 const { verifyToken } = require('../utils/jwtUtils');
 
 function authenticateToken(req, res, next) {
+    console.log("cookies", req.cookies); // להדפיס את cookies לבדיקת ערכים
     const token = req.cookies.token;
     if (!token) return res.sendStatus(401);
 

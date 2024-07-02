@@ -28,7 +28,8 @@ export async function serverRequests(method, URL, body) {
     const requestOptions = {
         method: method,
         headers: headers,
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        credentials: 'include',
     };
 
     try {
