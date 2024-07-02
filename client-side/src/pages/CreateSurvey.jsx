@@ -3,6 +3,7 @@ import CreateQuestion from '../components/CreateQuestion';
 import { FaPlus, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from '../App';
+import useLocalStorage from "../hooks/useLocalStorage"
 import { serverRequests } from "../Api";
 
 const CreateSurvey = () => {
@@ -11,7 +12,7 @@ const CreateSurvey = () => {
   const [questions, setQuestions] = useState([]);
   const [isSurveySaved, setIsSurveySaved] = useState(false);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [surveyId, setSurveyId] = useState(null);
+  const [surveyId, setSurveyId] =  useLocalStorage('surveyId', null);
 
   const handleSurveyTitleChange = (e) => {
     setSurveyTitle(e.target.value);
@@ -28,7 +29,7 @@ const CreateSurvey = () => {
       const result = await response.json();
       if (response.ok) {
         console.log('Survey saved successfully:', result);
-        setSurveyId(result.insertedId);
+        setSurveyId(result);
         setIsSurveySaved(true);
       } else {
         console.error('Failed to save survey:', result.error);

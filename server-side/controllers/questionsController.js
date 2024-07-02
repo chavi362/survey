@@ -29,6 +29,7 @@ async function getAnswersOfCloseQuestion(questionCode) {
 };
 async function createQuestion(body) {
     try {
+        //surveyCode
         console.log(body + " in controller");
         return await model.createQuestion(body);
     } catch (err) {

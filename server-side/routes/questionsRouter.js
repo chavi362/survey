@@ -1,6 +1,7 @@
 const express = require("express");
 const questionsRouter = express.Router({ mergeParams: true });
 const controller = require("../controllers/questionsController");
+const authenticateToken = require('../middlwares/authenticateToken');
 const surveyMiddleware = require("../middlwares/surveyMiddleware");
 questionsRouter.use(surveyMiddleware);
 questionsRouter.post("/", async (req, res) => {

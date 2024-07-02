@@ -52,18 +52,11 @@ async function createSurvey(body) {
         throw err;
     }
 }
-async function createSurvey(body) {
-    try {
-        console.log(body+ "in controller")
-        return await model.createSurvey(body);
-    } catch (err) {
-        throw err;
-    }
-}
 const patchSurveyTitle = async (req, res) => {
+    console.log(req.params)
     const { surveyCode } = req.params;
     const { title } = req.body;
-    debugger;
+    console.log(surveyCode,title)
     if (!title) {
       return res.status(400).json({ error: 'Title is required' });
     }
@@ -76,8 +69,8 @@ const patchSurveyTitle = async (req, res) => {
       if (survey.managerCode !== req.user.id) {
         return res.status(403).json({ error: 'User is not authorized to update this survey' });
       }
-  
-      const result = await updateSurveyTitle(surveyCode, title);
+ 
+      const result = await model.updateSurveyTitle(surveyCode, title);
       if (result.affectedRows === 0) {
         return res.status(404).json({ error: 'Survey not found' });
       }

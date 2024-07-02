@@ -23,42 +23,11 @@ async function getSurveysAmount() {
 
 async function getSurveyById(id) {
   try {
-    const sql = `SELECT s.surveyCode,
-                        s.surveyTitle,
-                        s.managerCode,
-                        s.report,
-                        s.showResults,
-                        s.confirmed,
-                        sq.questionCode,
-                        sq.question,
-                        sq.questionType,
-                        cao.answerCode AS optionCode,
-                        cao.answer AS optionText
-                FROM 
-                    surveys s
-                LEFT JOIN 
-                    surveysquestions sq ON s.surveyCode = sq.surveyCode
-                LEFT JOIN 
-                    surveyCloseAnswers cao ON sq.questionCode = cao.questionCode AND sq.questionType = 'close'
-                WHERE 
-                    s.surveyCode = ${id}
-                ORDER BY 
-                    sq.questionCode, cao.answerCode -- שינוי שם העמודה ל- answerCode
-                LIMIT 0, 1000`;
-    const result = await pool.query(sql);
-
-    console.log(result[0]);
-    console.log("hi ani po");
-
-    if (result.length > 0) {
-      return { success: true, message: "survey successful", survey: result[0] };
-    } else {
-      console.log("survey not found");
-      throw new Error(err);
-    }
+    const sql = getObjectByPram("surveys", "surveyCode");
+    const [rows, fields] = await pool.query(sql, id);
+    return rows[0];
   } catch (err) {
-    console.error("Error:", err);
-    throw new Error(err);
+    throw err;
   }
 }
 
