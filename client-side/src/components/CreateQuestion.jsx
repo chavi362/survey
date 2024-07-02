@@ -3,7 +3,7 @@ import { FaEdit, FaTrashAlt, FaPlus } from 'react-icons/fa';
 import { Form, Button } from 'react-bootstrap';
 import { serverRequests } from "../Api";
 
-const CreateQuestion = ({ surveyCode }) => {
+const CreateQuestion = ({ surveyCode, onDelete }) => {
   const [isEditing, setIsEditing] = useState(true);
   const [questionType, setQuestionType] = useState('open');
   const [question, setQuestion] = useState({ title: '', type: 'open', answers: [''] });
@@ -23,24 +23,11 @@ const CreateQuestion = ({ surveyCode }) => {
     const newAnswers = [...question.answers];
     newAnswers[index] = value;
     setQuestion({ ...question, answers: newAnswers });
-
-    // Save or update the answer in the backend when focus is lost
-    if (questionCode) {
-      serverRequests("PUT", `questions/${questionCode}/answers/${index}`, { answer: value })
-        .then(response => response.json())
-        .then(result => {
-          if (!response.ok) {
-            console.error('Failed to update answer:', result.error);
-          }
-        })
-        .catch(error => console.error('Error updating answer:', error));
-    }
   };
 
   const handleAnswerBlur = (index) => {
     const answer = question.answers[index];
     if (answer && questionCode) {
-      // Add new answer if it doesn't exist
       serverRequests("POST", `questions/${questionCode}/answers`, { answer })
         .then(response => response.json())
         .then(result => {
@@ -95,6 +82,24 @@ const CreateQuestion = ({ surveyCode }) => {
     setIsEditing(false);
   };
 
+  const handleDeleteQuestion = async () => {
+    if (questionCode) {
+      try {
+        const response = await serverRequests("DELETE", `questions/${questionCode}`);
+        if (response.ok) {
+          console.log('Question deleted successfully');
+          onDelete();
+        } else {
+          console.error('Failed to delete question');
+        }
+      } catch (error) {
+        console.error('Error deleting question:', error);
+      }
+    } else {
+      onDelete();
+    }
+  };
+
   return (
     <div className="card mb-4">
       <div className="card-body">
@@ -120,7 +125,7 @@ const CreateQuestion = ({ surveyCode }) => {
                 onChange={handleTypeChange}
               >
                 <option value="open">Open</option>
-                <option value="close" disabled={!questionCode}>Close</option>
+                <option value="close">Close</option>
               </Form.Select>
             </div>
             {questionType === 'close' && (
@@ -165,9 +170,14 @@ const CreateQuestion = ({ surveyCode }) => {
                 ))}
               </ul>
             )}
-            <Button onClick={() => setIsEditing(true)} className="btn btn-primary">
-              <FaEdit /> Edit
-            </Button>
+            <div className="d-flex justify-content-between">
+              <Button onClick={() => setIsEditing(true)} className="btn btn-primary">
+                <FaEdit /> Edit
+              </Button>
+              <Button onClick={handleDeleteQuestion} className="btn btn-danger">
+                <FaTrashAlt /> Delete
+              </Button>
+            </div>
           </div>
         )}
       </div>

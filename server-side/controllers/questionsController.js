@@ -28,10 +28,11 @@ async function getAnswersOfCloseQuestion(questionCode) {
     }
 };
 async function createQuestion(req, res) {
+    console.log("createQuestion")
     try {
       const { body, user } = req;
-      const { surveyCode } = body;
-      const survey = await getSurveyById(surveyCode);
+      console.log(req.surveyId)
+      const survey = await getSurveyById(req.surveyId);
       if (!survey) {
         return res.status(404).json({ error: 'Survey not found' });
       }
@@ -39,6 +40,7 @@ async function createQuestion(req, res) {
       if (survey.managerCode !== user.userCode) {
         return res.status(401).json({ error: 'User is not authorized to create a question for this survey' });
       }
+      console.log(survey.managerCode )
       const result = await model.createQuestion(body);
       return res.status(200).json(result);
     } catch (err) {

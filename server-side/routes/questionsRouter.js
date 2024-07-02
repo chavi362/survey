@@ -5,6 +5,7 @@ const authenticateToken = require('../middlewares/authenticateToken');
 const surveyMiddleware = require("../middlewares/surveyMiddleware");
 questionsRouter.use(surveyMiddleware);
 questionsRouter.post("/", authenticateToken, async (req, res) => {
+  console.log(req.surveyId+"uihy")
   await controller.createQuestion(req, res);
 });
 

@@ -3,7 +3,7 @@ import CreateQuestion from '../components/CreateQuestion';
 import { FaPlus, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from '../App';
-import useLocalStorage from "../hooks/useLocalStorage"
+import useLocalStorage from "../hooks/useLocalStorage";
 import { serverRequests } from "../Api";
 
 const CreateSurvey = () => {
@@ -40,12 +40,7 @@ const CreateSurvey = () => {
   };
 
   const handleAddQuestion = () => {
-    setQuestions([...questions, { id: questions.length + 1, surveyId }]);
-  };
-
-  const updateQuestion = (index, data) => {
-    const newQuestions = questions.map((question, i) => i === index ? { ...question, data } : question);
-    setQuestions(newQuestions);
+    setQuestions([...questions, { id: questions.length + 1 }]);
   };
 
   const handleEditTitle = () => {
@@ -68,6 +63,10 @@ const CreateSurvey = () => {
 
   const handleCancelEdit = () => {
     setIsEditingTitle(false);
+  };
+
+  const handleDeleteQuestion = (id) => {
+    setQuestions(questions.filter((q) => q.id !== id));
   };
 
   return (
@@ -105,7 +104,8 @@ const CreateSurvey = () => {
           {questions.map((question, index) => (
             <CreateQuestion
               key={index}
-              onSave={(data) => updateQuestion(index, data)}
+              surveyCode={surveyId}
+              onDelete={() => handleDeleteQuestion(question.id)}
             />
           ))}
           <div className="d-flex justify-content-between mt-4">

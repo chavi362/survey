@@ -43,10 +43,8 @@ app.use("/surveys/:surveyId/questions/:questionCode/answers", answersRouter);
 app.use("/surveys/:surveyId/questions", questionsRouter);
 app.use("/surveys", surveyRouter); 
 app.use("/allSurveys", surveysRouter);
-
 app.use("/users", userRouter); 
 app.use("/properties", propertiesRouter); 
-
 app.listen(PORT, () => {
   console.log(`SERVER: http://localhost:${PORT}`);
 });

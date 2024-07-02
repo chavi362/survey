@@ -23,13 +23,18 @@ async function getSurveysAmount() {
 
 async function getSurveyById(id) {
   try {
-    const sql = getObjectByPram("surveys", "surveyCode");
-    const [rows, fields] = await pool.query(sql, id);
-    return rows[0];
+      const sql = getObjectByPram("surveys", "surveyCode");
+      console.log("Executing SQL Query:", sql);
+      const [rows, fields] = await pool.query(sql, [id]);
+      console.log("Fetched Rows:", rows[0]);
+      return rows[0];
   } catch (err) {
-    throw err;
+      console.error("Error in getSurveyById:", err.message);
+      throw err;
   }
 }
+
+
 
 async function getSurveys() {
   try {

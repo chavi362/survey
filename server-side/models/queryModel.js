@@ -2,6 +2,7 @@ const config = require('../config/config')
 const db = config.DB_NAME;
 function createObject(table_name, values, columnsNum) {
     const query = `INSERT INTO ${db}.${table_name} (${values}) VALUES (${columnsNum})`;
+    console.log(query)
     return query;
 }
 function getObjects(tableName, page, perPage) {
@@ -19,8 +20,8 @@ function getObjectsOfUser(tableName, pages, start) {//if pages so use limit
     const query = `SELECT * FROM ${db}.${tableName} where userId = ?`;// LIMIT ${limit} OFFSET ${start}
     return query;
 }
-function getObjectByPram(tableName, objectParam, limit=0, start=5) {
-    const query = `SELECT * FROM ${db}.${tableName}  where ${objectParam} = ?`;//LIMIT ${limit} OFFSET ${start}
+function getObjectByPram(tableName, objectParam) {
+    const query = `SELECT * FROM ${db}.${tableName}  where ${objectParam} = ?`;
     return query;
 }
 function updateObject(table_name, values, idParameter) {
