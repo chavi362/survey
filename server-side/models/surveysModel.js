@@ -34,8 +34,6 @@ async function getSurveyById(id) {
   }
 }
 
-
-
 async function getSurveys() {
   try {
     const sql = `SELECT * FROM surveys WHERE confirmed = FALSE` ;

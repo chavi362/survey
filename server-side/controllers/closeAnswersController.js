@@ -1,4 +1,4 @@
-const model = require("../models/answersModel");
+const model = require("../models/closeAnswersModel");
 const surveyModel = require("../models/surveysModel");
 const questionsModel = require("../models/questionsModel");
 

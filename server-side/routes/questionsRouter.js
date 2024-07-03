@@ -32,5 +32,9 @@ questionsRouter.get("/", async (req, res, next) => {
     next(err);
   }
 });
+questionsRouter.delete("/:id", authenticateToken, async (req, res) => {
+  await controller.deleteQuestion(req, res);
+});
+
 
 module.exports = questionsRouter;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEdit, FaTrashAlt, FaPlus } from 'react-icons/fa';
 import { Form, Button } from 'react-bootstrap';
 import { serverRequests } from "../Api";
@@ -6,7 +6,8 @@ import { serverRequests } from "../Api";
 const CreateQuestion = ({ surveyCode, onDelete }) => {
   const [isEditing, setIsEditing] = useState(true);
   const [questionType, setQuestionType] = useState('open');
-  const [question, setQuestion] = useState({ title: '', type: 'open', answers: [''] });
+  const [question, setQuestion] = useState({ title: '', type: 'open' });
+  const [answers, setAnswers] = useState([]);
   const [questionCode, setQuestionCode] = useState(null);
 
   const handleInputChange = (e) => {
@@ -15,18 +16,23 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
   };
 
   const handleTypeChange = (e) => {
-    setQuestionType(e.target.value);
-    setQuestion({ ...question, type: e.target.value, answers: [''] });
+    if (answers.length > 0 && questionType === 'close') {
+      alert("Cannot change the question type to 'open' because answers exist.");
+      return;
+    }
+    const newType = e.target.value;
+    setQuestionType(newType);
+    setQuestion({ ...question, type: newType });
   };
 
   const handleAnswerChange = (index, value) => {
-    const newAnswers = [...question.answers];
+    const newAnswers = [...answers];
     newAnswers[index] = value;
-    setQuestion({ ...question, answers: newAnswers });
+    setAnswers(newAnswers);
   };
 
   const handleAnswerBlur = (index) => {
-    const answer = question.answers[index];
+    const answer = answers[index];
     if (answer && questionCode) {
       serverRequests("POST", `questions/${questionCode}/answers`, { answer })
         .then(response => response.json())
@@ -42,16 +48,17 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
   };
 
   const handleAddAnswer = () => {
-    setQuestion({ ...question, answers: [...question.answers, ''] });
+    setAnswers([...answers, '']);
   };
 
   const handleDeleteAnswer = (index) => {
+    const answer = answers[index];
     if (questionCode) {
       serverRequests("DELETE", `questions/${questionCode}/answers/${index}`)
         .then(response => {
           if (response.ok) {
-            const newAnswers = question.answers.filter((_, i) => i !== index);
-            setQuestion({ ...question, answers: newAnswers });
+            const newAnswers = answers.filter((_, i) => i !== index);
+            setAnswers(newAnswers);
             console.log('Answer deleted successfully');
           } else {
             console.error('Failed to delete answer');
@@ -78,7 +85,8 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
   };
 
   const handleCancel = () => {
-    setQuestion({ title: '', type: 'open', answers: [''] });
+    setQuestion({ title: '', type: 'open' });
+    setAnswers([]);
     setIsEditing(false);
   };
 
@@ -123,15 +131,16 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
                 className="form-control"
                 value={questionType}
                 onChange={handleTypeChange}
+                disabled={answers.length > 0}
               >
                 <option value="open">Open</option>
                 <option value="close">Close</option>
               </Form.Select>
             </div>
-            {questionType === 'close' && (
+            {questionType === 'close' && questionCode && (
               <div className="mb-3">
                 <label className="form-label">Answers:</label>
-                {question.answers.map((answer, index) => (
+                {answers.map((answer, index) => (
                   <div key={index} className="d-flex align-items-center mb-2">
                     <input
                       type="text"
@@ -140,7 +149,11 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
                       onChange={(e) => handleAnswerChange(index, e.target.value)}
                       onBlur={() => handleAnswerBlur(index)}
                     />
-                    <Button variant="danger" className="ms-2" onClick={() => handleDeleteAnswer(index)}>
+                    <Button
+                      variant="danger"
+                      className="ms-2"
+                      onClick={() => handleDeleteAnswer(index)}
+                    >
                       <FaTrashAlt />
                     </Button>
                   </div>
@@ -165,7 +178,7 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
             <p>Type: {question.type}</p>
             {question.type === 'close' && (
               <ul>
-                {question.answers.map((answer, index) => (
+                {answers.map((answer, index) => (
                   <li key={index}>{answer}</li>
                 ))}
               </ul>

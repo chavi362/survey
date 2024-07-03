@@ -35,7 +35,7 @@ const userRouter = require('./routes/userRouter.js');
 const registerRouter = require('./routes/registerRouter.js');
 const propertiesRouter = require('./routes/propertiesRouter.js');
 const questionsRouter = require("./routes/questionsRouter.js");
-const answersRouter = require("./routes/answersRouter.js"); // Import the answers router
+const answersRouter = require("./routes/closeAnswersRouter.js"); // Import the answers router
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);

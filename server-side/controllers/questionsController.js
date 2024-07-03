@@ -28,27 +28,37 @@ async function getAnswersOfCloseQuestion(questionCode) {
     }
 };
 async function createQuestion(req, res) {
-    console.log("createQuestion")
+    console.log("createQuestion");
     try {
-      const { body, user } = req;
-      console.log(req.surveyId)
+      const user = req.user;
+      console.log(req.surveyId);
       const survey = await getSurveyById(req.surveyId);
       if (!survey) {
         return res.status(404).json({ error: 'Survey not found' });
       }
   
-      if (survey.managerCode !== user.userCode) {
+      if (survey.managerCode !== user.id) {
+        console.log(user);
         return res.status(401).json({ error: 'User is not authorized to create a question for this survey' });
       }
-      console.log(survey.managerCode )
-      const result = await model.createQuestion(body);
+      const question = req.body.title; // Map 'title' from request body to 'question'
+      const surveyCode = req.surveyId; // Use req.surveyId as the surveyCode
+      const questionType = req.body.type; //
+  
+      if (!question || !surveyCode || !questionType) {
+        return res.status(400).json({ error: 'Missing required fields: question, surveyId, questionType' });
+      }
+  
+      console.log(`Creating question: ${question}, surveyId: ${surveyCode}, questionType: ${questionType}`);
+  
+      const result = await model.createQuestion(question ,surveyCode,questionType);
       return res.status(200).json(result);
     } catch (err) {
       console.error("Error in createQuestion:", err.message);
       return res.status(500).json({ error: 'An error occurred while creating the question' });
     }
   }
-
+  
 async function updateQuestion(body, id) {
     try {
         return await model.updateQuestion(body, id);

@@ -1,6 +1,6 @@
 const express = require("express");
 const answersRouter = express.Router({ mergeParams: true });
-const controller = require("../controllers/answersController");
+const controller = require("../controllers/closeAnswersController");
 const authenticateToken = require('../middlewares/authenticateToken');
 const surveyMiddleware = require("../middlewares/surveyMiddleware");
 answersRouter.use(surveyMiddleware);
