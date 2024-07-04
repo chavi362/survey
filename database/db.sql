@@ -179,22 +179,22 @@ INSERT INTO passwords (user_id, user_password) VALUES
 (5, 'password4');
 
 -- הכנסת נתונים לטבלת הסקרים
-INSERT INTO surveys (surveyTitle, managerCode,confirmed)
+INSERT INTO surveys (surveyTitle, managerCode, confirmed)
 VALUES 
-('סקר לקוחות', 1,  FALSE),
-('סקר עובדים', 2,  FALSE),
-('סקר מוצרים', 3,   FALSE),
-('סקר שירות', 4,  FALSE),
-('סקר תהליך רכישה', 1,  FALSE),
-('סקר חווית משתמש', 2,   FALSE),
-('סקר שיווק', 3,  FALSE),
-('סקר חינוך', 5,  FALSE),
-('סקר בריאות', 1, , FALSE),
+('סקר לקוחות', 1, FALSE),
+('סקר עובדים', 2, FALSE),
+('סקר מוצרים', 3, FALSE),
+('סקר שירות', 4, FALSE),
+('סקר תהליך רכישה', 1, FALSE),
+('סקר חווית משתמש', 2, FALSE),
+('סקר חינוך', 5, FALSE),
+('סקר בריאות', 1, FALSE),
 ('סקר כלכלה', 2, FALSE),
-('סקר סביבה', 3,  FALSE),
-('סקר תחבורה', 4,  FALSE),
+('סקר סביבה', 3, FALSE),
+('סקר תחבורה', 4, FALSE),
 ('סקר תרבות', 1, FALSE),
-('סקר ספורט', 2,   FALSE);
+('סקר ספורט', 2, FALSE);
+
 
 -- Insert statements for the surveysquestions table
 INSERT INTO surveysquestions (question, surveyCode, questionType)
