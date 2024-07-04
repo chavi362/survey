@@ -27,37 +27,18 @@ async function getAnswersOfCloseQuestion(questionCode) {
         throw err;
     }
 };
-async function createQuestion(req, res) {
-    console.log("createQuestion");
+const createQuestion = async (req, res) => {
+    const { surveyId } = req.params;
+    const { title, type } = req.body;
+  
     try {
-      const user = req.user;
-      console.log(req.surveyId);
-      const survey = await getSurveyById(req.surveyId);
-      if (!survey) {
-        return res.status(404).json({ error: 'Survey not found' });
-      }
-  
-      if (survey.managerCode !== user.id) {
-        console.log(user);
-        return res.status(401).json({ error: 'User is not authorized to create a question for this survey' });
-      }
-      const question = req.body.title; // Map 'title' from request body to 'question'
-      const surveyCode = req.surveyId; // Use req.surveyId as the surveyCode
-      const questionType = req.body.type; //
-  
-      if (!question || !surveyCode || !questionType) {
-        return res.status(400).json({ error: 'Missing required fields: question, surveyId, questionType' });
-      }
-  
-      console.log(`Creating question: ${question}, surveyId: ${surveyCode}, questionType: ${questionType}`);
-  
-      const result = await model.createQuestion(question ,surveyCode,questionType);
-      return res.status(200).json(result);
-    } catch (err) {
-      console.error("Error in createQuestion:", err.message);
-      return res.status(500).json({ error: 'An error occurred while creating the question' });
+      const result = await model.createQuestion(title,surveyId,  type);
+      res.status(201).json(result);
+    } catch (error) {
+      console.error('Error creating question:', error);
+      res.status(500).json({ error: 'An error occurred while creating the question' });
     }
-  }
+  };
   
 async function updateQuestion(body, id) {
     try {
@@ -68,13 +49,15 @@ async function updateQuestion(body, id) {
     }
 };
 
-async function deleteQuestion(id) {
+const deleteQuestion = async (req, res) => {
+    console.log(req.params)
+    const { id } = req.params;
     try {
-        return await model.deleteQuestion(id);
+      await model.deleteQuestion(id);
+      res.sendStatus(204);
+    } catch (error) {
+      console.error('Error deleting question:', error);
+      res.status(500).json({ error: 'An error occurred while deleting the question' });
     }
-    catch (err) {
-        throw err;
-    }
-};
-
+  }
 module.exports = { getQuestionById, createQuestion, updateQuestion, deleteQuestion ,getQuestionsOfSurvey,getAnswersOfCloseQuestion};

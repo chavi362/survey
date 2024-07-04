@@ -34,7 +34,7 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
   const handleAnswerBlur = (index) => {
     const answer = answers[index];
     if (answer && questionCode) {
-      serverRequests("POST", `questions/${questionCode}/answers`, { answer })
+      serverRequests("POST", `surveys/${surveyCode}questions/${questionCode}/answers`, { answer })
         .then(response => response.json())
         .then(result => {
           if (response.ok) {
@@ -54,7 +54,7 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
   const handleDeleteAnswer = (index) => {
     const answer = answers[index];
     if (questionCode) {
-      serverRequests("DELETE", `questions/${questionCode}/answers/${index}`)
+      serverRequests("DELETE", `surveys/${surveyCode}questions/${questionCode}/answers/${index}`)
         .then(response => {
           if (response.ok) {
             const newAnswers = answers.filter((_, i) => i !== index);
@@ -93,7 +93,7 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
   const handleDeleteQuestion = async () => {
     if (questionCode) {
       try {
-        const response = await serverRequests("DELETE", `questions/${questionCode}`);
+        const response = await serverRequests("DELETE", `surveys/${surveyCode}/questions/${questionCode}`);
         if (response.ok) {
           console.log('Question deleted successfully');
           onDelete();
