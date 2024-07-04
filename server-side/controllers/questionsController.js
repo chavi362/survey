@@ -40,14 +40,7 @@ const createQuestion = async (req, res) => {
     }
   };
   
-async function updateQuestion(body, id) {
-    try {
-        return await model.updateQuestion(body, id);
-    }
-    catch (err) {
-        throw err;
-    }
-};
+
 
 const deleteQuestion = async (req, res) => {
     console.log(req.params)
@@ -60,4 +53,4 @@ const deleteQuestion = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while deleting the question' });
     }
   }
-module.exports = { getQuestionById, createQuestion, updateQuestion, deleteQuestion ,getQuestionsOfSurvey,getAnswersOfCloseQuestion};
+module.exports = { getQuestionById, createQuestion, deleteQuestion ,getQuestionsOfSurvey,getAnswersOfCloseQuestion};

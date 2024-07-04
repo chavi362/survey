@@ -65,4 +65,4 @@ async function createQuestion(question ,surveyCode,questionType) {
     getQuestionsOfSurvey,
     getAnswersOfCloseQuestion
   };
-          
+  
