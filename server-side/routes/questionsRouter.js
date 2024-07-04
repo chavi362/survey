@@ -2,7 +2,7 @@ const express = require("express");
 const questionsRouter = express.Router({ mergeParams: true });
 const controller = require("../controllers/questionsController");
 const authenticateToken = require('../middlewares/authenticateToken');
-const surveyMiddleware =require('../middlewares/surveyMiddleware');
+const surveyMiddleware = require('../middlewares/surveyMiddleware');
 const checkSurveyManager = require('../middlewares/checkSurveyManager');
 
 questionsRouter.use(surveyMiddleware);
@@ -20,6 +20,10 @@ questionsRouter.get("/", async (req, res, next) => {
     res.status(400).json({ error: err.message });
     next(err);
   }
+});
+
+questionsRouter.put("/:id", authenticateToken, checkSurveyManager, async (req, res) => {
+  await controller.updateQuestion(req, res);
 });
 
 questionsRouter.delete("/:id", authenticateToken, checkSurveyManager, async (req, res) => {

@@ -70,6 +70,7 @@ const HomePage = () => {
       <section>
         <button className='navLinks linkBtn' onClick={() => { navigate("/home/all-surveys") }}>כל הסקרים</button>
         <button className='navLinks linkBtn' onClick={() => { navigate("/home/craete-survey") }}>יצירת סקר </button>
+        
       </section>
       <footer>
         <p>Project developed by havi and avital</p>

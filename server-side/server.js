@@ -37,6 +37,7 @@ const propertiesRouter = require('./routes/propertiesRouter.js');
 const questionsRouter = require("./routes/questionsRouter.js");
 const closeAnswersRouter = require("./routes/closeAnswersRouter.js");
 const answersRouter = require("./routes/answersRouter.js");
+const surveyResponsesRouter = require("./routes/surveyResponsesRouter.js");
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
@@ -47,6 +48,7 @@ app.use("/surveys", surveyRouter);
 app.use("/allSurveys", surveysRouter);
 app.use("/users", userRouter); 
 app.use("/properties", propertiesRouter); 
+app.use("/surveys/:surveyId/responses", surveyResponsesRouter); 
 app.listen(PORT, () => {
   console.log(`SERVER: http://localhost:${PORT}`);
 });
