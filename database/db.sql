@@ -81,8 +81,6 @@ CREATE TABLE surveys (
     surveyCode INT AUTO_INCREMENT PRIMARY KEY,
     surveyTitle VARCHAR(255) NOT NULL,
     managerCode INT NOT NULL,
-    report TEXT,
-    imageUrl VARCHAR(500) DEFAULT NULL,
     confirmed BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (managerCode) REFERENCES users(userCode)
 );
@@ -181,23 +179,22 @@ INSERT INTO passwords (user_id, user_password) VALUES
 (5, 'password4');
 
 -- הכנסת נתונים לטבלת הסקרים
-INSERT INTO surveys (surveyTitle, managerCode, report, imageUrl, confirmed)
+INSERT INTO surveys (surveyTitle, managerCode,confirmed)
 VALUES 
-('סקר לקוחות', 1, 'דו"ח על שביעות רצון הלקוחות', 'image1.jpg', FALSE),
-('סקר עובדים', 2, 'דו"ח על שביעות רצון העובדים', 'image2.jpg',  FALSE),
-('סקר מוצרים', 3, 'דו"ח על שביעות רצון מהמוצרים', 'image3.jpg',  FALSE),
-('סקר שירות', 4, 'דו"ח על שביעות רצון מהשירות', 'image4.jpg', FALSE),
-('סקר תהליך רכישה', 1, 'דו"ח על תהליך הרכישה', 'image5.jpg',  FALSE),
-('סקר חווית משתמש', 2, 'דו"ח על חווית המשתמש', 'image6.jpg',  FALSE),
-('סקר שיווק', 3, 'דו"ח על פעילויות השיווק', 'image7.jpg', FALSE),
-('סקר חדשנות', 4, 'דו"ח על חדשנות', 'image8.jpg',  FALSE),
-('סקר חינוך', 5, 'דו"ח על חינוך', 'image9.jpg',  FALSE),
-('סקר בריאות', 1, 'דו"ח על בריאות', 'image10.jpg', FALSE),
-('סקר כלכלה', 2, 'דו"ח על כלכלה', 'image11.jpg',  FALSE),
-('סקר סביבה', 3, 'דו"ח על סביבה', 'image12.jpg',  FALSE),
-('סקר תחבורה', 4, 'דו"ח על תחבורה', 'image13.jpg', FALSE),
-('סקר תרבות', 1, 'דו"ח על תרבות', 'image14.jpg', FALSE),
-('סקר ספורט', 2, 'דו"ח על ספורט', 'image15.jpg',  FALSE);
+('סקר לקוחות', 1,  FALSE),
+('סקר עובדים', 2,  FALSE),
+('סקר מוצרים', 3,   FALSE),
+('סקר שירות', 4,  FALSE),
+('סקר תהליך רכישה', 1,  FALSE),
+('סקר חווית משתמש', 2,   FALSE),
+('סקר שיווק', 3,  FALSE),
+('סקר חינוך', 5,  FALSE),
+('סקר בריאות', 1, , FALSE),
+('סקר כלכלה', 2, FALSE),
+('סקר סביבה', 3,  FALSE),
+('סקר תחבורה', 4,  FALSE),
+('סקר תרבות', 1, FALSE),
+('סקר ספורט', 2,   FALSE);
 
 -- Insert statements for the surveysquestions table
 INSERT INTO surveysquestions (question, surveyCode, questionType)
