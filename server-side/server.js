@@ -40,7 +40,7 @@ const answersRouter = require("./routes/answersRouter.js");
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
-app.use("/surveys/:surveyId/questions/:questionCode/answers", closeAnswersRouter);
+app.use("/surveys/:surveyId/questions/:questionCode/close-answers", closeAnswersRouter);
 app.use("/surveys/:surveyId/answers", answersRouter);
 app.use("/surveys/:surveyId/questions", questionsRouter);
 app.use("/surveys", surveyRouter); 

@@ -27,34 +27,59 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
 
   const handleAnswerChange = (index, value) => {
     const newAnswers = [...answers];
-    newAnswers[index] = value;
+    newAnswers[index].answer = value;
     setAnswers(newAnswers);
   };
 
   const handleAnswerBlur = (index) => {
     const answer = answers[index];
     if (answer && questionCode) {
-      serverRequests("POST", `surveys/${surveyCode}questions/${questionCode}/answers`, { answer })
-        .then(response => response.json())
-        .then(result => {
-          if (response.ok) {
-            console.log('Answer added successfully:', result);
-          } else {
-            console.error('Failed to add answer:', result.error);
-          }
-        })
-        .catch(error => console.error('Error adding answer:', error));
+        const payload = { answer: answer.answer };
+        console.log("Sending payload:", payload);
+        if (answer.id) {
+            serverRequests("PUT", `surveys/${surveyCode}/questions/${questionCode}/close-answers/${answer.id}`, payload)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to update answer');
+                    }
+                })
+                .then(result => {
+                    console.log('Answer updated successfully:', result);
+                })
+                .catch(error => console.error('Error updating answer:', error));
+        } else {
+            serverRequests("POST", `surveys/${surveyCode}/questions/${questionCode}/close-answers`, payload)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Failed to add answer');
+                    }
+                })
+                .then(result => {
+                    const newAnswers = [...answers];
+                    newAnswers[index] = { ...answer, id: result.answerCode };
+                    setAnswers(newAnswers);
+                    console.log('Answer added successfully:', result);
+                })
+                .catch(error => console.error('Error adding answer:', error));
+        }
     }
-  };
+};
+
+
+  
 
   const handleAddAnswer = () => {
-    setAnswers([...answers, '']);
+    setAnswers([...answers, { answer: '', id: null }]);
   };
 
   const handleDeleteAnswer = (index) => {
     const answer = answers[index];
     if (questionCode) {
-      serverRequests("DELETE", `surveys/${surveyCode}questions/${questionCode}/answers/${index}`)
+      serverRequests("DELETE", `surveys/${surveyCode}/questions/${questionCode}/close-answers/${answer.id}`)
         .then(response => {
           if (response.ok) {
             const newAnswers = answers.filter((_, i) => i !== index);
@@ -145,7 +170,7 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
                     <input
                       type="text"
                       className="form-control"
-                      value={answer}
+                      value={answer.answer}
                       onChange={(e) => handleAnswerChange(index, e.target.value)}
                       onBlur={() => handleAnswerBlur(index)}
                     />
@@ -179,7 +204,7 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
             {question.type === 'close' && (
               <ul>
                 {answers.map((answer, index) => (
-                  <li key={index}>{answer}</li>
+                  <li key={index}>{answer.answer}</li>
                 ))}
               </ul>
             )}
