@@ -37,6 +37,7 @@ function App() {
             <Route path="/manager/surveysToConfirm/:surveyCode" element={<SurveyDetail />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/home/all-surveys" element={<AllSurveys />} />
+            <Route path="/home/all-surveys/:surveyCode" element={<SurveyDetail />} />
             <Route path="/home/craete-survey" element={<CreateSurvey />} />
             <Route path="/surveys/:surveyCode" element={<SurveyDetail />} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />

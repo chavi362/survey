@@ -60,7 +60,7 @@ async function getSurveys() {
 
 async function getAllSurveys(limit, offset) {
   try {
-    const sql = `SELECT * FROM surveys limit ${limit} offset ${offset}` ;
+    const sql = `SELECT * FROM surveys  limit ${limit} offset ${offset}` ;
     const result = await pool.query(sql);
   
     if (result.length > 0) {

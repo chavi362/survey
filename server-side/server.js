@@ -35,11 +35,13 @@ const userRouter = require('./routes/userRouter.js');
 const registerRouter = require('./routes/registerRouter.js');
 const propertiesRouter = require('./routes/propertiesRouter.js');
 const questionsRouter = require("./routes/questionsRouter.js");
-const answersRouter = require("./routes/closeAnswersRouter.js"); // Import the answers router
+const closeAnswersRouter = require("./routes/closeAnswersRouter.js");
+const answersRouter = require("./routes/answersRouter.js");
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
-app.use("/surveys/:surveyId/questions/:questionCode/answers", answersRouter);
+app.use("/surveys/:surveyId/questions/:questionCode/answers", closeAnswersRouter);
+app.use("/surveys/:surveyId/answers", answersRouter);
 app.use("/surveys/:surveyId/questions", questionsRouter);
 app.use("/surveys", surveyRouter); 
 app.use("/allSurveys", surveysRouter);

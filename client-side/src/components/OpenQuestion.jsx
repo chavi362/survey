@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 import { Form } from 'react-bootstrap';
 
 
-const OpenQuestion = ({ question }) => {
+const OpenQuestion = ({ question, handleChange }) => {
   
   return (
     <div className="mb-3">
@@ -10,10 +10,11 @@ const OpenQuestion = ({ question }) => {
   
           <Form.Control
             as="textarea"
-            rows={3}
+            rows={1}
             name={`question-${question.questionCode}`}
             id={`question-${question.questionCode}-textarea`}
             placeholder="כתוב את תשובתך כאן"
+            onChange={(e) => handleChange(question.questionCode, e.target.value)}
           />
   
     </div>
