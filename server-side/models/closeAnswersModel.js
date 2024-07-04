@@ -39,8 +39,17 @@ const deleteAnswer = async (answerCode) => {
         throw error;
     }
 };
-
+async function getAnswersOfCloseQuestion(questionId) {
+    try {
+      const sql = getObjectByPram("surveycloseanswers", "questionCode");
+      const [rows, fields] = await pool.query(sql, questionId);
+      return rows;
+    } catch (err) {
+      throw err;
+    }
+  }
 module.exports = {
+    getAnswersOfCloseQuestion,
     createAnswer,
     updateAnswer,
     getAnswerById,

@@ -26,7 +26,15 @@ const createAnswer = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while creating the answer' });
     }
 };
-
+async function getAnswersOfCloseQuestion(questionCode) {
+    console.log("controller body");
+    try {
+        return await model.getAnswersOfCloseQuestion(questionCode);
+    }
+    catch (err) {
+        throw err;
+    }
+};
 const updateAnswer = async (req, res) => {
     const { surveyId, answerCode } = req.params;
     const { answer } = req.body;
@@ -77,4 +85,5 @@ module.exports = {
     createAnswer,
     updateAnswer,
     deleteAnswer,
+    getAnswersOfCloseQuestion
 };

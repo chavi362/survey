@@ -6,7 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Register from './pages/RegisterPage';
 import AddUserDetails from './pages/AddUserDetails';
-import SurveysPage from './pages/SurveysPage';
 import HomePage from './pages/HomePage';
 import ManagerPage from './pages/ManagerPage';
 import CreateSurvey from './pages/CreateSurvey';
@@ -42,7 +41,7 @@ function App() {
             <Route path="/surveys/:surveyCode" element={<SurveyDetail />} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
-            <Route path="/surveys" component={SurveysPage} />
+            {/* <Route path="/surveys" component={SurveysPage} /> */}
             <Route path="users/:userId/" />
             <Route path="*" element={<Error />} />
           </Routes>

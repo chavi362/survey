@@ -41,7 +41,6 @@ function AllSurveys() {
 
   return (
     <div>
-      {/* <ManagerNav /> */}
       <div className="firstPadding"></div>
       <h1 className="addSurveyTitle">כל הסקרים</h1>
 

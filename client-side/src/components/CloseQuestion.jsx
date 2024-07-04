@@ -4,7 +4,7 @@ import useGetData from '../hooks/useGetData';
 
 const CloseQuestion = ({ question,handleChange  }) => {
     const [answers, setAnswers] = useState([]);
-    const [data, error, loading, setLoading] = useGetData(`surveys/${question.surveyCode}/questions/${question.questionCode}/answers`);
+    const [data, error, loading, setLoading] = useGetData(`surveys/${question.surveyCode}/questions/${question.questionCode}/close-answers`);
 
     useEffect(() => {
         if (error) {

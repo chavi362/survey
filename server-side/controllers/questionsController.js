@@ -18,15 +18,7 @@ async function getQuestionsOfSurvey(surveyCode) {
         throw err;
     }
 };
-async function getAnswersOfCloseQuestion(questionCode) {
-    console.log("controller body");
-    try {
-        return await model.getAnswersOfCloseQuestion(questionCode);
-    }
-    catch (err) {
-        throw err;
-    }
-};
+
 const createQuestion = async (req, res) => {
     const { surveyId } = req.params;
     const { title, type } = req.body;
@@ -53,4 +45,4 @@ const deleteQuestion = async (req, res) => {
       res.status(500).json({ error: 'An error occurred while deleting the question' });
     }
   }
-module.exports = { getQuestionById, createQuestion, deleteQuestion ,getQuestionsOfSurvey,getAnswersOfCloseQuestion};
+module.exports = { getQuestionById, createQuestion, deleteQuestion ,getQuestionsOfSurvey};
