@@ -1,14 +1,18 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSurvey } from '../components/SurveyContext';
 import useGetData from '../hooks/useGetData'; 
 import WithLoader from '../hoc/WithLoader'
 import QuestionList from '../components/QuestionList';
 import { serverRequests } from "../Api";
+import { UserContext } from '../App';
 
 const SurveyDetail = () => {
+  const user = useContext(UserContext);
+  console.log(user);
     const { survey } = useSurvey();
     console.log(survey)
-
+const navigate = useNavigate();
     if (!survey) {
         return <div>Loading...</div>;
     }
@@ -27,10 +31,11 @@ const SurveyDetail = () => {
     const handleSubmit = async (answers) => {
       try {
         const surveyId = survey.surveyCode;
-        let userId = 1;
+        let userId = user.userCode;
         const response = await serverRequests('POST',`surveys/${surveyId}/answers`, { surveyId, answers, userId });
         if (response.status === 200) {
           alert("תשובותיך נשמרו בהצלחה");
+          navigate('/home/all-surveys');
         } else {
           console.error("Error saving answers:", response);
         }

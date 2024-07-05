@@ -27,7 +27,7 @@ const CloseQuestion = ({ question,handleChange  }) => {
                   name={`question-${question.questionCode}`}
                   id={`question-${question.questionCode}-option${index}`}
                   label={answer.answer} // Assuming answer has optionText property
-                  onChange={() => handleChange(question.questionCode, answer.answer)}
+                  onChange={() => handleChange(question.questionCode, answer.answerCode)}
                 />
               ))
             )}
