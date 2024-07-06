@@ -9,7 +9,6 @@ export const useSurvey = () => {
 export const SurveyProvider = ({ children }) => {
     const [survey, setSurvey] = useState(null);
     console.log(survey)
-
     return (
         <SurveyContext.Provider value={{ survey, setSurvey }}>
             {children}

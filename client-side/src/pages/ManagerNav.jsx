@@ -5,12 +5,6 @@ import Cookies from 'js-cookie';
 function ManagerORUser() {
     let navigate = useNavigate();
 
-    useEffect(() => {
-        const userCode = Cookies.get('userCode'); // קריאת ה-userCode מהעוגיות
-        if (!userCode)
-            navigate("/");
-    }, [navigate]);
-
     return (
         <div>
             <div className='nav'>

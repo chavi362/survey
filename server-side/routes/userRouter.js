@@ -1,5 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
+const authenticateToken = require('../middlewares/authenticateToken');
+const isAdmin = require('../middlewares/isAdmin');
 const { getAllUsers, getUsersByUserName, updateUser } = require('../controllers/userController');
 userRouter.get("/", async (req, res) => {
     try {
@@ -24,5 +26,10 @@ userRouter.put("/:id", async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
+userRouter.get('/admin', authenticateToken, isAdmin, (req, res) => {
+    res.status(200).json({ isAdmin: true }); 
+});
+
+  
 
 module.exports = userRouter;
