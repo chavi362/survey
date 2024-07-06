@@ -22,9 +22,10 @@ function AllSurveys() {
     nextPage,
     setNextPage,
   ] = useGetPaginationData(`allSurveys?&page=${page}&limit=${perPage}`);
+  
   useEffect(() => {
     if (error) {
-      console.error("Error fetching photos:", error);
+      console.error("Error fetching surveys:", error);
     } else if (data) {
       let surveys = data.surveys;
       let tempSurveys = [...allSurveys];
@@ -36,7 +37,7 @@ function AllSurveys() {
   const handleAnswer = (survey) => {
     setSurvey(survey);
     console.log(`Answer survey with code ${survey.surveyCode}`);
-    navigate(`/home/all-surveys/${survey.surveyCode}`);
+    navigate(`/home/all-surveys/${survey.surveyCode}`, { state: { isManagerSeeing: false } });
   };
 
   return (
@@ -63,7 +64,7 @@ function AllSurveys() {
       )}
 
       {nextPage && (
-        <button className="finishBtn moreSurveysBtn" onClick={getSurveys}>
+        <button className="finishBtn moreSurveysBtn" onClick={() => setPage(page + 1)}>
           <p>עוד</p>
         </button>
       )}

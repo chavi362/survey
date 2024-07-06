@@ -41,7 +41,6 @@ function App() {
             <Route path="/surveys/:surveyCode" element={<SurveyDetail />} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
-            {/* <Route path="/surveys" component={SurveysPage} /> */}
             <Route path="users/:userId/" />
             <Route path="*" element={<Error />} />
           </Routes>

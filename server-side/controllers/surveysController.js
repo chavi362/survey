@@ -89,6 +89,16 @@ async function updateSurvey(body) {
         throw err;
     }
 };
+async function getSurveysByManager(req, res) {
+    try {
+        const managerCode = req.user.id;
+        const result = await model.getSurveysByManager(managerCode);
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+}
+
+module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, patchSurveyTitle, getSurveysByManager };
 
 
-module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys,createSurvey,patchSurveyTitle }
