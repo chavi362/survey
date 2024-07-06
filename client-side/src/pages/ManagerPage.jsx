@@ -15,12 +15,7 @@ function ManagerPage() {
 
   useEffect(() => {
       const checkAdmin = async () => {
-          const token = Cookies.get('token');
-          if (!token) {
-              navigate("/");
-              return;
-          }
-
+      
           try {
               const response = await serverRequests("GET", "/users/admin", token);
               if (response.ok) {
