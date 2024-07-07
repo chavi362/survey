@@ -15,7 +15,7 @@ const SurveysToConfirm = () => {
   }, []);
 
   const getSurveys = async () => {
-    const url = "allSurveys/surveysToConfirm";
+    const url = "surveys/surveysToConfirm";
 
     try {
       const response = await serverRequests("GET", url, null);

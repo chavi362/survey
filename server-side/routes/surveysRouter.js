@@ -1,13 +1,7 @@
 const express = require("express");
+const authenticateToken = require('../middlewares/authenticateToken');
 const surveysRouter = express.Router();
-const {
-  getSurveysAmount,
-  getAllSurveys,
-  getSurveys,
-  getSurveyById,
-  updateSurvey,
-  createSurvey
-} = require("../controllers/surveysController");
+const { getAllSurveys, getSurveys, getSurveyById, updateSurvey, createSurvey,patchSurveyTitle} = require("../controllers/surveysController");
 
 surveysRouter.get('/', getAllSurveys);
 
@@ -41,6 +35,21 @@ surveysRouter.put("/:id", async (req, res) => {
     res.status(404).send({ ok: false });
   }
 });
+
+surveysRouter.post("/", async (req, res) => {
+  console.log("Request body:", req.body);
+
+  try {
+    const result = await createSurvey(req.body);
+    console.log("Survey creation successful, sending response...");
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("Error in surveysRouter:", err.message);
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+surveysRouter.patch('/:surveyCode/title', authenticateToken, patchSurveyTitle);
 
 
 

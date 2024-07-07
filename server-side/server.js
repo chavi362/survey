@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 const loginRouter = require("./routes/loginRouter");
 const surveysRouter = require("./routes/surveysRouter");
-const surveyRouter = require("./routes/surveyRouter");
+// const surveyRouter = require("./routes/surveyRouter");
 const userRouter = require('./routes/userRouter.js');
 const registerRouter = require('./routes/registerRouter.js');
 const propertiesRouter = require('./routes/propertiesRouter.js');
@@ -44,8 +44,8 @@ app.use("/register", registerRouter);
 app.use("/surveys/:surveyId/questions/:questionCode/close-answers", closeAnswersRouter);
 app.use("/surveys/:surveyId/answers", answersRouter);
 app.use("/surveys/:surveyId/questions", questionsRouter);
-app.use("/surveys", surveyRouter); 
-app.use("/allSurveys", surveysRouter);
+app.use("/surveys", surveysRouter); 
+// app.use("/allSurveys", surveysRouter);
 app.use("/users", userRouter); 
 app.use("/properties", propertiesRouter); 
 app.use("/surveys/:surveyId/responses", surveyResponsesRouter); 

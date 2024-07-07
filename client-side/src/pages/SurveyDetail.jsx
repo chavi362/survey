@@ -37,7 +37,7 @@ const SurveyDetail = () => {
       const response = await serverRequests('POST', `surveys/${surveyId}/answers`, { surveyId, answers, userId });
       if (response.status === 200) {
         alert("Your answers have been saved successfully");
-        navigate('/home/all-surveys');
+        navigate('/home/surveys');
       } else {
         console.error("Error saving answers:", response);
       }

@@ -68,7 +68,7 @@ const HomePage = () => {
         </p>
       </section>
       <section>
-        <button className='navLinks linkBtn' onClick={() => { navigate("/home/all-surveys") }}>כל הסקרים</button>
+        <button className='navLinks linkBtn' onClick={() => { navigate("/home/surveys") }}>כל הסקרים</button>
         <button className='navLinks linkBtn' onClick={() => { navigate("/home/craete-survey") }}>יצירת סקר </button>
         
       </section>
