@@ -10,31 +10,31 @@ function ManagerPage() {
   sessionStorage.setItem("isManager", true);
   let navigate = useNavigate();
 
-  useEffect(() => {
-      const checkAdmin = async () => {
+  // useEffect(() => {
+  //     const checkAdmin = async () => {
       
-          try {
-              const response = await serverRequests("GET", "users/admin");
-              if (response.ok) {
-                  const data = await response.json();
-                  console.log(data)
-                  if (!data.isAdmin) {
-                      navigate("/");
-                  }
-              } else {
-                  navigate("/");
-              }
-          } catch (error) {
-              console.error("Error checking admin status:", error);
-              navigate("/");
-          }
-      };
+  //         try {
+  //             const response = await serverRequests("GET", "users/admin");
+  //             if (response.ok) {
+  //                 const data = await response.json();
+  //                 console.log(data)
+  //                 if (!data.isAdmin) {
+  //                     navigate("/");
+  //                 }
+  //             } else {
+  //                 navigate("/");
+  //             }
+  //         } catch (error) {
+  //             console.error("Error checking admin status:", error);
+  //             navigate("/");
+  //         }
+  //     };
 
-      checkAdmin();
-  }, [navigate]);
+  //     checkAdmin();
+  // }, [navigate]);
   return (
     <div id='managerPage'>
-      {/* <ManagerNav /> */}
+      <ManagerNav />
       <div className='firstPadding'></div>
       <button className='navLinks linkBtn' onClick={() => { navigate("/manager/surveysToConfirm") }}>סקרים הממתינים לאישור</button>
     </div>
