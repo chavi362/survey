@@ -24,9 +24,11 @@ function AllSurveys() {
   ] = useGetPaginationData(`surveys?&page=${page}&limit=${perPage}`);
   
   useEffect(() => {
+
     if (error) {
       console.error("Error fetching surveys:", error);
     } else if (data) {
+      console.console.log(data)
       let surveys = data.surveys;
       let tempSurveys = [...allSurveys];
       tempSurveys = [...tempSurveys, ...surveys];

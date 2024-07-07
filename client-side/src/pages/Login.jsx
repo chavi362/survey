@@ -34,6 +34,7 @@ function LogIn({ updateUserContext }) {
       Cookies.set('token', data.token, { expires: 1 });
       console.log(data.role)
       if (data.role === "admin") {
+        debugger;
         navigate("/managerPage");
       } else {
         navigate("/home");

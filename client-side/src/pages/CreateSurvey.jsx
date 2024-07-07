@@ -8,6 +8,7 @@ import { serverRequests } from "../Api";
 
 const CreateSurvey = () => {
   const user = useContext(UserContext);
+  console.log(user)
   const [surveyTitle, setSurveyTitle] = useState('');
   const [questions, setQuestions] = useState([]);
   const [isSurveySaved, setIsSurveySaved] = useState(false);

@@ -10,7 +10,7 @@ const ManagerSurveyItem = ({ survey }) => {
           console.error('Error fetching surveys:', error);
         } else if (data) {
             console.log(data);
-            setNumberOfResponses(data.surveys);
+            setNumberOfResponses(data.numberOfUsers);
          
         }
       }, [data, error]);

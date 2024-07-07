@@ -5,5 +5,6 @@ const authenticateToken = require('../middlewares/authenticateToken');
 const surveyMiddleware = require('../middlewares/surveyMiddleware');
 const checkSurveyManager = require('../middlewares/checkSurveyManager');
 const controller=require('../controllers/surveyResponsesController')
-surveyResponsesRouter.get("/numberOfResponses", authenticateToken, checkSurveyManager, controller.getNumberOfResponses);
+// surveyResponsesRouter.get("/numberOfResponses", authenticateToken, checkSurveyManager, controller.getNumberOfResponses);
+surveyResponsesRouter.get("/numberOfResponses",  controller.getNumberOfResponses);
 module.exports = surveyResponsesRouter;
