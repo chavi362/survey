@@ -2,6 +2,8 @@ import Cookies from 'js-cookie';
 
 export async function serverRequests(method, URL, body) {
     const token = Cookies.get('token');
+    console.log(Cookies)
+    console.log(token)
     const headers = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -13,7 +15,7 @@ export async function serverRequests(method, URL, body) {
 
     if (method === 'GET') {
         try {
-            const fetchResponse = await fetch(`http://localhost:3000/${URL}`, { method: 'GET', headers });
+            const fetchResponse = await fetch(`http://localhost:3000/${URL}`, { method: 'GET', headers, credentials: 'include' });
             if (fetchResponse.ok) {
                 console.log('Fetch response headers:', fetchResponse.headers);
                 return fetchResponse;
