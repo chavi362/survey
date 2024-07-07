@@ -1,16 +1,4 @@
 const model = require('../models/userModel');
-
-
-
-async function loginUser(userName,password){
-    try{
-       const userRes=await model.loginUser(userName,password);
-       return userRes;
-      // return res.status(200).json(userRes);
-    }catch(err){
-        throw err;
-    } 
-}
 async function registerUser(userName,password){
     try{
     
@@ -34,13 +22,13 @@ async function getAllUsers() {
 }
    
 
-async function updateUser(userToUp,id) {
+async function updateUser(userToUp,userCode) {
     try {
-        const user=await model.updateUser(userToUp,id);
+        const user=await model.updateUser(userToUp,userCode);
         return user;
     }
     catch (err) {
         throw err;
     }
 }
-module.exports = {loginUser,getAllUsers,getUsersByUserName,registerUser,updateUser}
+module.exports = {getAllUsers,getUsersByUserName,registerUser,updateUser}

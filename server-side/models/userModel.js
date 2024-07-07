@@ -18,39 +18,69 @@ async function loginUser(password,userName) {
     throw err;
   }
 }
+
 async function registerUser(userName, password) {
   try {
-    const sqlUser = createObject("users", "userName", "?");
+
+    const sqlUser = 'INSERT INTO users (userName) VALUES (?)';
     const [userResult] = await pool.execute(sqlUser, [userName]);
     const userId = userResult.insertId;
-    console.log("userId " + userId)
-    const sqlPassword = createObject("passwords", "user_id,user_password", "?,?");
-    console.log(sqlPassword);
+
+    const sqlPassword = 'INSERT INTO passwords (user_id, user_password) VALUES (?, ?)';
     await pool.execute(sqlPassword, [userId, password]);
+
     console.log('User registered successfully!');
-    return { "id": userId, "userName": userName };
+    return { userCode: userId, userName: userName, role: 'user' };
   } catch (err) {
-    console.error('Error in register:', err);
+    console.error('Error in registerUser:', err);
     throw err;
   }
 }
+
 async function getUsersByUserName(userName, start = 0, limit = 2) {
   try {
     const sql = getObjectByPram("Users", "userName", limit, start);
     const [rows, fields] = await pool.query(sql, [userName]);
     return rows;
   } catch (err) {
+    console.error('Error in getUsersByUserName:', err);
+    throw err;
   }
 }
+
 async function getAllUsers() {
-  const sql = getObjects("users");
-  const [rows, fields] = await pool.query(sql);
-  return rows;
-}
-async function updateUser(updatedUser, id) {
-  const queryTodo = updateObject("users", "name = ?, userName = ?, email = ? , address = ? ,phone = ? , company = ?", "id");
-  const result = await pool.query(queryTodo, [updatedUser.username, updatedUser.email,updatedUser.email,updatedUser.address,updatedUser.phone,updatedUser.company, id]);
-  return updateUser;
+  try {
+    const sql = getObjects("users");
+    const [rows, fields] = await pool.query(sql);
+    return rows;
+  } catch (err) {
+    console.error('Error in getAllUsers:', err);
+    throw err;
+  }
 }
 
-module.exports = { getAllUsers, loginUser, getUsersByUserName, registerUser,updateUser } 
+async function updateUser(updatedUser, userCode) {
+  try {
+    const queryTodo = updateObject("users", "name = ?, username = ?, email = ?, ageID = ?, genderID = ?, areaID = ?, sectorID = ?, educationID = ?, incomeID = ?", "userCode");
+    
+    const result = await pool.query(queryTodo, [
+      updatedUser.firstName + ' ' + updatedUser.lastName,
+      updatedUser.username,
+      updatedUser.email,
+      updatedUser.ageID,
+      updatedUser.genderID,
+      updatedUser.areaID,
+      updatedUser.sectorID,
+      updatedUser.educationID,
+      updatedUser.incomeID,
+      userCode
+    ]);
+
+    return result;
+  } catch (err) {
+    console.error('Error in updateUser:', err);
+    throw err;
+  }
+}
+
+module.exports = { getAllUsers, loginUser, getUsersByUserName, registerUser,updateUser } ;

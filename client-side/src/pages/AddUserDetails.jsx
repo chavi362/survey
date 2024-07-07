@@ -7,9 +7,10 @@ import useGetData from '../hooks/useGetData';
 
 const AddUserDetails = ({ updateUserContext }) => {
   const user = useContext(UserContext);
+  console.log(user)
   const navigate = useNavigate();
   const [formUser, setFormUser] = useState({
-    username: "",
+    username: user.userName,
     email: "",
     firstName: "",
     lastName: "",
@@ -35,7 +36,6 @@ const AddUserDetails = ({ updateUserContext }) => {
   const [sectorsData, sectorsError, sectorsLoading] = useGetData('properties/sectors');
   const [educationLevelsData, educationLevelsError, educationLevelsLoading] = useGetData('properties/education_levels');
   const [incomeLevelsData, incomeLevelsError, incomeLevelsLoading] = useGetData('properties/family_income_levels');
-
   useEffect(() => {
     if (agesData) setAges(agesData);
   }, [agesData]);
@@ -63,22 +63,22 @@ const AddUserDetails = ({ updateUserContext }) => {
   useEffect(() => {
     setFormUser((prevFormUser) => ({
       ...prevFormUser,
-      id: user.id,
-      username: user.username
+      usercode: user.userCode,
     }));
   }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedFormUser = { ...formUser, id: user.id };
+      const updatedFormUser = { ...formUser};
       debugger;
+      console.log(updatedFormUser)
       const response = await serverRequests('PUT', `users/${user.id}`, updatedFormUser);
       if (response.error) {
         console.error('Error updating user details:', response.error);
       } else {
         updateUserContext(updatedFormUser);
-        navigate(`/users/${updatedFormUser.id}/home`);
+        navigate("/home");
       }
     } catch (error) {
       console.error('Error updating user details:', error);
@@ -118,20 +118,7 @@ const AddUserDetails = ({ updateUserContext }) => {
                       <form onSubmit={handleSubmit}>
                         <p>Let's take more details....</p>
 
-                        <div className="form-outline mb-4">
-                          <input
-                            id="username"
-                            className="form-control"
-                            placeholder="Your username"
-                            value={formUser.username}
-                            onChange={handleChange}
-                            name="username"
-                            required
-                          />
-                          <label className="form-label" htmlFor="username">
-                            Username
-                          </label>
-                        </div>
+                    
 
                         <div className="form-outline mb-4">
                           <input

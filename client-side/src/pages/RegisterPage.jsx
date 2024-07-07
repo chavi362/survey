@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../sass/form.scss';
 import { serverRequests } from "../Api";
+import Cookies from 'js-cookie';
 
 const Register = ({ updateUserContext }) => {
   const navigate = useNavigate();
@@ -26,10 +27,10 @@ const Register = ({ updateUserContext }) => {
           return;
         }
         const registerResponse = await serverRequests("POST", 'register', { userName: user.userName, password: user.password });
-        const data = await registerResponse.json(); // parse the JSON response
-        const userContextData = {
-          userCode: data.userCode
-        };
+        const data = await registerResponse.json(); 
+        console.log(data)
+        const userContextData =data.user
+        Cookies.set('token', data.token, { expires: 1 });
         updateUserContext(userContextData);
         navigate(`/create-account`);
       }

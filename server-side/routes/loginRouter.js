@@ -9,12 +9,9 @@ loginRouter.post("/", async (req, res) => {
 
   try {
     const user = await postLogin(req.body);
-
-    // Generate JWT
     const token = generateToken(user);
     console.log(token);
 
-    // Set JWT in HTTP-only cookie
     res.cookie('token', token, {
       httpOnly: true,
       maxAge: 3600000 // 1 hour
