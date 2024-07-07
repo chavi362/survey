@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import useGetData from '../hooks/useGetData';
 
-const CloseQuestion = ({ question,handleChange  }) => {
+const CloseQuestion = ({ question,handleChange, isManagerSeeing  }) => {
     const [answers, setAnswers] = useState([]);
     const [data, error, loading, setLoading] = useGetData(`surveys/${question.surveyCode}/questions/${question.questionCode}/close-answers`);
 
@@ -24,6 +24,7 @@ const CloseQuestion = ({ question,handleChange  }) => {
                 <Form.Check
                   key={index}
                   type="radio"
+                  disabled = {isManagerSeeing}
                   name={`question-${question.questionCode}`}
                   id={`question-${question.questionCode}-option${index}`}
                   label={answer.answer} // Assuming answer has optionText property

@@ -2,7 +2,7 @@ import React  from 'react';
 import { Form } from 'react-bootstrap';
 
 
-const OpenQuestion = ({ question, handleChange }) => {
+const OpenQuestion = ({ question, handleChange, isManagerSeeing }) => {
   
   return (
     <div className="mb-3">
@@ -14,6 +14,7 @@ const OpenQuestion = ({ question, handleChange }) => {
             name={`question-${question.questionCode}`}
             id={`question-${question.questionCode}-textarea`}
             placeholder="כתוב את תשובתך כאן"
+            disabled = {isManagerSeeing}
             onChange={(e) => handleChange(question.questionCode, e.target.value)}
           />
   

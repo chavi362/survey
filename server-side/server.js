@@ -46,6 +46,7 @@ app.use("/register", registerRouter);
 app.use("/surveys/:surveyId/questions/:questionCode/close-answers", closeAnswersRouter);
 app.use("/surveys/:surveyId/answers", answersRouter);
 app.use("/surveys/:surveyId/questions", questionsRouter);
+// app.use("/surveys/:surveyId/confirm", surveysRouter);
 app.use("/surveys", surveysRouter); 
 // app.use("/allSurveys", surveysRouter);
 app.use("/users", userRouter); 

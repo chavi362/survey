@@ -48,7 +48,7 @@ const SurveyDetail = () => {
 
   const handleConfirm = async () => {
     try {
-      const response = await serverRequests('POST', `surveys/${survey.surveyCode}/confirm`);
+      const response = await serverRequests('PATCH', `surveys/${survey.surveyCode}/confirm`);
       if (response.status === 200) {
         alert("Survey confirmed successfully");
         navigate('/manager/surveysToConfirm');
@@ -65,12 +65,12 @@ const SurveyDetail = () => {
   return (
     <div>
       <h1>{survey.surveyTitle}</h1>
+      <QuestionsListWithLoader loading={loading} questions={questions} onSubmit={handleSubmit} isManagerSeeing={isManagerSeeing} />
       {isManagerSeeing ? (
-        <button onClick={handleConfirm}>Confirm Survey</button>
-      ) : (
-        <QuestionsListWithLoader loading={loading} questions={questions} onSubmit={handleSubmit} />
-      )}
+      <button onClick={handleConfirm}>Confirm Survey</button>
+    ) :(<div></div>)}
     </div>
+    
   );
 };
 

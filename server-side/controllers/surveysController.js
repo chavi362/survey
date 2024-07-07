@@ -107,6 +107,27 @@ async function getSurveysByManager(req, res) {
     }
 }
 
-module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, patchSurveyTitle, getSurveysByManager };
+const patchSurveyConfirm = async (req, res) => {
+    console.log(req.params)
+    const { surveyCode } = req.params;
+    console.log(surveyCode)
+    try {
+      const survey = await getSurveyById(surveyCode);
+      if (!survey) {
+        return res.status(404).json({ error: 'Survey not found' });
+      }
+
+      const result = await model.updateSurveyConfirm(surveyCode);
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'Survey not found' });
+      }
+      res.status(200).json({ message: 'Survey confirm updated successfully' });
+    } catch (error) {
+      console.error('Error updating survey title:', error);
+      res.status(500).json({ error: 'An error occurred while updating the survey title' });
+    }
+  };
+
+module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, patchSurveyTitle, getSurveysByManager, patchSurveyConfirm };
 
 
