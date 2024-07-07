@@ -31,6 +31,4 @@ userRouter.get('/admin', authenticateToken, isAdmin, (req, res) => {
     res.status(200).json({ isAdmin: true }); 
 });
 
-  
-
 module.exports = userRouter;

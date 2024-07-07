@@ -1,6 +1,7 @@
 const pool = require('../DB.js');
 const { createObject, getObjectByPram, deleteObject, updateObject } = require("./queryModel.js");
 const getNumberOfResponse = async (surveyCode) => {
+    console.log(surveyCode)
     try {
         const sql = `
             SELECT COUNT(DISTINCT userCode) AS numberOfUsers
@@ -28,5 +29,4 @@ const getNumberOfResponse = async (surveyCode) => {
 
 module.exports = {
     getNumberOfResponse,
-    // other functions...
 };
