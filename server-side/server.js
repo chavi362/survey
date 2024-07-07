@@ -14,6 +14,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); 
+app.use(express.static('public'));
 
 
 const config = require('./config/config.js');
@@ -40,6 +41,9 @@ const questionsRouter = require("./routes/questionsRouter.js");
 const closeAnswersRouter = require("./routes/closeAnswersRouter.js");
 const answersRouter = require("./routes/answersRouter.js");
 const surveyResponsesRouter = require("./routes/surveyResponsesRouter.js");
+
+const imageRoutes = require("./routes/imagesRouter")
+app.use("/upload",imageRoutes)
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
