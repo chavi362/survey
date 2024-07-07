@@ -1,7 +1,7 @@
 const express = require("express");
 const authenticateToken = require('../middlewares/authenticateToken');
 const surveysRouter = express.Router();
-const { getAllSurveys, getSurveys, getSurveyById, updateSurvey, createSurvey,patchSurveyTitle} = require("../controllers/surveysController");
+const { getAllSurveys, getSurveys, getSurveyById, updateSurvey, createSurvey,patchSurveyTitle, patchSurveyConfirm} = require("../controllers/surveysController");
 
 surveysRouter.get('/', getAllSurveys);
 
@@ -50,6 +50,8 @@ surveysRouter.post("/", async (req, res) => {
 });
 
 surveysRouter.patch('/:surveyCode/title', authenticateToken, patchSurveyTitle);
+
+surveysRouter.patch('/:surveyCode/confirm', authenticateToken, patchSurveyConfirm);
 
 
 
