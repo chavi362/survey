@@ -1,15 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import AllSurveys from "./AllSurveys";
 import { useNavigate } from "react-router-dom";
 import ManagerNav from "./ManagerNav";
-import SurveysToConfirm from './SurveysToConfirm';
+import { serverRequests } from "../Api";
+import Cookies from 'js-cookie';
 
 
 function ManagerPage() {
   sessionStorage.setItem("isManager", true);
-
+  const token = Cookies.get('token');
   let navigate = useNavigate();
 
 
