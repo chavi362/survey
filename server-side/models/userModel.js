@@ -3,9 +3,9 @@ const { createObject, getObjectByPram, deleteObject, updateObject, getObjects } 
 
 async function loginUser(password,userName) {
   try {
-    const sql = `SELECT * FROM Passwords  join Users on userCode=user_id  WHERE Users.username = '${userName}' AND Passwords.user_password = '${password}' `;
+    const sql = `SELECT * FROM Passwords  join Users on userCode=user_id  WHERE Users.username = ? AND Passwords.user_password = ? `;
     console.log(sql,userName,password);
-    const result = await pool.query(sql);
+    const result = await pool.query(sql, [userName,password]);
     console.log(result);
     if (result.length > 0) {
       console.log(result[0]);
