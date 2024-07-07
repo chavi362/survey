@@ -26,7 +26,7 @@ function LogIn({ updateUserContext }) {
         return;
       }
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       const userContextData = {
         userCode: data.userCode,
       };

@@ -4,11 +4,12 @@ const { createObject, getObjectByPram, deleteObject, updateObject, getObjects } 
 async function loginUser(password,userName) {
   try {
     const sql = 'SELECT * FROM Passwords  join Users on userCode=user_id  WHERE Users.userName = ? AND Passwords.user_password = ? ';
-    console.log(sql,userName,password)
-    const [rows, fields] = await pool.query(sql, [userName, password]);
-    if (rows.length > 0) {
-      console.log(rows[0])
-      return rows[0];
+    console.log(sql,userName,password);
+    const result = await pool.query(sql, [userName, password]);
+    console.log(result);
+    if (result.length > 0) {
+      console.log(result[0]);
+      return result[0][0];
     } else {
       return null;
     }

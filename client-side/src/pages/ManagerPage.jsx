@@ -16,7 +16,7 @@ function ManagerPage() {
       const checkAdmin = async () => {
       
           try {
-              const response = await serverRequests("GET", "/users/admin", token);
+              const response = await serverRequests("GET", "users/admin");
               if (response.ok) {
                   const data = await response.json();
                   console.log(data)
