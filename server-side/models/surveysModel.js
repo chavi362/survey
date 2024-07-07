@@ -126,5 +126,39 @@ async function getSurveysByManager(managerCode) {
     throw new Error(err);
   }
 }
+async function getSurveysAmountByManager(managerCode) {
+  try {
+      const sql = `SELECT count(*) AS surveyCount FROM surveys WHERE managerCode = ?`;
+      const [result] = await pool.query(sql, [managerCode]);
+      if (result.length > 0) {
+          return result[0].surveyCount;
+      } else {
+          console.log("amount not found");
+          throw new Error(err);
+      }
+  } catch (err) {
+      console.error("Error:", err);
+      throw new Error(err);
+  }
+}
+async function getSurveysByManager(managerCode) {
+  try {
+      const sql = `SELECT * FROM surveys WHERE managerCode = ?`;
+      const [result] = await pool.query(sql, [managerCode]);
+      if (result.length > 0) {
+          return {
+              success: true,
+              message: "surveys retrieved successfully",
+              surveys: result,
+          };
+      } else {
+          console.log("No surveys found for this manager");
+          return { success: true, message: "No surveys found for this manager", surveys: [] };
+      }
+  } catch (err) {
+      console.error("Error:", err);
+      throw new Error(err);
+  }
+}
 
-module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, updateSurveyTitle, getSurveysByManager };
+module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, updateSurveyTitle, getSurveysByManager ,getSurveysAmountByManager,getSurveysByManager};

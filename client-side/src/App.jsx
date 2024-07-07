@@ -14,7 +14,8 @@ import Error from './pages/Error';
 import SurveysToConfirm from './pages/SurveysToConfirm';
 import SurveyDetail from './pages/SurveyDetail';
 import AllSurveys from './pages/AllSurveys';
-import { SurveyProvider } from './components/SurveyContext'; // ייבוא SurveyProvider
+import ManagerSurveys from './pages/ManagerSurveys';
+import { SurveyProvider } from './components/SurveyContext'; 
 
 export const UserContext = createContext();
 
@@ -24,6 +25,7 @@ function App() {
     clearLocalStorage();
     setUser(null);
   };
+  
   return (
     <BrowserRouter>
       <UserContext.Provider value={user}>
@@ -32,12 +34,13 @@ function App() {
             <Route path="/" element={<Navigate to='/login' deleteUser={deleteUser} />} />
             <Route path="/login" element={<Login updateUserContext={setUser} />} />
             <Route path="/managerPage" element={<ManagerPage />} />
+            <Route path="/surveys/:managerCode/surveys" element={<ManagerSurveys />} /> {/* Adjusted route for ManagerSurveys */}
             <Route path="/manager/surveysToConfirm" element={<SurveysToConfirm />} />
             <Route path="/manager/surveysToConfirm/:surveyCode" element={<SurveyDetail />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/home/surveys" element={<AllSurveys />} />
             <Route path="/home/all-surveys/:surveyCode" element={<SurveyDetail />} />
-            <Route path="/home/craete-survey" element={<CreateSurvey />} />
+            <Route path="/home/create-survey" element={<CreateSurvey />} />
             <Route path="/surveys/:surveyCode" element={<SurveyDetail />} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />

@@ -8,9 +8,7 @@ import Cookies from 'js-cookie';
 
 function ManagerPage() {
   sessionStorage.setItem("isManager", true);
-  const token = Cookies.get('token');
   let navigate = useNavigate();
-
 
   useEffect(() => {
       const checkAdmin = async () => {

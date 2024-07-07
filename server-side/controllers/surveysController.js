@@ -27,23 +27,31 @@ async function getAllSurveys(req, res) {
         const limit = parseInt(req.query.limit, 10) || 10;
         const offset = (page - 1) * limit;
 
-        const result = await model.getAllSurveys(limit, offset);
-        console.log(result);
-        const totalSurveys = await model.getSurveysAmount();
-        console.log(totalSurveys) 
-        console.log(offset + limit )
+        const managerCode = req.query.managerCode;
+        let result, totalSurveys;
+
+        if (managerCode) {
+
+            result = await model.getSurveysByManager(managerCode);
+            totalSurveys = result.length; 
+        } else {
+            result = await model.getAllSurveys(limit, offset);
+            totalSurveys = await model.getSurveysAmount();
+        }
+
         const hasNextPage = offset + limit < totalSurveys;
         const hasPrevPage = offset > 0;
+
         res.setHeader('Link', [
             hasNextPage ? `<http://localhost:3000/allSurveys?page=${page + 1}&limit=${limit}>; rel="next"` : '',
             hasPrevPage ? `<http://localhost:3000/allSurveys?page=${page - 1}&limit=${limit}>; rel="prev"` : ''
         ].filter(Boolean).join(', '));
+        
         res.json(result);
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
 }
-
 async function createSurvey(body) {
     try {
         console.log(body+ "in controller")

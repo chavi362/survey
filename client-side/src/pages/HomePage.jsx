@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
-//import "../css/HomePage.css";
-
+import { UserContext } from '../App';
 const HomePage = () => {
   let navigate = useNavigate();
+  const user = useContext(UserContext);
   return (
     <div>
       <h1>Welcome to Survey Management System!</h1>
@@ -70,6 +70,7 @@ const HomePage = () => {
       <section>
         <button className='navLinks linkBtn' onClick={() => { navigate("/home/surveys") }}>כל הסקרים</button>
         <button className='navLinks linkBtn' onClick={() => { navigate("/home/craete-survey") }}>יצירת סקר </button>
+        <button className='navLinks linkBtn' onClick={() => { navigate(`/surveys/${user.userCode}/surveys`) }}>הסקרים שלי</button>
         
       </section>
       <footer>
