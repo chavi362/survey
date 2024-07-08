@@ -6,6 +6,7 @@ import WithLoader from '../hoc/WithLoader';
 import QuestionList from '../components/QuestionList';
 import { serverRequests } from "../Api";
 import { UserContext } from '../App';
+import '../css/SurveyDetail.css'
 
 const SurveyDetail = () => {
   const user = useContext(UserContext);
@@ -63,14 +64,14 @@ const SurveyDetail = () => {
   const QuestionsListWithLoader = WithLoader(QuestionList);
 
   return (
-    <div>
+    <div className='card singel-answer'>
       <h1>{survey.surveyTitle}</h1>
       <QuestionsListWithLoader loading={loading} questions={questions} onSubmit={handleSubmit} isManagerSeeing={isManagerSeeing} />
       {isManagerSeeing ? (
-      <button onClick={handleConfirm}>Confirm Survey</button>
-    ) :(<div></div>)}
+        <button onClick={handleConfirm} className='btn btn-light'>Confirm Survey</button>
+      ) : (<div></div>)}
     </div>
-    
+
   );
 };
 

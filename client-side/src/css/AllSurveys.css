@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-image: url('../../public/images/page1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.singel-survey {
+    background: linear-gradient(45deg, rgba(255, 111, 97, 0.8), rgba(222, 67, 19, 0.8));
+
+}
+
+.surveys-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.addSurveyTitle {
+    font-size: 3rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.firstPadding {
+    padding-top: 60px;
+}
+
+.addSurveyTitle {
+    font-size: 3rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.addSurveyTitle::after {
+    content: '';
+    width: 50%;
+    height: 4px;
+    background: linear-gradient(45deg, rgba(255, 111, 97, 0.8), rgba(222, 67, 19, 0.8));
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+}
