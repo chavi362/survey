@@ -14,7 +14,7 @@ import Error from './pages/Error';
 import SurveysToConfirm from './pages/SurveysToConfirm';
 import SurveyDetail from './pages/SurveyDetail';
 import AllSurveys from './pages/AllSurveys';
-import { SurveyProvider } from './components/SurveyContext'; 
+import { SurveyProvider } from './components/SurveyContext';
 import ManagerSurveys from './pages/ManagerSurveys';
 import SurveyResponses from './pages/SurveyRespones'
 
@@ -29,13 +29,13 @@ function App() {
   return (
     <BrowserRouter>
       <UserContext.Provider value={user}>
-        <SurveyProvider> 
+        <SurveyProvider>
           <Routes>
             <Route path="/" element={<Navigate to='/login' deleteUser={deleteUser} />} />
             <Route path="/login" element={<Login updateUserContext={setUser} />} />
             <Route path="/managerPage" element={<ManagerPage />} />
             <Route path="/surveys/:managerCode/surveys" element={<ManagerSurveys />} />
-            <Route path="/survey/:surveyCode/responses" component={SurveyResponses} />
+            <Route path="/survey/:surveyCode/responses" element={<SurveyResponses />} />
             <Route path="/manager/surveysToConfirm" element={<SurveysToConfirm />} />
             <Route path="/manager/surveysToConfirm/:surveyCode" element={<SurveyDetail />} />
             <Route path="/home" element={<HomePage />} />

@@ -27,6 +27,80 @@ const getNumberOfResponse = async (surveyCode) => {
     }
 };
 
-module.exports = {
-    getNumberOfResponse,
+
+const getFilteredResponses = async (questionCode, filters) => {
+    try {
+        let sql = `
+            WITH user_answers AS (
+                SELECT cd.userCode, ca.answer, ca.answerCode 
+                FROM surveyCloseAnswers ca 
+                JOIN surveyCloseData cd ON ca.answerCode = cd.answerCode 
+                WHERE ca.questionCode = ?
+            ),
+            filtered_users AS (
+                SELECT u.userCode 
+                FROM users u
+        `;
+
+        const joins = [];
+        const filterConditions = [];
+        const filterValues = [questionCode];
+        if (filters.ageRange && filters.ageRange.length > 0) {
+            joins.push('JOIN ages a ON u.ageID = a.ageID');
+            filterConditions.push(`(${filters.ageRange.map(() => '(a.startYear <= ? AND a.endYear >= ?)').join(' OR ')})`);
+            filters.ageRange.forEach(ageRange => {
+                filterValues.push(ageRange.endYear, ageRange.startYear);
+            });
+        }
+        if (filters.incomeRange && filters.incomeRange.length > 0) {
+            joins.push('JOIN family_income_levels fil ON u.incomeID = fil.incomeID');
+            filterConditions.push(`(${filters.incomeRange.map(() => '(fil.startRange <= ? AND fil.endRange >= ?)').join(' OR ')})`);
+            filters.incomeRange.forEach(incomeRange => {
+                filterValues.push(incomeRange.endRange, incomeRange.startRange);
+            });
+        }
+
+        if (filters.areaID) {
+            filterConditions.push('u.areaID = ?');
+            filterValues.push(filters.areaID);
+        }
+
+        if (filters.genderID) {
+            filterConditions.push('u.genderID = ?');
+            filterValues.push(filters.genderID);
+        }
+
+        if (filters.educationID) {
+            filterConditions.push('u.educationID = ?');
+            filterValues.push(filters.educationID);
+        }
+
+        if (filters.sectorID) {
+            filterConditions.push('u.sectorID = ?');
+            filterValues.push(filters.sectorID);
+        }
+        if (joins.length > 0) {
+            sql += ' ' + joins.join(' ');
+        }
+        if (filterConditions.length > 0) {
+            sql += ' WHERE ' + filterConditions.join(' AND ');
+        }
+
+        sql += `
+            )
+            SELECT COUNT(u.userCode) AS numberofresponse, u.answer 
+            FROM filtered_users f 
+            JOIN user_answers u ON u.userCode = f.userCode 
+            GROUP BY u.answerCode, u.answer;
+        `;
+
+        const [result] = await pool.query(sql, filterValues);
+        return result;
+    } catch (error) {
+        throw error;
+    }
 };
+
+module.exports = { getNumberOfResponse, getFilteredResponses };
+
+

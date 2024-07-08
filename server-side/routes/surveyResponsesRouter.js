@@ -7,4 +7,5 @@ const checkSurveyManager = require('../middlewares/checkSurveyManager');
 const controller=require('../controllers/surveyResponsesController')
 // surveyResponsesRouter.get("/numberOfResponses", authenticateToken, checkSurveyManager, controller.getNumberOfResponses);
 surveyResponsesRouter.get("/numberOfResponses",  controller.getNumberOfResponses);
+surveyResponsesRouter.post('/:question-code/filtered-responses', controller.getFilteredResponsesController);
 module.exports = surveyResponsesRouter;

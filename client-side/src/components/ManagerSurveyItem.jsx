@@ -24,17 +24,13 @@ const ManagerSurveyItem = ({ survey }) => {
       <p>Confirmed: {survey.confirmed ? "Yes" : "No"}</p>
       <p>Number of Responses: {numberOfResponses}</p>
       {numberOfResponses > 0 && (
-        <Link 
-          to={{
-            pathname: `/survey/${survey.surveyCode}/responses`,
-            state: { 
-              surveyTitle: survey.surveyTitle,
-              numberOfResponses: numberOfResponses 
-            }
-          }}
-        >
-          View Responses
-        </Link>
+       <Link
+       to={`/survey/${survey.surveyCode}/responses`}
+       state={{ surveyTitle: survey.surveyTitle, numberOfResponses: numberOfResponses }}
+     >
+       View Responses
+     </Link>
+     
       )}
     </div>
   );
