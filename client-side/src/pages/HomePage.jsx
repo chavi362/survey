@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from '../App';
+
 const HomePage = () => {
   let navigate = useNavigate();
   const user = useContext(UserContext);
