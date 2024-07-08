@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from '../App';
 import '../css/HomePage.css';
 
+
 const HomePage = () => {
   let navigate = useNavigate();
   const user = useContext(UserContext);

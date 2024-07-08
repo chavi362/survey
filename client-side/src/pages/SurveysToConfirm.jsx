@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { serverRequests } from "../Api";
 import { useSurvey } from "../components/SurveyContext";
 import Survey from "./Survey";
+import { BsEye } from "react-icons/bs";
 
 const SurveysToConfirm = () => {
   const { setSurvey } = useSurvey();
@@ -43,11 +44,11 @@ const SurveysToConfirm = () => {
       {allSurveys.length === 0 ? (
         <p>No surveys available</p>
       ) : (
-        <div>
+        <div className="surveys-to-confirm">
           {allSurveys.map((survey) => (
             <section key={survey.surveyCode}>
               <Survey survey={survey} />
-              <button className="navLinks linkBtn" onClick={() => handleView(survey)}>צפיה</button>
+              <button className="navLinks linkBtn" onClick={() => handleView(survey)}><BsEye /></button>
             </section>
           ))}
         </div>

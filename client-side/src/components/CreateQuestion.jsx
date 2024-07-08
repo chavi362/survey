@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { FaEdit, FaTrashAlt, FaPlus } from 'react-icons/fa';
 import { Form, Button } from 'react-bootstrap';
 import { serverRequests } from "../Api";
+import UploadImage from './UploadImage';
 
 const CreateQuestion = ({ surveyCode, onDelete }) => {
   const [isEditing, setIsEditing] = useState(true);
   const [questionType, setQuestionType] = useState('open');
-  const [question, setQuestion] = useState({ title: '', type: 'open' });
+  const [question, setQuestion] = useState({ title: '', type: 'open', image_url:'' });
   const [answers, setAnswers] = useState([]);
   const [questionCode, setQuestionCode] = useState(null);
 
@@ -134,10 +135,17 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
   };
 
   return (
+    <div>
+
+  
     <div className="card mb-4">
       <div className="card-body">
         {isEditing ? (
           <>
+          <div className="mb-3">
+              <label htmlFor="questionTitle" className="form-label">Image:</label>
+              <UploadImage setQuestion={setQuestion}/>
+            </div>
             <div className="mb-3">
               <label htmlFor="questionTitle" className="form-label">Question:</label>
               <input
@@ -200,6 +208,7 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
         ) : (
           <div>
             <h5>{question.title}</h5>
+            <img className='images' src={`http://localhost:3000/images/${question.image_url}`} alt={`image ${question.title}`} />
             <p>Type: {question.type}</p>
             {question.type === 'close' && (
               <ul>
@@ -220,7 +229,9 @@ const CreateQuestion = ({ surveyCode, onDelete }) => {
         )}
       </div>
     </div>
+    </div>
   );
+
 };
 
 export default CreateQuestion;

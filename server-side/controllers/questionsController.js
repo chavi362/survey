@@ -46,10 +46,10 @@ const updateQuestion = async (req, res) => {
   
 const createQuestion = async (req, res) => {
     const { surveyId } = req.params;
-    const { title, type } = req.body;
+    const { title, type, image_url } = req.body;
   
     try {
-      const result = await model.createQuestion(title,surveyId,  type);
+      const result = await model.createQuestion(title,surveyId,  type, image_url);
       res.status(201).json(result);
     } catch (error) {
       console.error('Error creating question:', error);

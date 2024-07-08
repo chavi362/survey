@@ -90,6 +90,7 @@ CREATE TABLE surveysquestions (
     question TEXT NOT NULL,
     surveyCode INT NOT NULL,
     questionType ENUM('open', 'close') NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
     FOREIGN KEY (surveyCode) REFERENCES surveys(surveyCode)
 );
 
@@ -197,28 +198,28 @@ VALUES
 
 
 -- Insert statements for the surveysquestions table
-INSERT INTO surveysquestions (question, surveyCode, questionType)
+INSERT INTO surveysquestions (question, surveyCode, questionType, image_url)
 VALUES 
-('איך היית מדרג את השירות שלנו?', 1, 'close'),
-('מה דעתך על האיכות של המוצרים?', 1, 'open'),
-('האם אתה מרוצה מהמקום עבודה?', 2, 'close'),
-('מה דעתך על התנאים במקום העבודה?', 2, 'open'),
-('איך היית מדרג את השירות שלנו?', 3, 'close'),
-('מה דעתך על האיכות של המוצרים?', 3, 'open'),
-('האם אתה מרוצה מהמקום עבודה?', 4, 'close'),
-('מה דעתך על התנאים במקום העבודה?', 4, 'open'),
-('איך היית מדרג את השירות שלנו?', 5, 'close'),
-('מה דעתך על האיכות של המוצרים?', 5, 'open'),
-('האם אתה מרוצה מהמקום עבודה?', 6, 'close'),
-('מה דעתך על התנאים במקום העבודה?', 6, 'open'),
-('איך היית מדרג את השירות שלנו?', 7, 'close'),
-('מה דעתך על האיכות של המוצרים?', 7, 'open'),
-('האם אתה מרוצה מהמקום עבודה?', 8, 'close'),
-('מה דעתך על התנאים במקום העבודה?', 8, 'open'),
-('איך היית מדרג את השירות שלנו?', 9, 'close'),
-('מה דעתך על האיכות של המוצרים?', 9, 'open'),
-('האם אתה מרוצה מהמקום עבודה?', 10, 'close'),
-('מה דעתך על התנאים במקום העבודה?', 10, 'open');
+('איך היית מדרג את השירות שלנו?', 1, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 1, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 2, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 2, 'open', 'image1.png'),
+('איך היית מדרג את השירות שלנו?', 3, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 3, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 4, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 4, 'open', 'image1.png'),
+('איך היית מדרג את השירות שלנו?', 5, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 5, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 6, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 6, 'open', 'image1.png'),
+('איך היית מדרג את השירות שלנו?', 7, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 7, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 8, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 8, 'open', 'image1.png'),
+('איך היית מדרג את השירות שלנו?', 9, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 9, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 10, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 10, 'open', 'image1.png');
 
 -- Insert statements for the surveyCloseAnswers table
 INSERT INTO surveyCloseAnswers (questionCode, answer)

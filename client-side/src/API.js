@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 
 export async function serverRequests(method, URL, body) {
+    console.log(body);
     const token = Cookies.get('token');
     console.log(Cookies)
     console.log(token)
@@ -33,6 +34,7 @@ export async function serverRequests(method, URL, body) {
         body: JSON.stringify(body),
         credentials: 'include',
     };
+    console.log(requestOptions);
 
     try {
         const fetchResponse = await fetch(`http://localhost:3000/${URL}`, requestOptions);

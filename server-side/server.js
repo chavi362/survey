@@ -42,8 +42,8 @@ const closeAnswersRouter = require("./routes/closeAnswersRouter.js");
 const answersRouter = require("./routes/answersRouter.js");
 const surveyResponsesRouter = require("./routes/surveyResponsesRouter.js");
 
-const imageRoutes = require("./routes/imagesRouter")
-app.use("/upload",imageRoutes)
+const imagesRouter = require("./routes/imagesRouter")
+app.use("/upload",imagesRouter)
 
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);

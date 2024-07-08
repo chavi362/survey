@@ -9,16 +9,20 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { getQuestionById } = require("../controllers/questionsController");
 
+
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 router.use(cors({ origin: config.CORS_ORIGIN, credentials: true }));
 router.use(cookieParser());
+
+
 
 // Ensure the directory exists
 const uploadDir = path.join(__dirname, '../public/images');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -30,10 +34,14 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+console.log("******");
 
-router.put('/:gift_id', upload.single('image'), async (req, res) => {
+router.put('/:question_id', upload.single('image'), async (req, res) => {
     try {
+        console.log(req.file);
         const image = req.file.filename;
+        console.log("******************88");
+        console.log(image);
         if (!req.file.filename) {
             const error = {
                 message: "Fill in the data"
@@ -41,6 +49,7 @@ router.put('/:gift_id', upload.single('image'), async (req, res) => {
             res.status(400).send(error);
         }
         else {
+            console.log(req.params);
             const question_id = req.params.question_id;
 
             if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
@@ -58,6 +67,17 @@ router.put('/:gift_id', upload.single('image'), async (req, res) => {
         console.error("Error updating image:", err);
         res.status(500).send({ error: err.message });
     }
+
+    
+
+
 });
+
+router.post('/',upload.single('image'), (req, res) => {
+    console.log("hiiiiiiiiii aniiiiii poooooooo");
+    console.log(req.file);
+    const image = req.file.filename;
+    console.log(image);
+})
 
 module.exports = router;
