@@ -17,6 +17,9 @@ import AllSurveys from './pages/AllSurveys';
 import { SurveyProvider } from './components/SurveyContext'; 
 import ManagerSurveys from './pages/ManagerSurveys';
 import SurveyResponses from './pages/SurveyRespones'
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 export const UserContext = createContext();
 

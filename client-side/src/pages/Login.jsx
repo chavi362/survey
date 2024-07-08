@@ -1,76 +1,175 @@
+// import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { serverRequests } from "../Api";
+// import Cookies from 'js-cookie';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import '../css/Login.css';
+
+// function LogIn({ updateUserContext }) {
+//   let navigate = useNavigate();
+//   const [userName, setUserName] = useState("");
+//   const [userPassword, setUserPassword] = useState("");
+
+//   const log = async () => {
+//     if (userName === "" || userPassword === "") {
+//       alert("All fields must be filled out!");
+//       return;
+//     }
+
+//     const url = "login";
+//     const body = { userName, userPassword };
+//     try {
+//       const response = await serverRequests("POST", url, body);
+//       if (!response.ok) {
+//         alert("User does not exist or incorrect details");
+//         return;
+//       }
+//       const data = await response.json();
+//       console.log(data);
+//       const userContextData = { userCode: data.userCode };
+//       updateUserContext(userContextData);
+//       Cookies.set('token', data.token, { expires: 1 });
+
+//       if (data.role === "admin") {
+//         navigate("/managerPage");
+//       } else {
+//         navigate("/home");
+//       }
+//     } catch (error) {
+//       console.error("Error in log function:", error);
+//       alert("Server error");
+//     }
+//   };
+
+//   return (
+//     <div className="login-container">
+//       <div className="login-form">
+//         {/* <h1 className="text-center mb-4">Surveys</h1> */}
+//         <h2 className="text-center mb-4">Existing User</h2>
+//         <div className="form-floating mb-3">
+//           <input
+//             type="text"
+//             className="form-control"
+//             id="floatingInput"
+//             placeholder="Enter Username"
+//             onChange={(event) => setUserName(event.target.value)}
+//           />
+//           <label htmlFor="floatingInput">Enter Username</label>
+//         </div>
+//         <div className="form-floating mb-3">
+//           <input
+//             type="password"
+//             className="form-control"
+//             id="floatingPassword"
+//             placeholder="Enter Password"
+//             onChange={(event) => setUserPassword(event.target.value)}
+//           />
+//           <label htmlFor="floatingPassword">Enter Password</label>
+//         </div>
+//         <div className="text-center pt-1 mb-5 pb-1">
+//           <button
+//             className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 sign-up-btn"
+//             onClick={log}
+//           >
+//             Log In
+//           </button>
+//         </div>
+//         <div className="d-flex align-items-center justify-content-center pb-4 ">
+//           <button
+//             className="login-btn-su"
+//             onClick={() => navigate("/register")}
+//           >
+//             New User
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default LogIn;
+//before the change
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { serverRequests } from "../Api";
 import Cookies from 'js-cookie';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Login.css';
 
 function LogIn({ updateUserContext }) {
   let navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
   const log = async () => {
     if (userName === "" || userPassword === "") {
-      alert("חובה למלא את כל הפרטים!");
+      alert("All fields must be filled out!");
       return;
     }
 
     const url = "login";
-    const body = {
-      userName: userName,
-      userPassword: userPassword,
-    };
+    const body = { userName, userPassword };
     try {
       const response = await serverRequests("POST", url, body);
       if (!response.ok) {
-        alert("משתמש לא קיים או שאחד הפרטים שגויים ");
+        alert("User does not exist or incorrect details");
         return;
       }
       const data = await response.json();
       console.log(data);
-      const userContextData = {
-        userCode: data.userCode,
-      };
+      const userContextData = { userCode: data.userCode };
       updateUserContext(userContextData);
       Cookies.set('token', data.token, { expires: 1 });
-      console.log(data.role)
+
       if (data.role === "admin") {
-        debugger;
         navigate("/managerPage");
       } else {
         navigate("/home");
       }
     } catch (error) {
       console.error("Error in log function:", error);
-      alert("שגיאה בשרת");
+      alert("Server error");
     }
   };
 
   return (
-    <div>
-      <h1 className="webTitle">סקרים</h1>
-      <div className="logInBox">
-        <h1 className="logIn">משתמש קיים</h1>
-        <input
-          type="text"
-          placeholder="הכנס שם משתמש"
-          onChange={(event) => setUserName(event.target.value)}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="הכנס סיסמא"
-          onChange={(event) => setUserPassword(event.target.value)}
-        />
-        <br />
-        <div className="submitBtn">
-          <button id="logInBtn" className="logInBtn" onClick={log}>
-            היכנס
-          </button>
+    <div className="login-container">
+      <div className="login-form">
+        <h2 className="text-center mb-4">Existing User</h2>
+        <div className="form-floating mb-3">
+          <input
+            type="text"
+            className="form-control"
+            id="floatingInput"
+            placeholder="Enter Username"
+            onChange={(event) => setUserName(event.target.value)}
+          />
+          <label htmlFor="floatingInput">Enter Username</label>
+        </div>
+        <div className="form-floating mb-3">
+          <input
+            type="password"
+            className="form-control"
+            id="floatingPassword"
+            placeholder="Enter Password"
+            onChange={(event) => setUserPassword(event.target.value)}
+          />
+          <label htmlFor="floatingPassword">Enter Password</label>
+        </div>
+        <div className="text-center pt-1 mb-5 pb-1">
           <button
-            className="logInBtn"
+            className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 sign-up-btn"
+            onClick={log}
+          >
+            Log In
+          </button>
+        </div>
+        <div className="d-flex align-items-center justify-content-center pb-4">
+          <button
+            className="login-btn-su"
             onClick={() => navigate("/register")}
           >
-            משתמש חדש
+            New User
           </button>
         </div>
       </div>
