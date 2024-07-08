@@ -1,0 +1,151 @@
+/* Import Montserrat font */
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'); */
+
+/* body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-image: url('../../public/images/page1.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.register-form {
+  background: rgba(255, 255, 255, 0.01);
+  padding: 30px;
+  border-radius: 10px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+/* width: 100%;
+  max-width: 400px;
+}
+
+.register-form h2, 
+.register-form .form-label, 
+.register-form .btn, 
+.register-form p, 
+.register-form a {
+  color: white;
+}
+
+.register-form h2 {
+  color: rgb(252, 246, 246);
+}
+
+.register-form .form-label {
+  color: #333;
+}
+
+.register-form .btn {
+  background: linear-gradient(45deg, #ff6f61, #de4313);
+  color: #fff;
+}
+
+.gradient-custom-2 {
+  background: linear-gradient(45deg, #ff6f61, #de4313);
+  color: #fff;
+} */
+/* Import Montserrat font */
+/* Import Montserrat font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-image: url('../../public/images/page1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.register-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.register-form {
+    /* background: rgba(255, 255, 255, 0.01); */
+    padding: 30px;
+    border-radius: 10px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    width: 100%;
+    max-width: 400px;
+      overflow: hidden
+
+}
+
+.register-form h2,
+.register-form .form-label,
+.register-form p,
+.register-form a {
+    color: white;
+}
+
+.register-form h2 {
+    color: rgb(255, 255, 255);
+}
+
+.register-form .form-label {
+    color: #ffffff;
+}
+
+.login-btn {
+    background: linear-gradient(45deg, #ff6f61, #de4313);
+    color: #fff;
+    border: none;
+    width: 20%;
+    /* padding: 15px; */
+    font-size: 0.7rem;
+    /* margin-top: 20px; */
+}
+
+/* .register-form .btn {
+  background: linear-gradient(45deg, #ff6f61, #de4313);
+  color: #fff;
+  border: none;
+  width: 60%;
+  padding: 15px;
+  font-size: 1.2rem;
+  margin-top: 20px;
+} */
+.sign-up-btn {
+    background: linear-gradient(45deg, #ff6f61, #de4313);
+    color: #fff;
+    border: none;
+    width: 50%;
+    padding: 15px;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+.register-form .btn:hover {
+    background: black;
+    color: #fff;
+}
+
+.gradient-custom-2 {
+    background: linear-gradient(45deg, #ff6f61, #de4313);
+    color: #fff;
+}
+
+.text-center {
+    text-align: center;
+}

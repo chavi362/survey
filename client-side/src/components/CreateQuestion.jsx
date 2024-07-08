@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaEdit, FaTrashAlt, FaPlus } from 'react-icons/fa';
 import { Form, Button } from 'react-bootstrap';
 import { serverRequests } from "../Api";
-import UploadImage from './UploadImage';
+// import UploadImage from './UploadImage';
 
 const CreateQuestion = ({ surveyCode, onDelete }) => {
   const [isEditing, setIsEditing] = useState(true);

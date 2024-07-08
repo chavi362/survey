@@ -3,7 +3,7 @@ import React from "react";
 const Survey = ({ survey }) => {
     return (
         <div>
-            <span>{survey.surveyTitle}</span>
+            <h3>{survey.surveyTitle}</h3>
 
         </div>
     );
