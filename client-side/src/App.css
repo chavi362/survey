@@ -23,6 +23,14 @@
   size: 20%;
   height: 200px;
 }
+
+.surveys-to-confirm{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: flex-end;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

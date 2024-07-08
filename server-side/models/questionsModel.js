@@ -1,9 +1,9 @@
 const pool = require('../DB.js');
 const { createObject, getObjectByPram, deleteObject, updateObject } = require("./queryModel.js");
-async function createQuestion(question ,surveyCode,questionType) {
+async function createQuestion(question ,surveyCode,questionType, image_url) {
     try {
-      const sql = createObject("surveysquestions", "question, surveyCode, questionType", "?,?,?");
-      const [result] = await pool.query(sql, [question ,surveyCode,questionType]);
+      const sql = createObject("surveysquestions", "question, surveyCode, questionType, image_url", "?,?,?,?");
+      const [result] = await pool.query(sql, [question ,surveyCode,questionType, image_url]);
       console.log(`SQL Query: ${sql}`);
       const insertedId = result.insertId;
       const newQuestion = { ...question, questionCode: insertedId };

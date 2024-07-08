@@ -43,7 +43,7 @@ const SurveysToConfirm = () => {
       {allSurveys.length === 0 ? (
         <p>No surveys available</p>
       ) : (
-        <div>
+        <div className="surveys-to-confirm">
           {allSurveys.map((survey) => (
             <section key={survey.surveyCode}>
               <Survey survey={survey} />
