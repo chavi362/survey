@@ -223,7 +223,7 @@ const Register = ({ updateUserContext }) => {
             <button className="btn btn-primary btn-block gradient-custom-2 sign-up-btn" type="submit">
               Register
             </button>
-            <a className="text-muted d-block mt-3" href="#!">Forgot password?</a>
+            
           </div>
           <div className="d-flex align-items-center justify-content-center pb-4 mt-3">
             <p className="mb-0 me-2">Already have an account?</p>
