@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import CloseQuestionResponse from '../components/CloseQuestionResponse';
 import OpenQuestionResponse from '../components/OpenQuestionResponse';
-
+import { Container, Row, Col } from 'react-bootstrap';
 import { serverRequests } from '../Api';
 import useGetData from '../hooks/useGetData';
 import FilterComponent from '../components/FilterComponent';
@@ -60,24 +60,30 @@ const SurveyResponses = () => {
   }
 
   return (
-    <div>
+    <Container>
       <h2>Survey Responses for {surveyTitle}</h2>
       <p>Number of Responses: {numberOfResponses}</p>
-      <FilterComponent filters={filters} setFilters={setFilters} />
-      <div>
-        <h3>Questions</h3>
-        {questions.map((question) => (
-          <div key={question.questionCode}>
-            <h4>{question.question}</h4>
-            {question.questionType === 'close' ? (
-              <CloseQuestionResponse surveyCode={surveyCode} questionCode={question.questionCode} filters={filters}/>
-            ) : (
-              <OpenQuestionResponse responses={filteredResponses[question.questionCode]} />
-            )}
+      <Row>
+        <Col md={4}>
+          <FilterComponent filters={filters} setFilters={setFilters} />
+        </Col>
+        <Col md={8}>
+          <div>
+            <h3>Questions</h3>
+            {questions.map((question) => (
+              <div key={question.questionCode}>
+                <h4>{question.question}</h4>
+                {question.questionType === 'close' ? (
+                  <CloseQuestionResponse surveyCode={surveyCode} questionCode={question.questionCode} filters={filters}/>
+                ) : (
+                  <OpenQuestionResponse surveyCode={surveyCode} questionCode={question.questionCode} filters={filters} />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
