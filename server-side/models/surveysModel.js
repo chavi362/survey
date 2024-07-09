@@ -71,22 +71,24 @@ async function getAllSurveysForAnswer(limit, offset, userCode) {
   console.log(userCode, "limit", limit,"ofsset",offset)
   try {
     const sql = `
-      SELECT s.surveyCode, s.surveyTitle, s.managerCode, s.confirmed
+     SELECT * FROM surveymanagement.surveysquestions;
+ SELECT s.surveyCode, s.surveyTitle, s.managerCode, s.confirmed
       FROM surveys s
       JOIN surveysquestions sq ON s.surveyCode = sq.surveyCode
       WHERE s.confirmed = true
         AND s.surveyCode NOT IN (
           SELECT DISTINCT sq.surveyCode
           FROM surveysquestions sq
-          LEFT JOIN surveyCloseAnswers sca ON sq.questionCode = sca.questionCode
-          LEFT JOIN surveyOpenAnswers soa ON sq.questionCode = soa.questionCode
-          LEFT JOIN surveyCloseData scd ON sca.answerCode = scd.answerCode
-          WHERE (scd.userCode IS NULL OR soa.userCode = ?)
+           JOIN surveyCloseAnswers sca ON sq.questionCode = sca.questionCode
+           JOIN surveyOpenAnswers soa ON sq.questionCode = soa.questionCode
+           JOIN surveyCloseData scd ON sca.answerCode = scd.answerCode
+          WHERE (scd.userCode =?  OR soa.userCode = ?)
         )
       LIMIT ?
       OFFSET ?`;
+      
 
-    const params = [userCode, limit, offset];
+    const params = [userCode,userCode, limit, offset];
     const result = await pool.query(sql, params);
 
     if (result[0].length > 0) {
