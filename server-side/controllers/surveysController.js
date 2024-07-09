@@ -29,7 +29,6 @@ async function getAllSurveys(req, res) {
 
       const managerCode = req.query.managerCode;
       let result, totalSurveys;
-
       if (managerCode) {
           result = await model.getSurveysByManager(managerCode);
           totalSurveys = result.length;
@@ -56,7 +55,32 @@ async function getAllSurveys(req, res) {
       res.status(500).json({ success: false, message: err.message });
   }
 }
+async function getAllSurveysForAnswer(req, res) {
+  try {
 
+      const page = parseInt(req.query.page, 10) || 1;
+      const limit = parseInt(req.query.limit, 10) || 10;
+      const offset = (page - 1) * limit;
+      result = await model.getAllSurveysForAnswer(limit, offset,req.user.userCode);
+      totalSurveys = await model.getSurveysAmount();
+      const hasNextPage = offset + limit < totalSurveys;
+      const hasPrevPage = offset > 0;
+
+      const nextPage = hasNextPage ? `http://localhost:3000/allSurveys?page=${page + 1}&limit=${limit}` : null;
+      const prevPage = hasPrevPage ? `http://localhost:3000/allSurveys?page=${page - 1}&limit=${limit}` : null;
+
+      res.json({
+          ...result,
+          nextPage,
+          prevPage,
+          totalSurveys,
+          currentPage: page,
+          totalPages: Math.ceil(totalSurveys / limit)
+      });
+  } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+  }
+}
 async function createSurvey(body) {
     try {
         console.log(body+ "in controller")

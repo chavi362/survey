@@ -67,21 +67,64 @@ async function getAllSurveys(limit, offset) {
     throw new Error(err);
   }
 }
-async function getAllSurveysForAnswer(limit, offset,userCode) {
+async function getAllSurveysForAnswer(limit, offset, userCode) {
   try {
-    const sql = `SELECT * 
-    FROM surveys s Join surveysquestions sq
-    where s. 
-     LIMIT ${limit} OFFSET ${offset}`;
-    const result = await pool.query(sql);
+    const sql = `
+      SELECT s.surveyCode, s.surveyTitle, s.managerCode, s.confirmed
+      FROM surveys s
+      JOIN surveysquestions sq ON s.surveyCode = sq.surveyCode
+      WHERE s.confirmed = true
+        AND s.surveyCode NOT IN (
+          SELECT DISTINCT sq.surveyCode
+          FROM surveysquestions sq
+          LEFT JOIN surveyCloseAnswers sca ON sq.questionCode = sca.questionCode
+          LEFT JOIN surveyOpenAnswers soa ON sq.questionCode = soa.questionCode
+          LEFT JOIN surveyCloseData scd ON sca.answerCode = scd.answerCode
+          WHERE (scd.userCode = ? OR soa.userCode = ?)
+        )
+      LIMIT ?
+      OFFSET ?`;
+      
+    const params = [userCode, userCode, limit, offset];
+    const result = await pool.query(sql, params);
+    
     if (result.length > 0) {
       return {
         success: true,
         message: "allSurveys successful",
-        surveys: result[0],
+        surveys: result,
       };
     } else {
-      console.log("allSurveys not found");
+      console.log("No surveys found that match the criteria.");
+      return {
+        success: false,
+        message: "No surveys found matching the criteria.",
+        surveys: [],
+      };
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    throw new Error(err);
+  }
+}
+
+async function getSurveysForAnswerAmount(userCode) {
+  try {
+    const sql = `SELECT count(*) AS surveyCount FROM surveys s JOIN surveysquestions sq ON s.surveyCode = sq.surveyCode
+      WHERE s.confirmed = true
+        AND s.surveyCode NOT IN (
+          SELECT DISTINCT sq.surveyCode
+          FROM surveysquestions sq
+          LEFT JOIN surveyCloseAnswers sca ON sq.questionCode = sca.questionCode
+          LEFT JOIN surveyOpenAnswers soa ON sq.questionCode = soa.questionCode
+          LEFT JOIN surveyCloseData scd ON sca.answerCode = scd.answerCode
+          WHERE (scd.userCode = ? OR soa.userCode = ?)
+        )`;
+    const result = await pool.query(sql,[userCode]);
+    if (result.length > 0) {
+      return result[0][0].surveyCount;
+    } else {
+      console.log("amount not found");
       throw new Error(err);
     }
   } catch (err) {
@@ -193,4 +236,4 @@ async function getSurveysByManager(managerCode) {
   }
 }
 
-module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, updateSurveyTitle, getSurveysByManager ,getSurveysAmountByManager,getSurveysByManager, updateSurveyConfirm};
+module.exports = { getSurveysAmount, getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, updateSurveyTitle, getSurveysByManager ,getSurveysAmountByManager,getSurveysByManager, updateSurveyConfirm,getAllSurveysForAnswer,getSurveysForAnswerAmount};
