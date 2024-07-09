@@ -27,76 +27,83 @@ const getNumberOfResponse = async (surveyCode) => {
     }
 };
 
-
-const getFilteredResponses = async (questionCode, filters) => {
+const getFilteredResponses = async (questionCode, questionType, filters) => {
     try {
-        let sql = `
-            WITH user_answers AS (
-                SELECT cd.userCode, ca.answer, ca.answerCode 
-                FROM surveyCloseAnswers ca 
-                JOIN surveyCloseData cd ON ca.answerCode = cd.answerCode 
-                WHERE ca.questionCode = ?
-            ),
-            filtered_users AS (
-                SELECT u.userCode 
-                FROM users u
-        `;
-        const joins = [];
-        const filterConditions = [];
-        const filterValues = [parseInt(questionCode)];
-        if (filters.ageRange && filters.ageRange.length > 0) {
-            joins.push('JOIN ages a ON u.ageID = a.ageID');
-            filterConditions.push(`(a.startYear <= ? AND a.endYear >= ?)`);
-                filterValues.push(filters.ageRange[1], filters.ageRange[0]); 
-            console.log(filterValues);
-        }
-        if (filters.incomeRange && filters.incomeRange.length > 0) {
-            joins.push('JOIN family_income_levels fil ON u.incomeID = fil.incomeID');
-            filterConditions.push(`(fil.startRange <= ? AND fil.endRange >= ?)`);
-                filterValues.push(filters.incomeRange[1], filters.incomeRange[0]); 
-        }
-
-        if (filters.areaID != '') {
-            filterConditions.push('u.areaID = ?');
-            filterValues.push(filters.areaID);
-        }
-
-        if (filters.genderID != '') {
-            filterConditions.push('u.genderID = ?');
-            filterValues.push(filters.genderID);
-        }
-
-        if (filters.educationID != '') {
-            filterConditions.push('u.educationID = ?');
-            filterValues.push(filters.educationID);
-        }
-
-        if (filters.sectorID != '') {
-            filterConditions.push('u.sectorID = ?');
-            filterValues.push(filters.sectorID);
-        }
-        if (joins.length > 0) {
-            sql += ' ' + joins.join(' ');
-        }
-        if (filterConditions.length > 0) {
-            sql += ' WHERE ' + filterConditions.join(' AND ');
-        }
-
+      // Base SQL for user filters
+      let sql = `
+        WITH user_answers AS (
+      `;
+  
+      if (questionType === 'close') {
         sql += `
-            )
-            SELECT COUNT(u.userCode) AS numberofresponse, u.answer 
-            FROM filtered_users f 
-            JOIN user_answers u ON u.userCode = f.userCode 
-            GROUP BY u.answerCode, u.answer;
+          SELECT cd.userCode, ca.answer, ca.answerCode
+          FROM surveyCloseAnswers ca
+          JOIN surveyCloseData cd ON ca.answerCode = cd.answerCode
+          WHERE ca.questionCode = ?
         `;
-console.log(sql, filterValues);
-        const [result] = await pool.query(sql, filterValues);
-        return result;
+      } else if (questionType === 'open') {
+        sql += `
+          SELECT oa.userCode, oa.answer, NULL AS answerCode
+          FROM surveyOpenAnswers oa
+          WHERE oa.questionCode = ?
+        `;
+      }
+  
+      sql += `), filtered_users AS (
+              SELECT u.userCode
+              FROM users u
+      `;
+  
+      const joins = [];
+      const filterConditions = [];
+      const filterValues = [parseInt(questionCode)];
+  
+      if (filters.ageRange && filters.ageRange.length > 0) {
+        joins.push('JOIN ages a ON u.ageID = a.ageID');
+        filterConditions.push(`(a.startYear <= ? AND a.endYear >= ?)`);
+        filterValues.push(filters.ageRange[1], filters.ageRange[0]);
+      }
+      if (filters.incomeRange && filters.incomeRange.length > 0) {
+        joins.push('JOIN family_income_levels fil ON u.incomeID = fil.incomeID');
+        filterConditions.push(`(fil.startRange <= ? AND fil.endRange >= ?)`);
+        filterValues.push(filters.incomeRange[1], filters.incomeRange[0]);
+      }
+      if (filters.areaID != '') {
+        filterConditions.push('u.areaID = ?');
+        filterValues.push(filters.areaID);
+      }
+      if (filters.genderID != '') {
+        filterConditions.push('u.genderID = ?');
+        filterValues.push(filters.genderID);
+      }
+      if (filters.educationID != '') {
+        filterConditions.push('u.educationID = ?');
+        filterValues.push(filters.educationID);
+      }
+      if (filters.sectorID != '') {
+        filterConditions.push('u.sectorID = ?');
+        filterValues.push(filters.sectorID);
+      }
+      if (joins.length > 0) {
+        sql += ' ' + joins.join(' ');
+      }
+      if (filterConditions.length > 0) {
+        sql += ' WHERE ' + filterConditions.join(' AND ');
+      }
+  
+      sql += `)
+          SELECT COUNT(u.userCode) AS numberOfResponses, u.answer
+          FROM filtered_users f
+          JOIN user_answers u ON u.userCode = f.userCode
+          GROUP BY u.answer;
+      `;
+  
+      const [result] = await pool.query(sql, filterValues);
+      return result;
     } catch (error) {
-        throw error;
+      throw error;
     }
-};
-
-module.exports = { getNumberOfResponse, getFilteredResponses };
-
-
+  };
+  
+  module.exports = { getNumberOfResponse, getFilteredResponses };
+  
