@@ -1,11 +1,13 @@
+// File: src/components/SurveyResponses.js
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import CloseQuestionResponse from '../components/CloseQuestionResponse';
 import OpenQuestionResponse from '../components/OpenQuestionResponse';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { serverRequests } from '../Api';
 import useGetData from '../hooks/useGetData';
 import FilterComponent from '../components/FilterComponent';
+import * as XLSX from 'xlsx';
 
 const SurveyResponses = () => {
   const { surveyCode } = useParams();
@@ -51,6 +53,56 @@ const SurveyResponses = () => {
     // Update `filteredResponses` accordingly
   }, [filters]);
 
+  const sanitizeSheetName = (name) => {
+    return name.replace(/[\/\?\*\[\]\\]/g, '_').replace(/[:]/g, '-');
+  };
+
+  const downloadSurveyResponsesAsExcel = async () => {
+    setLoading(true);
+    const workbook = XLSX.utils.book_new();
+    let sheetAdded = false;
+
+    for (const question of questions) {
+      try {
+        const response = await serverRequests("POST", `surveys/${surveyCode}/responses/${question.questionCode}/filtered-responses`, {
+          questionType: question.questionType,
+          filters
+        });
+        const responseData = await response.json();
+
+        console.log(`Response Data for question ${question.questionCode}:`, responseData);
+
+        if (responseData.length > 0) {
+          const worksheetData = responseData.map(response => ({
+            Answer: response.answer,
+            NumberOfResponses: response.numberOfResponses
+          }));
+
+          console.log(`Worksheet Data for question ${question.questionCode}:`, worksheetData);
+
+          if (worksheetData.length > 0) {
+            const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+            const sanitizedSheetName = sanitizeSheetName(question.question);
+            XLSX.utils.book_append_sheet(workbook, worksheet, sanitizedSheetName);
+            sheetAdded = true;
+          }
+        }
+
+      } catch (err) {
+        setError(err.message);
+        console.error(`Error fetching responses for question ${question.questionCode}:`, err);
+      }
+    }
+
+    if (sheetAdded) {
+      XLSX.writeFile(workbook, `SurveyResponses_${surveyCode}.xlsx`);
+    } else {
+      alert("No data available to download.");
+    }
+
+    setLoading(false);
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -63,6 +115,7 @@ const SurveyResponses = () => {
     <Container>
       <h2>Survey Responses for {surveyTitle}</h2>
       <p>Number of Responses: {numberOfResponses}</p>
+      <Button onClick={downloadSurveyResponsesAsExcel}>Download Survey Responses as Excel</Button>
       <Row>
         <Col md={4}>
           <FilterComponent filters={filters} setFilters={setFilters} />
