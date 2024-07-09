@@ -10,10 +10,12 @@ const getNumberOfResponses = async (req, res) => {
     }
 };
 const getFilteredResponsesController = async (req, res) => {
-    const { surveyCode } = req.params;
+  console.log("wqwew")
+    const { questionCode } = req.params;
+    console.log(questionCode)
     const filters = req.body;
     try {
-      const responses = await model.getFilteredResponses(surveyCode, filters);
+      const responses = await model.getFilteredResponses(questionCode, filters);
       res.json(responses);
     } catch (error) {
       res.status(500).json({ error: error.message });

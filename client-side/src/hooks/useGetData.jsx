@@ -8,14 +8,14 @@ const useGetData = (urlParam) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true); 
+        setLoading(true);
         const response = await serverRequests("GET", urlParam);
         const responseData = await response.json(); // Parse the response to JSON
         setData(responseData);
       } catch (error) {
         setError(error.message);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
