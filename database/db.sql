@@ -1,3 +1,6 @@
+-- Creating tables
+CREATE DATABASE IF NOT EXISTS SurveyManagement;
+USE SurveyManagement;
 
 DROP TABLE IF EXISTS surveyCloseData;
 DROP TABLE IF EXISTS surveyOpenAnswers;
@@ -12,9 +15,6 @@ DROP TABLE IF EXISTS genders;
 DROP TABLE IF EXISTS family_income_levels;
 DROP TABLE IF EXISTS areas;
 DROP TABLE IF EXISTS ages;
--- Creating tables
-CREATE DATABASE IF NOT EXISTS SurveyManagement;
-USE SurveyManagement;
 
 CREATE TABLE ages (
     ageID INT AUTO_INCREMENT PRIMARY KEY,
@@ -278,6 +278,114 @@ VALUES
 (3, 12),
 (3, 15),
 (3, 18);
+-- Insert statements for the surveysquestions table
+INSERT INTO surveysquestions (question, surveyCode, questionType, image_url)
+VALUES 
+('איך היית מדרג את השירות שלנו?', 1, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 1, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 2, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 2, 'open', 'image1.png'),
+('איך היית מדרג את השירות שלנו?', 3, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 3, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 4, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 4, 'open', 'image1.png'),
+('איך היית מדרג את השירות שלנו?', 5, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 5, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 6, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 6, 'open', 'image1.png'),
+('איך היית מדרג את השירות שלנו?', 7, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 7, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 8, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 8, 'open', 'image1.png'),
+('איך היית מדרג את השירות שלנו?', 9, 'close', 'image1.png'),
+('מה דעתך על האיכות של המוצרים?', 9, 'open', 'image1.png'),
+('האם אתה מרוצה מהמקום עבודה?', 10, 'close', 'image1.png'),
+('מה דעתך על התנאים במקום העבודה?', 10, 'open', 'image1.png'),
+('האם אתה מרוצה משירות הלקוחות שלנו?', 1, 'close', ''),
+('מה דעתך על תחום המחירים שלנו?', 1, 'open', ''),
+('האם אתה מרוצה מהניהול בחברה?', 2, 'close', ''),
+('מה דעתך על תנאי העבודה בחברה?', 2, 'open', ''),
+('מהם היתרונות של מוצרינו?', 3, 'open', ''),
+('מהם החסרונות של מוצרינו?', 3, 'open', ''),
+('איך היית מדרג את השירות במוסדות בריאות הציבוריים?', 21, 'close', ''),
+('מהם הגישות המתקדמות ביותר שלך בטכנולוגיה?', 22, 'open', ''),
+('מהי התחבורה הציבורית המועדפת עליך?', 23, 'close', ''),
+('אילו ספורטאים אתה אוהב לעשות בחורף?', 24, 'open', '');
 
+-- Insert statements for the surveyCloseAnswers table
+INSERT INTO surveyCloseAnswers (questionCode, answer)
+VALUES 
+(1, 'מאוד מרוצה'),
+(1, 'מרוצה'),
+(1, 'לא מרוצה'),
+(3, 'מאוד מרוצה'),
+(3, 'מרוצה'),
+(3, 'לא מרוצה'),
+(5, 'מאוד מרוצה'),
+(5, 'מרוצה'),
+(5, 'לא מרוצה'),
+(7, 'מאוד מרוצה'),
+(7, 'מרוצה'),
+(7, 'לא מרוצה'),
+(9, 'מאוד מרוצה'),
+(9, 'מרוצה'),
+(9, 'לא מרוצה'),
+(11, 'מאוד מרוצה'),
+(11, 'מרוצה'),
+(11, 'לא מרוצה'),
+(19, 'מאוד מרוצה'),
+(19, 'מרוצה'),
+(19, 'לא מרוצה'),
+(24, 'מצוין'),
+(24, 'טוב'),
+(24, 'גרוע'),
+(26, 'מצוין'),
+(26, 'טוב'),
+(26, 'גרוע');
 
+-- Insert statements for the surveyOpenAnswers table
+INSERT INTO surveyOpenAnswers (questionCode, answer, userCode)
+VALUES 
+(2, 'השירות היה טוב מאוד', 1),
+(4, 'המוצרים איכותיים מאוד', 2),
+(6, 'השירות היה טוב מאוד', 3),
+(8, 'המוצרים איכותיים מאוד', 4),
+(10, 'השירות היה טוב מאוד', 5),
+(12, 'המוצרים איכותיים מאוד', 1),
+(14, 'השירות היה טוב מאוד', 2),
+(16, 'המוצרים איכותיים מאוד', 3),
+(18, 'השירות היה טוב מאוד', 4),
+(20, 'המוצרים איכותיים מאוד', 5),
+(22, 'תשובה פתוחה לשאלה 2', 1),
+(24, 'תשובה פתוחה לשאלה 4', 2);
 
+-- Insert statements for the surveyCloseData table
+INSERT INTO surveyCloseData (userCode, answerCode)
+VALUES 
+(1, 1),
+(1, 4),
+(1, 7),
+(1, 10),
+(1, 13),
+(1, 16),
+(2, 2),
+(2, 5),
+(2, 8),
+(2, 11),
+(2, 14),
+(2, 17),
+(3, 3),
+(3, 6),
+(3, 9),
+(3, 12),
+(3, 15),
+(3, 18),
+(4, 25),
+(4, 28),
+(4, 31),
+(5, 19),
+(5, 22),
+(6, 20),
+(6, 23);
+
+COMMIT;

@@ -67,6 +67,28 @@ async function getAllSurveys(limit, offset) {
     throw new Error(err);
   }
 }
+async function getAllSurveysForAnswer(limit, offset,userCode) {
+  try {
+    const sql = `SELECT * 
+    FROM surveys s Join surveysquestions sq
+    where s. 
+     LIMIT ${limit} OFFSET ${offset}`;
+    const result = await pool.query(sql);
+    if (result.length > 0) {
+      return {
+        success: true,
+        message: "allSurveys successful",
+        surveys: result[0],
+      };
+    } else {
+      console.log("allSurveys not found");
+      throw new Error(err);
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    throw new Error(err);
+  }
+}
 
 async function createSurvey(survey) {
   try {
