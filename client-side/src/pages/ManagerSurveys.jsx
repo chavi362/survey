@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 const ManagerSurveys = () => {
 
   const { managerCode } = useParams(); // Extract managerCode from URL params
-  console.log(managerCode)
+  console.log(managerCode);
   const [data, error, loading] = useGetData(`surveys?managerCode=${managerCode}`);
   const [surveys, setSurveys] = useState([]);
   useEffect(() => {

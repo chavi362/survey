@@ -44,7 +44,7 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/home/surveys" element={<AllSurveys />} />
             <Route path="/home/all-surveys/:surveyCode" element={<SurveyDetail />} />
-            <Route path="/home/craete-survey" element={<CreateSurvey />} />
+            <Route path="/home/create-survey" element={<CreateSurvey />} />
             <Route path="/surveys/:surveyCode" element={<SurveyDetail />} />
             <Route path="/register" element={<Register updateUserContext={setUser} />} />
             <Route path="/create-account" element={<AddUserDetails updateUserContext={setUser} />} />
