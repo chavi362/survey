@@ -22,7 +22,7 @@ function AllSurveys() {
     setPrevPage,
     nextPage,
     setNextPage,
-  ] = useGetPaginationData(`surveys?&page=${page}&limit=${perPage}`);
+  ] = useGetPaginationData(`surveys/not-answered?&page=${page}&limit=${perPage}`);
 
   useEffect(() => {
     if (error) {

@@ -57,12 +57,11 @@ async function getAllSurveys(req, res) {
 }
 async function getAllSurveysForAnswer(req, res) {
   try {
-
       const page = parseInt(req.query.page, 10) || 1;
       const limit = parseInt(req.query.limit, 10) || 10;
       const offset = (page - 1) * limit;
       result = await model.getAllSurveysForAnswer(limit, offset,req.user.userCode);
-      totalSurveys = await model.getSurveysAmount();
+      totalSurveys = await model.getSurveysForAnswerAmount();
       const hasNextPage = offset + limit < totalSurveys;
       const hasPrevPage = offset > 0;
 
@@ -157,6 +156,6 @@ const patchSurveyConfirm = async (req, res) => {
     }
   };
 
-module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, patchSurveyTitle, getSurveysByManager, patchSurveyConfirm };
+module.exports = { getSurveys, getSurveyById, updateSurvey, getAllSurveys, createSurvey, patchSurveyTitle, getSurveysByManager, patchSurveyConfirm,getAllSurveysForAnswer };
 
 
