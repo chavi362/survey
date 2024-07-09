@@ -8,7 +8,7 @@ export async function serverRequests(method, URL, body) {
     const headers = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        'Host': 'localhost:3000',
+        'Host': 'localhost:3000'
     };
 
     console.log(`Sending ${method} request to ${URL}`);

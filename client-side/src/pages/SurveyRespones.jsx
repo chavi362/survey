@@ -60,14 +60,14 @@ const SurveyResponses = () => {
   }
 
   return (
-    <div>
+    <div className='card singel-answer'>
       <h2>Survey Responses for {surveyTitle}</h2>
       <p>Number of Responses: {numberOfResponses}</p>
       <FilterComponent filters={filters} setFilters={setFilters} />
       <div>
         <h3>Questions</h3>
         {questions.map((question) => (
-          <div key={question.questionCode}>
+          <div  key={question.questionCode}>
             <h4>{question.question}</h4>
             {question.questionType === 'close' ? (
               <CloseQuestionResponse surveyCode={surveyCode} questionCode={question.questionCode} filters={filters}/>
