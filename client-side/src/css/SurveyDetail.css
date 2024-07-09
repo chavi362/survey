@@ -51,3 +51,14 @@ body {
 p {
     font-family: 'Varela Round', sans-serif;
 }
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+  }

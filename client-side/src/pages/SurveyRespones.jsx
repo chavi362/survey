@@ -67,15 +67,19 @@ const SurveyResponses = () => {
       <div>
         <h3>Questions</h3>
         {questions.map((question) => (
-          <div  key={question.questionCode}>
+          <div key={question.questionCode}>
             <h4>{question.question}</h4>
             {question.questionType === 'close' ? (
-              <CloseQuestionResponse surveyCode={surveyCode} questionCode={question.questionCode} filters={filters}/>
+              <CloseQuestionResponse surveyCode={surveyCode} questionCode={question.questionCode} filters={filters} />
             ) : (
               <OpenQuestionResponse responses={filteredResponses[question.questionCode]} />
             )}
           </div>
         ))}
+        <div className="button-container">
+          <button className="btn btn-primary">Button 1</button>
+          <button className="btn btn-primary">Button 2</button>
+        </div>
       </div>
     </div>
   );
