@@ -5,6 +5,7 @@ import { serverRequests } from "../Api";
 import { useSurvey } from "../components/SurveyContext";
 import Survey from "./Survey";
 import { BsEye } from "react-icons/bs";
+import '../css/AllSurveys.css';
 
 const SurveysToConfirm = () => {
   const { setSurvey } = useSurvey();
@@ -40,13 +41,13 @@ const SurveysToConfirm = () => {
 
   return (
     <div>
-      <h1>Surveys To Confirm:</h1>
+      <h1 className="addSurveyTitle">Surveys To Confirm:</h1>
       {allSurveys.length === 0 ? (
         <p>No surveys available</p>
       ) : (
-        <div className="surveys-to-confirm">
+        <div className="surveys-container">
           {allSurveys.map((survey) => (
-            <section key={survey.surveyCode}>
+            <section className="card singel-survey" key={survey.surveyCode}>
               <Survey survey={survey} />
               <button className="navLinks linkBtn" onClick={() => handleView(survey)}><BsEye /></button>
             </section>

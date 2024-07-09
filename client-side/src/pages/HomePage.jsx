@@ -13,7 +13,7 @@ const HomePage = () => {
       <nav className="navbar">
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="/">Home</a>
+            <a className="nav-link" aria-current="page" href="/">Log Out</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/surveys">Surveys</a>

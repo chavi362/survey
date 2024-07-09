@@ -19,7 +19,7 @@ userRouter.get("/", async (req, res) => {
 });
 userRouter.put("/:id", async (req, res) => {
     try {
-        console.log(req.params.id)
+        console.log(req.params);
         const userRes = await updateUser(req.body, req.params.id);
         return res.status(200).json(userRes);
     } catch (error) {
