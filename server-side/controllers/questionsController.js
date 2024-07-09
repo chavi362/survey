@@ -10,6 +10,7 @@ async function getQuestionById(id) {
     }
 };
 async function getQuestionsOfSurvey(surveyCode) {
+  console.log(surveyCode)
     console.log("controller body");
     try {
         return await model.getQuestionsOfSurvey(surveyCode);

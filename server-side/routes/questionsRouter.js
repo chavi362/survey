@@ -13,6 +13,7 @@ questionsRouter.post("/", authenticateToken, checkSurveyManager, async (req, res
 
 questionsRouter.get("/", async (req, res, next) => {
   try {
+    console.log("trhjry")
     const result = await controller.getQuestionsOfSurvey(req.surveyId);
     res.json(result);
   } catch (err) {

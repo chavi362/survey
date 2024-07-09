@@ -13,12 +13,14 @@ const SurveyResponses = () => {
   const { surveyTitle = 'Default Title', numberOfResponses = 0 } = state;
 
   const [questions, setQuestions] = useState([]);
+  console.log(surveyCode)
   const [data, error, loading, setLoading] = useGetData(`surveys/${surveyCode}/questions`);
 
   useEffect(() => {
     if (error) {
       console.error('Error fetching questions:', error);
     } else if (data) {
+      console.log(data)
       setQuestions(data);
       console.log(data);
     }
@@ -104,6 +106,19 @@ const SurveyResponses = () => {
   useEffect(() => {
     // Implement filtering logic here based on `filters`
     // Update `filteredResponses` accordingly
+    async function fetchFilteredResponses() {
+      setLoading(true);
+      try {
+        const response = await serverRequests("POST",`/surveys/:question-code/filtered-responses`,filters) 
+        const data = await response.json();
+        setFilteredResponses(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    }
+    fetchFilteredResponses();
   }, [filters]);
 
   useEffect(() => {
@@ -256,7 +271,7 @@ const SurveyResponses = () => {
         <h3>Questions</h3>
         {questions.map((question) => (
           <div key={question.questionCode}>
-            <h4>{question.questionText}</h4>
+            <h4>{question.question}</h4>
             {question.questionType === 'close' ? (
               <CloseQuestionResponse responses={filteredResponses[question.questionCode]} />
             ) : (
