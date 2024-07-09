@@ -68,6 +68,7 @@ async function getAllSurveys(limit, offset) {
   }
 }
 async function getAllSurveysForAnswer(limit, offset, userCode) {
+  console.log(userCode, "limit", limit,"ofsset",offset)
   try {
     const sql = `
       SELECT s.surveyCode, s.surveyTitle, s.managerCode, s.confirmed
@@ -80,19 +81,19 @@ async function getAllSurveysForAnswer(limit, offset, userCode) {
           LEFT JOIN surveyCloseAnswers sca ON sq.questionCode = sca.questionCode
           LEFT JOIN surveyOpenAnswers soa ON sq.questionCode = soa.questionCode
           LEFT JOIN surveyCloseData scd ON sca.answerCode = scd.answerCode
-          WHERE (scd.userCode = ? OR soa.userCode = ?)
+          WHERE (scd.userCode IS NULL OR soa.userCode = ?)
         )
       LIMIT ?
       OFFSET ?`;
-      
-    const params = [userCode, userCode, limit, offset];
+
+    const params = [userCode, limit, offset];
     const result = await pool.query(sql, params);
-    
-    if (result.length > 0) {
+
+    if (result[0].length > 0) {
       return {
         success: true,
         message: "allSurveys successful",
-        surveys: result,
+        surveys: result[0],
       };
     } else {
       console.log("No surveys found that match the criteria.");
@@ -109,6 +110,7 @@ async function getAllSurveysForAnswer(limit, offset, userCode) {
 }
 
 async function getSurveysForAnswerAmount(userCode) {
+  console.log("usercode",userCode)
   try {
     const sql = `SELECT count(*) AS surveyCount FROM surveys s JOIN surveysquestions sq ON s.surveyCode = sq.surveyCode
       WHERE s.confirmed = true
@@ -118,14 +120,15 @@ async function getSurveysForAnswerAmount(userCode) {
           LEFT JOIN surveyCloseAnswers sca ON sq.questionCode = sca.questionCode
           LEFT JOIN surveyOpenAnswers soa ON sq.questionCode = soa.questionCode
           LEFT JOIN surveyCloseData scd ON sca.answerCode = scd.answerCode
-          WHERE (scd.userCode = ? OR soa.userCode = ?)
+          WHERE (scd.userCode IS NULL OR soa.userCode = ?)
         )`;
-    const result = await pool.query(sql,[userCode]);
-    if (result.length > 0) {
+    const result = await pool.query(sql, [userCode]);
+
+    if (result[0].length > 0) {
       return result[0][0].surveyCount;
     } else {
       console.log("amount not found");
-      throw new Error(err);
+      throw new Error("amount not found");
     }
   } catch (err) {
     console.error("Error:", err);

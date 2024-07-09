@@ -31,6 +31,7 @@ function AllSurveys() {
     } else if (data) {
       let surveys = data.surveys;
       let tempSurveys = [...allSurveys, ...surveys];
+      console.log(surveys)
       setAllSurveys(tempSurveys);
     }
   }, [data, error]);
