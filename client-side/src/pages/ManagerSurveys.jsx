@@ -2,12 +2,14 @@ import React, { useEffect,useState } from "react";
 import WithLoader from "../hoc/WithLoader";
 import ManagerSurveysList from "../components/ManagerSurveysList";
 import useGetData from "../hooks/useGetData";
+import NavBar from "../components/NavBar";
+
 
 import { useParams } from "react-router-dom";
 
 const ManagerSurveys = () => {
 
-  const { managerCode } = useParams(); // Extract managerCode from URL params
+  const { managerCode } = useParams();
   console.log(managerCode);
   const [data, error, loading] = useGetData(`surveys?managerCode=${managerCode}`);
   const [surveys, setSurveys] = useState([]);
@@ -20,7 +22,14 @@ const ManagerSurveys = () => {
     }
   }, [data, error]);
   if (error) return <div>Error: {error}</div>;
-  return <ManagerSurveysList data={surveys} loading={loading} />;
+  return(
+    <div>
+      <NavBar/>
+         <h1 className="addSurveyTitle">My Surveys</h1>
+         
+         <ManagerSurveysList data={surveys} loading={loading} />;
+    </div>
+  ) 
 };
 
 export default WithLoader(ManagerSurveys);

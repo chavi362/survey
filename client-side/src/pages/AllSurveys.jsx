@@ -5,6 +5,7 @@ import Survey from "./Survey";
 import React from "react";
 import useGetPaginationData from "../hooks/useGetPaginationData";
 import { useSurvey } from "../components/SurveyContext";
+import NavBar from "../components/NavBar";
 import '../css/AllSurveys.css';
 
 function AllSurveys() {
@@ -41,6 +42,7 @@ function AllSurveys() {
 
   return (
     <div>
+      <NavBar/>
       <div className="firstPadding"></div>
       <h1 className="addSurveyTitle">All Surveys</h1>
       

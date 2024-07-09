@@ -19,20 +19,23 @@ const ManagerSurveyItem = ({ survey }) => {
   if (error) return <p>Error: {error}</p>;
 
   return (
+    
     <div key={survey.surveyCode} className="survey-item">
       <h3>{survey.surveyTitle}</h3>
       <p>Confirmed: {survey.confirmed ? "Yes" : "No"}</p>
       <p>Number of Responses: {numberOfResponses}</p>
       {numberOfResponses > 0 && (
+        <button>
        <Link
        to={`/survey/${survey.surveyCode}/responses`}
        state={{ surveyTitle: survey.surveyTitle, numberOfResponses: numberOfResponses }}
      >
        View Responses
      </Link>
-     
+     </button>
       )}
     </div>
+    
   );
 };
 

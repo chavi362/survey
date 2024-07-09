@@ -5,6 +5,7 @@ import { FaPlus, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from '../App';
 import useLocalStorage from "../hooks/useLocalStorage";
+import NavBar from '../components/NavBar';
 import { serverRequests } from "../Api";
 
 const CreateSurvey = () => {
@@ -73,6 +74,8 @@ const CreateSurvey = () => {
   };
 
   return (
+    <div>
+      <NavBar/>
     <div className="container mt-5">
       <h1>Create Survey</h1>
       {isSurveySaved ? (
@@ -139,6 +142,7 @@ const CreateSurvey = () => {
         </>
       )}
       
+    </div>
     </div>
   );
 };
