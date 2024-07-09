@@ -66,7 +66,6 @@ const SurveyResponses = () => {
         const data = await serverRequests('GET', `/surveys/${surveyCode}/questions`);
         setQuestions(data);
       } catch (err) {
-        // Handle error fetching questions
         console.error('Error fetching questions:', err);
       }
     }
@@ -91,14 +90,13 @@ const SurveyResponses = () => {
     }));
   };
 
-  // Example: Filter responses based on current filters
   useEffect(() => {
     // Implement filtering logic here based on `filters`
     // Update `filteredResponses` accordingly
   }, [filters]);
 
-  // Render loading state
-  if (agesLoading || gendersLoading || areasLoading || sectorsLoading || educationLevelsLoading || incomeLevelsLoading) {
+  const loading=agesLoading || gendersLoading || areasLoading || sectorsLoading || educationLevelsLoading || incomeLevelsLoading;
+  if (loading) {
     return <p>Loading...</p>;
   }
 
@@ -111,7 +109,6 @@ const SurveyResponses = () => {
     <div>
       <h2>Survey Responses for {surveyTitle}</h2>
       <p>Number of Responses: {numberOfResponses}</p>
-
       <div>
         <h3>Filters</h3>
         <div>
@@ -131,9 +128,9 @@ const SurveyResponses = () => {
           <input
             type="range"
             name="incomeRange"
-            min={filters.incomeRange[0]}
-            max={filters.incomeRange[1]}
-            value={filters.incomeRange[0]}
+            min={filters.incomeLevels[0]}
+            max={filters.incomeLevels[1]}
+            value={filters.incomeLevels[0]}
             onChange={(e) => handleRangeChange('incomeRange', [e.target.value, filters.incomeRange[1]])}
           />
           {filters.incomeRange[0]} - {filters.incomeRange[1]}
