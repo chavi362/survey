@@ -7,6 +7,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { serverRequests } from "../Api";
 
 const CreateSurvey = () => {
+  console.log("craete rvet");
   const user = useContext(UserContext);
   const [surveyTitle, setSurveyTitle] = useState('');
   const [questions, setQuestions] = useState([]);

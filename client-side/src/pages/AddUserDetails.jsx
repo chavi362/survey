@@ -72,8 +72,9 @@ const AddUserDetails = ({ updateUserContext }) => {
     try {
       const updatedFormUser = { ...formUser};
       debugger;
-      console.log(updatedFormUser)
-      const response = await serverRequests('PUT', `users/${user.id}`, updatedFormUser);
+      console.log(updatedFormUser);
+      console.log(user);
+      const response = await serverRequests('PUT', `users/${user.userCode}`, updatedFormUser);
       if (response.error) {
         console.error('Error updating user details:', response.error);
       } else {
