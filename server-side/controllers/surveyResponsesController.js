@@ -14,6 +14,7 @@ const getFilteredResponsesController = async (req, res) => {
     const { questionCode } = req.params;
     console.log(questionCode)
     const filters = req.body;
+    console.log(filters);
     try {
       const responses = await model.getFilteredResponses(questionCode, filters);
       res.json(responses);

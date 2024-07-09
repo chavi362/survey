@@ -41,41 +41,37 @@ const getFilteredResponses = async (questionCode, filters) => {
                 SELECT u.userCode 
                 FROM users u
         `;
-
         const joins = [];
         const filterConditions = [];
-        const filterValues = [questionCode];
+        const filterValues = [parseInt(questionCode)];
         if (filters.ageRange && filters.ageRange.length > 0) {
             joins.push('JOIN ages a ON u.ageID = a.ageID');
-            filterConditions.push(`(${filters.ageRange.map(() => '(a.startYear <= ? AND a.endYear >= ?)').join(' OR ')})`);
-            filters.ageRange.forEach(ageRange => {
-                filterValues.push(ageRange.endYear, ageRange.startYear);
-            });
+            filterConditions.push(`(a.startYear <= ? AND a.endYear >= ?)`);
+                filterValues.push(filters.ageRange[1], filters.ageRange[0]); 
+            console.log(filterValues);
         }
         if (filters.incomeRange && filters.incomeRange.length > 0) {
             joins.push('JOIN family_income_levels fil ON u.incomeID = fil.incomeID');
-            filterConditions.push(`(${filters.incomeRange.map(() => '(fil.startRange <= ? AND fil.endRange >= ?)').join(' OR ')})`);
-            filters.incomeRange.forEach(incomeRange => {
-                filterValues.push(incomeRange.endRange, incomeRange.startRange);
-            });
+            filterConditions.push(`(fil.startRange <= ? AND fil.endRange >= ?)`);
+                filterValues.push(filters.incomeRange[1], filters.incomeRange[0]); 
         }
 
-        if (filters.areaID) {
+        if (filters.areaID != '') {
             filterConditions.push('u.areaID = ?');
             filterValues.push(filters.areaID);
         }
 
-        if (filters.genderID) {
+        if (filters.genderID != '') {
             filterConditions.push('u.genderID = ?');
             filterValues.push(filters.genderID);
         }
 
-        if (filters.educationID) {
+        if (filters.educationID != '') {
             filterConditions.push('u.educationID = ?');
             filterValues.push(filters.educationID);
         }
 
-        if (filters.sectorID) {
+        if (filters.sectorID != '') {
             filterConditions.push('u.sectorID = ?');
             filterValues.push(filters.sectorID);
         }
@@ -93,7 +89,7 @@ const getFilteredResponses = async (questionCode, filters) => {
             JOIN user_answers u ON u.userCode = f.userCode 
             GROUP BY u.answerCode, u.answer;
         `;
-
+console.log(sql, filterValues);
         const [result] = await pool.query(sql, filterValues);
         return result;
     } catch (error) {
