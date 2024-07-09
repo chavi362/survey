@@ -4,7 +4,7 @@ const surveysRouter = express.Router();
 const { getAllSurveys, getSurveys, getSurveyById, updateSurvey, createSurvey,patchSurveyTitle, patchSurveyConfirm,getAllSurveysForAnswer} = require("../controllers/surveysController");
 
 surveysRouter.get('/', getAllSurveys);
-surveysRouter.get('/not-answered', authenticateToken,getAllSurveysForAnswer);
+surveysRouter.get('/not-answered', authenticateToken, getAllSurveysForAnswer);
 
 surveysRouter.get("/surveysToConfirm", async (req, res) => {
   console.log("Request body:", req.body);
