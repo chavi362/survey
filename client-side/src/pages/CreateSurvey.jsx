@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import CreateQuestion from '../components/CreateQuestion';
 import { FaPlus, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
@@ -7,6 +8,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { serverRequests } from "../Api";
 
 const CreateSurvey = () => {
+  let navigate = useNavigate();
   console.log("craete rvet");
   const user = useContext(UserContext);
   const [surveyTitle, setSurveyTitle] = useState('');
@@ -113,6 +115,9 @@ const CreateSurvey = () => {
             <Button onClick={handleAddQuestion} className="btn btn-primary">
               <FaPlus /> Add Question
             </Button>
+            <Button onClick={() => {navigate('/home')}} className="btn btn-success">
+              Finish
+            </Button>
           </div>
         </>
       ) : (
@@ -133,6 +138,7 @@ const CreateSurvey = () => {
           </div>
         </>
       )}
+      
     </div>
   );
 };
