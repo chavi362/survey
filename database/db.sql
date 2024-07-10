@@ -128,263 +128,207 @@ INSERT INTO ages (startYear, endYear) VALUES
 
 -- Inserting data into areas table
 INSERT INTO areas (area) VALUES 
-('תל אביב'),
-('ירושלים'),
-('חיפה'),
-('באר שבע'),
-('אשדוד');
+('New York'),
+('Los Angeles'),
+('Chicago'),
+('Houston'),
+('Phoenix');
 
 -- Inserting data into family_income_levels table
 INSERT INTO family_income_levels (startRange, endRange) VALUES 
-(5000, 10000), 
-(10001, 15000), 
-(15001, 20000), 
-(20001, 25000), 
-(25001, 30000);
+(30000, 50000), 
+(50001, 70000), 
+(70001, 90000), 
+(90001, 110000), 
+(110001, 130000);
 
 -- Inserting data into genders table
 INSERT INTO genders (gender) VALUES 
-('זכר'),
-('נקבה');
+('Male'),
+('Female');
 
 -- Inserting data into education_levels table
 INSERT INTO education_levels (education_level) VALUES 
-('תיכון'),
-('תעודה מקצועית'),
-('תואר ראשון'),
-('תואר שני'),
-('דוקטורט');
+('High School'),
+('Associate Degree'),
+('Bachelor\'s Degree'),
+('Master\'s Degree'),
+('Doctorate');
 
 -- Inserting data into sectors table
 INSERT INTO sectors (sector) VALUES 
-('הייטק'),
-('פיננסים'),
-('חינוך'),
-('בריאות'),
-('תעשייה');
+('Technology'),
+('Finance'),
+('Healthcare'),
+('Education'),
+('Manufacturing');
 
 -- Inserting data into users table
 INSERT INTO users (username, email, name, ageID, genderID, areaID, sectorID, role, educationID, incomeID) VALUES 
-('user1', 'user1@example.com', 'משתמש אחד', 1, 1, 1, 1, 'user', 1, 1),
-('user2', 'user2@example.com', 'משתמש שני', 2, 2, 2, 2, 'user', 2, 2),
-('user3', 'user3@example.com', 'משתמש שלישי', 3, 1, 3, 3, 'user', 3, 3),
-('admin', 'admin@example.com', 'אדמין', 4, 2, 4, 4, 'admin', 4, 4),
-('user4', 'user4@example.com', 'משתמש רביעי', 5, 1, 5, 5, 'user', 5, 5);
+('user1', 'user1@example.com', 'User One', 1, 1, 1, 1, 'user', 1, 1),
+('user2', 'user2@example.com', 'User Two', 2, 2, 2, 2, 'user', 2, 2),
+('user3', 'user3@example.com', 'User Three', 3, 1, 3, 3, 'user', 3, 3),
+('user4', 'user4@example.com', 'User Four', 4, 2, 4, 4, 'user', 4, 4),
+('user5', 'user5@example.com', 'User Five', 5, 1, 5, 5, 'user', 5, 5),
+('user6', 'user6@example.com', 'User Six', 1, 2, 1, 1, 'user', 1, 1),
+('user7', 'user7@example.com', 'User Seven', 2, 1, 2, 2, 'user', 2, 2),
+('user8', 'user8@example.com', 'User Eight', 3, 2, 3, 3, 'user', 3, 3),
+('user9', 'user9@example.com', 'User Nine', 4, 1, 4, 4, 'user', 4, 4),
+('user10', 'user10@example.com', 'User Ten', 5, 2, 5, 5, 'user', 5, 5),
+('manager', 'manager@example.com', 'Survey Manager', 3, 1, 3, 3, 'admin', 3, 3);
 
 -- Inserting data into passwords table
 INSERT INTO passwords (user_id, user_password) VALUES 
 (1, 'password1'), 
 (2, 'password2'), 
 (3, 'password3'), 
-(4, 'adminpassword'), 
-(5, 'password4');
+(4, 'password4'), 
+(5, 'password5'), 
+(6, 'password6'), 
+(7, 'password7'), 
+(8, 'password8'), 
+(9, 'password9'), 
+(10, 'password10'),
+(11, 'managerpassword');
 
--- הכנסת נתונים לטבלת הסקרים
-INSERT INTO surveys (surveyTitle, managerCode, confirmed)
-VALUES 
-('סקר לקוחות', 1, FALSE),
-('סקר עובדים', 2, FALSE),
-('סקר מוצרים', 3, FALSE),
-('סקר שירות', 4, FALSE),
-('סקר תהליך רכישה', 1, FALSE),
-('סקר חווית משתמש', 2, FALSE),
-('סקר חינוך', 5, FALSE),
-('סקר בריאות', 1, FALSE),
-('סקר כלכלה', 2, FALSE),
-('סקר סביבה', 3, FALSE),
-('סקר תחבורה', 4, FALSE),
-('סקר תרבות', 1, FALSE),
-('סקר ספורט', 2, FALSE);
+-- Inserting data into surveys table
+INSERT INTO surveys (surveyTitle, managerCode, confirmed) VALUES 
+('Customer Satisfaction Survey', 7, TRUE),
+('Employee Feedback Survey', 7, TRUE),
+('Product Evaluation Survey', 7, TRUE),
+('Service Quality Survey', 7, TRUE),
+('Purchasing Experience Survey', 7, TRUE),
+('User Experience Survey', 7, TRUE),
+('Educational Survey', 7, TRUE),
+('Confirmed Customer Satisfaction Survey', 1, TRUE),
+('Unconfirmed Customer Satisfaction Survey', 1, FALSE),
+('Confirmed Employee Feedback Survey', 2, TRUE),
+('Unconfirmed Employee Feedback Survey', 2, FALSE),
+('Confirmed Product Evaluation Survey', 3, TRUE),
+('Unconfirmed Product Evaluation Survey', 3, FALSE),
+('Confirmed Service Quality Survey', 2, TRUE),
+('Unconfirmed Service Quality Survey', 2, FALSE);
+
+-- Inserting data into surveysquestions table
+INSERT INTO surveysquestions (question, surveyCode, questionType, image_url) VALUES 
+('How would you rate our customer service?', 16, 'close', 'image1.png'),
+('What do you think about the quality of our products?', 16, 'open', 'image2.png'),
+('Are you satisfied with your job?', 17, 'close', 'image3.png'),
+('What improvements would you suggest for the workplace?', 17, 'open', 'image4.png'),
+('How would you rate the value for money of our products?', 18, 'close', 'image5.png'),
+('What features do you like most about our products?', 18, 'open', 'image6.png'),
+('How satisfied are you with the service provided?', 19, 'close', 'image7.png'),
+('What suggestions do you have for improving our service?', 19, 'open', 'image8.png'),
+('How was your overall purchasing experience?', 20, 'close', 'image9.png'),
+('What could we do to enhance your buying experience?',20, 'open', 'image10.png'),
+('How would you rate the user interface of our product?', 21, 'close', 'image11.png'),
+('What improvements would you like to see in the user interface?', 21, 'open', 'image12.png'),
+('How do you rate the current education system?', 22, 'close', 'image13.png'),
+('What changes would you suggest for the education system?', 22, 'open', 'image14.png'),
+('How would you rate our customer service?', 23, 'close', 'image15.png'),
+('What do you think about the quality of our products?', 23, 'open', 'image16.png'),
+('Are you satisfied with your job?', 24, 'close', 'image17.png'),
+('What improvements would you suggest for the workplace?', 24, 'open', 'image18.png'),
+('How would you rate the value for money of our products?', 25, 'close', 'image19.png'),
+('What features do you like most about our products?', 25, 'open', 'image20.png'),
+('How satisfied are you with the service provided?', 26, 'close', 'image21.png'),
+('What suggestions do you have for improving our service?', 26, 'open', 'image22.png'),
+('How was your overall purchasing experience?', 27, 'close', 'image23.png'),
+('What could we do to enhance your buying experience?', 27, 'open', 'image24.png'),
+('How would you rate the user interface of our product?', 28, 'close', 'image25.png'),
+('What improvements would you like to see in the user interface?', 28, 'open', 'image26.png');
 
 
--- Insert statements for the surveysquestions table
-INSERT INTO surveysquestions (question, surveyCode, questionType, image_url)
-VALUES 
-('איך היית מדרג את השירות שלנו?', 1, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 1, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 2, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 2, 'open', 'image1.png'),
-('איך היית מדרג את השירות שלנו?', 3, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 3, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 4, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 4, 'open', 'image1.png'),
-('איך היית מדרג את השירות שלנו?', 5, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 5, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 6, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 6, 'open', 'image1.png'),
-('איך היית מדרג את השירות שלנו?', 7, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 7, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 8, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 8, 'open', 'image1.png'),
-('איך היית מדרג את השירות שלנו?', 9, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 9, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 10, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 10, 'open', 'image1.png');
+-- Inserting data into surveyCloseAnswers table
+INSERT INTO surveyCloseAnswers (questionCode, answer) VALUES 
+(185, 'Very Satisfied'), (185, 'Satisfied'), (185, 'Neutral'), (185, 'Dissatisfied'), (185, 'Very Dissatisfied'),
+(187, 'Very Satisfied'), (187, 'Satisfied'), (187, 'Neutral'), (187, 'Dissatisfied'), (187, 'Very Dissatisfied'),
+(189, 'Excellent'), (189, 'Good'), (189, 'Average'), (189, 'Below Average'), (189, 'Poor'),
+(191, 'Very Satisfied'), (191, 'Satisfied'), (191, 'Neutral'), (191, 'Dissatisfied'), (191, 'Very Dissatisfied'),
+(193, 'Very Good'), (193, 'Good'), (193, 'Fair'), (193, 'Poor'), (193, 'Very Poor'),
+(195, 'Very Satisfied'), (195, 'Satisfied'), (195, 'Neutral'), (195, 'Dissatisfied'), (195, 'Very Dissatisfied'),
+(197, 'Excellent'), (197, 'Good'), (197, 'Average'), (197, 'Below Average'), (197, 'Poor'),
+(199, 'Very Satisfied'), (199, 'Satisfied'), (199, 'Neutral'), (199, 'Dissatisfied'), (199, 'Very Dissatisfied'),
+(201, 'Very Satisfied'), (201, 'Satisfied'), (201, 'Neutral'), (201, 'Dissatisfied'), (201, 'Very Dissatisfied'),
+(203, 'Excellent'), (203, 'Good'), (203, 'Average'), (203, 'Below Average'), (203, 'Poor'),
+(205, 'Very Satisfied'), (205, 'Satisfied'), (205, 'Neutral'), (205, 'Dissatisfied'), (205, 'Very Dissatisfied'),
+(207, 'Very Good'), (207, 'Good'), (207, 'Fair'), (207, 'Poor'), (207, 'Very Poor'),
+(209, 'Very Satisfied'), (209, 'Satisfied'), (209, 'Neutral'), (209, 'Dissatisfied'), (209, 'Very Dissatisfied');
 
--- Insert statements for the surveyCloseAnswers table
-INSERT INTO surveyCloseAnswers (questionCode, answer)
-VALUES 
-(1, 'מאוד מרוצה'),
-(1, 'מרוצה'),
-(1, 'לא מרוצה'),
-(3, 'מאוד מרוצה'),
-(3, 'מרוצה'),
-(3, 'לא מרוצה'),
-(5, 'מאוד מרוצה'),
-(5, 'מרוצה'),
-(5, 'לא מרוצה'),
-(7, 'מאוד מרוצה'),
-(7, 'מרוצה'),
-(7, 'לא מרוצה'),
-(9, 'מאוד מרוצה'),
-(9, 'מרוצה'),
-(9, 'לא מרוצה'),
-(11, 'מאוד מרוצה'),
-(11, 'מרוצה'),
-(11, 'לא מרוצה');
+-- Inserting data into surveyOpenAnswers table
+INSERT INTO surveyOpenAnswers (questionCode, answer, userCode) VALUES 
+(186, 'The quality of your products is outstanding.', 1),
+(186, 'I love the durability of the products.', 2),
+(186, 'Great value for money.', 3),
+(186, 'The products are okay, but can be improved.', 4),
+(186, 'Not satisfied with the product quality.', 5),
+(188, 'More flexible working hours.', 1),
+(188, 'Better communication from management.', 2),
+(188, 'More opportunities for career advancement.', 3),
+(188, 'Better office facilities.', 4),
+(188, 'Increase in salary.', 5),
+(190, 'I love the sleek design.', 1),
+(190, 'The user interface is very intuitive.', 2),
+(190, 'Great usability.', 3),
+(190, 'Responsive and fast.', 4),
+(190, 'More customization options.', 5),
+(192, 'Faster response times.', 1),
+(192, 'More friendly staff.', 2),
+(192, 'Better training for staff.', 3),
+(192, 'Extended service hours.', 4),
+(192, 'Better pricing.', 5),
+(194, 'More variety of payment options.', 1),
+(194, 'Better customer support.', 2),
+(194, 'Quicker delivery times.', 3),
+(194, 'More product information.', 4),
+(194, 'Easier return process.', 5),
+(196, 'More intuitive navigation.', 1),
+(196, 'Better color schemes.', 2),
+(196, 'Improved loading speeds.', 3),
+(196, 'More features.', 4),
+(196, 'Easier accessibility options.', 5),
+(198, 'More practical applications.', 1),
+(198, 'Better teacher training.', 2),
+(198, 'Updated curriculum.', 3),
+(198, 'More extracurricular activities.', 4),
+(198, 'Better facilities.', 5),
+(200, 'Excellent service.', 1),
+(200, 'Good service.', 2),
+(200, 'Average service.', 3),
+(200, 'Poor service.', 4),
+(200, 'Very poor service.', 5),
+(202, 'Very intuitive interface.', 1),
+(202, 'Easy to navigate.', 2),
+(202, 'User friendly.', 3),
+(202, 'Could use some improvements.', 4),
+(202, 'Difficult to use.', 5),
+(204, 'Great value for money.', 1),
+(204, 'Reasonable price.', 2),
+(204, 'Too expensive.', 3),
+(204, 'Affordable.', 4),
+(204, 'Not worth the price.', 5),
+(206, 'Flexible working hours.', 1),
+(206, 'Good communication.', 2),
+(206, 'Career growth opportunities.', 3),
+(206, 'Good office facilities.', 4),
+(206, 'Competitive salary.', 5),
+(208, 'Sleek design.', 1),
+(208, 'Intuitive interface.', 2),
+(208, 'Highly usable.', 3),
+(208, 'Responsive.', 4),
+(208, 'Customizable.', 5);
 
--- Insert statements for the surveyOpenAnswers table
-INSERT INTO surveyOpenAnswers (questionCode, answer, userCode)
-VALUES 
-(2, 'השירות היה טוב מאוד', 1),
-(4, 'המוצרים איכותיים מאוד', 2),
-(6, 'השירות היה טוב מאוד', 3),
-(8, 'המוצרים איכותיים מאוד', 4),
-(10, 'השירות היה טוב מאוד', 5),
-(12, 'המוצרים איכותיים מאוד', 1),
-(14, 'השירות היה טוב מאוד', 2),
-(16, 'המוצרים איכותיים מאוד', 3),
-(18, 'השירות היה טוב מאוד', 4),
-(20, 'המוצרים איכותיים מאוד', 5);
+-- Inserting data into surveyCloseData table
+INSERT INTO surveyCloseData (userCode, answerCode) VALUES 
+(1, 141), (1, 142), (1, 143), (1, 144), (1, 145), (1, 146), (1, 147),
+(2, 148), (2, 149), (2, 150), (2, 151), (2, 152), (2, 153), (2, 154),
+(3, 155), (3, 156), (3, 157), (3, 158), (3, 159), (3, 160), (3, 161),
+(4, 162), (4, 163), (4, 164), (4, 165), (4, 166), (4, 167), (4, 168),
+(5, 169), (5, 170), (5, 171), (5, 172), (5, 173), (5, 174), (5, 175),
+(6, 176), (6, 177), (6, 178), (6, 179), (6, 180), (6, 181), (6, 182),
+(7, 183), (7, 184), (7, 185), (7, 186), (7, 187), (7, 188), (7, 189),
+(8, 190), (8, 191), (8, 192), (8, 193), (8, 194), (8, 195), (8, 196),
+(9, 197), (9, 198), (9, 199), (9, 200), (9, 201), (9, 202), (9, 203),
+(10, 204), (10, 205);
 
--- Insert statements for the surveyCloseData table
-INSERT INTO surveyCloseData (userCode, answerCode)
-VALUES 
-(1, 1),
-(1, 4),
-(1, 7),
-(1, 10),
-(1, 13),
-(1, 16),
-(2, 2),
-(2, 5),
-(2, 8),
-(2, 11),
-(2, 14),
-(2, 17),
-(3, 3),
-(3, 6),
-(3, 9),
-(3, 12),
-(3, 15),
-(3, 18);
--- Insert statements for the surveysquestions table
-INSERT INTO surveysquestions (question, surveyCode, questionType, image_url)
-VALUES 
-('איך היית מדרג את השירות שלנו?', 1, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 1, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 2, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 2, 'open', 'image1.png'),
-('איך היית מדרג את השירות שלנו?', 3, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 3, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 4, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 4, 'open', 'image1.png'),
-('איך היית מדרג את השירות שלנו?', 5, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 5, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 6, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 6, 'open', 'image1.png'),
-('איך היית מדרג את השירות שלנו?', 7, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 7, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 8, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 8, 'open', 'image1.png'),
-('איך היית מדרג את השירות שלנו?', 9, 'close', 'image1.png'),
-('מה דעתך על האיכות של המוצרים?', 9, 'open', 'image1.png'),
-('האם אתה מרוצה מהמקום עבודה?', 10, 'close', 'image1.png'),
-('מה דעתך על התנאים במקום העבודה?', 10, 'open', 'image1.png'),
-('האם אתה מרוצה משירות הלקוחות שלנו?', 1, 'close', ''),
-('מה דעתך על תחום המחירים שלנו?', 1, 'open', ''),
-('האם אתה מרוצה מהניהול בחברה?', 2, 'close', ''),
-('מה דעתך על תנאי העבודה בחברה?', 2, 'open', ''),
-('מהם היתרונות של מוצרינו?', 3, 'open', ''),
-('מהם החסרונות של מוצרינו?', 3, 'open', ''),
-('איך היית מדרג את השירות במוסדות בריאות הציבוריים?', 21, 'close', ''),
-('מהם הגישות המתקדמות ביותר שלך בטכנולוגיה?', 22, 'open', ''),
-('מהי התחבורה הציבורית המועדפת עליך?', 23, 'close', ''),
-('אילו ספורטאים אתה אוהב לעשות בחורף?', 24, 'open', '');
-
--- Insert statements for the surveyCloseAnswers table
-INSERT INTO surveyCloseAnswers (questionCode, answer)
-VALUES 
-(1, 'מאוד מרוצה'),
-(1, 'מרוצה'),
-(1, 'לא מרוצה'),
-(3, 'מאוד מרוצה'),
-(3, 'מרוצה'),
-(3, 'לא מרוצה'),
-(5, 'מאוד מרוצה'),
-(5, 'מרוצה'),
-(5, 'לא מרוצה'),
-(7, 'מאוד מרוצה'),
-(7, 'מרוצה'),
-(7, 'לא מרוצה'),
-(9, 'מאוד מרוצה'),
-(9, 'מרוצה'),
-(9, 'לא מרוצה'),
-(11, 'מאוד מרוצה'),
-(11, 'מרוצה'),
-(11, 'לא מרוצה'),
-(19, 'מאוד מרוצה'),
-(19, 'מרוצה'),
-(19, 'לא מרוצה'),
-(24, 'מצוין'),
-(24, 'טוב'),
-(24, 'גרוע'),
-(26, 'מצוין'),
-(26, 'טוב'),
-(26, 'גרוע');
-
--- Insert statements for the surveyOpenAnswers table
-INSERT INTO surveyOpenAnswers (questionCode, answer, userCode)
-VALUES 
-(2, 'השירות היה טוב מאוד', 1),
-(4, 'המוצרים איכותיים מאוד', 2),
-(6, 'השירות היה טוב מאוד', 3),
-(8, 'המוצרים איכותיים מאוד', 4),
-(10, 'השירות היה טוב מאוד', 5),
-(12, 'המוצרים איכותיים מאוד', 1),
-(14, 'השירות היה טוב מאוד', 2),
-(16, 'המוצרים איכותיים מאוד', 3),
-(18, 'השירות היה טוב מאוד', 4),
-(20, 'המוצרים איכותיים מאוד', 5),
-(22, 'תשובה פתוחה לשאלה 2', 1),
-(24, 'תשובה פתוחה לשאלה 4', 2);
-
--- Insert statements for the surveyCloseData table
-INSERT INTO surveyCloseData (userCode, answerCode)
-VALUES 
-(1, 1),
-(1, 4),
-(1, 7),
-(1, 10),
-(1, 13),
-(1, 16),
-(2, 2),
-(2, 5),
-(2, 8),
-(2, 11),
-(2, 14),
-(2, 17),
-(3, 3),
-(3, 6),
-(3, 9),
-(3, 12),
-(3, 15),
-(3, 18),
-(4, 25),
-(4, 28),
-(4, 31),
-(5, 19),
-(5, 22),
-(6, 20),
-(6, 23);
 
