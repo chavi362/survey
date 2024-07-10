@@ -7,6 +7,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { serverRequests } from '../Api';
 import useGetData from '../hooks/useGetData';
 import FilterComponent from '../components/FilterComponent';
+import NavBar from '../components/NavBar';
 import * as XLSX from 'xlsx';
 
 
@@ -112,7 +113,9 @@ const SurveyResponses = () => {
   }
 
   return (
-    <Container>
+    <div>
+      <NavBar/>
+    <Container className='survey-responses'>
       <h2>Survey Responses for {surveyTitle}</h2>
       <p>Number of Responses: {numberOfResponses}</p>
       <Button onClick={downloadSurveyResponsesAsExcel}>Download Survey Responses as Excel</Button>
@@ -137,6 +140,7 @@ const SurveyResponses = () => {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 };
 
