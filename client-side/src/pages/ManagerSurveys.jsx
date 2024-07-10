@@ -24,7 +24,6 @@ const ManagerSurveys = () => {
   if (error) return <div>Error: {error}</div>;
   return(
     <div>
-      <NavBar/>
          <h1 className="addSurveyTitle">My Surveys</h1>
          
          <ManagerSurveysList data={surveys} loading={loading} />;

@@ -27,7 +27,7 @@ function LogIn({ updateUserContext }) {
       }
       const data = await response.json();
       console.log(data);
-      const userContextData = { userCode: data.userCode };
+      const userContextData = { userCode: data.userCode,role:data.role };
       updateUserContext(userContextData);
       Cookies.set('token', data.token, { expires: 1 });
 

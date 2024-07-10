@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
@@ -20,6 +20,8 @@ import SurveyResponses from './pages/SurveyRespones'
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import NavBar from './components/NavBar';
+import ManagerNav from './components/ManagerNav';
 
 export const UserContext = createContext();
 
@@ -29,10 +31,13 @@ function App() {
     clearLocalStorage();
     setUser(null);
   };
+
   return (
     <BrowserRouter>
       <UserContext.Provider value={user}>
         <SurveyProvider>
+          {user && user.role !== 'admin' && <NavBar />}
+          {user && user.role === 'admin' && <ManagerNav />}
           <Routes>
             <Route path="/" element={<Navigate to='/login' deleteUser={deleteUser} />} />
             <Route path="/login" element={<Login updateUserContext={setUser} />} />

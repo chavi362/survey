@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ManagerNav from "./ManagerNav";
+import ManagerNav from "../components/ManagerNav";
 import { serverRequests } from "../Api";
 import Cookies from 'js-cookie';
 
@@ -34,7 +34,6 @@ function ManagerPage() {
   }, [navigate]);
   return (
     <div id='managerPage'>
-      <ManagerNav />
       <div className='firstPadding'></div>
       <button className='navLinks linkBtn' onClick={() => { navigate("/manager/surveysToConfirm") }}>סקרים הממתינים לאישור</button>
     </div>
