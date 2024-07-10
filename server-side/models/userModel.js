@@ -1,15 +1,21 @@
 const pool = require('../DB.js');
+const bcrypt = require('bcrypt');
 const { createObject, getObjectByPram, deleteObject, updateObject, getObjects } = require("./queryModel.js")
 
-async function loginUser(password,userName) {
+async function loginUser(userName, password) {
   try {
-    const sql = `SELECT * FROM Passwords  join Users on userCode=user_id  WHERE Users.username = ? AND Passwords.user_password = ? `;
-    console.log(sql,userName,password);
-    const result = await pool.query(sql, [userName,password]);
-    console.log(result);
+    const sql = `SELECT * FROM passwords JOIN users ON users.userCode = passwords.user_id WHERE users.username = ?`;
+    const [result] = await pool.query(sql, [userName]);
+
     if (result.length > 0) {
-      console.log(result[0]);
-      return result[0][0];
+      const user = result[0];
+      console.log(user);
+      const isMatch = await bcrypt.compare(password, user.user_password);
+      if (isMatch) {
+        return user;
+      } else {
+        return null;
+      }
     } else {
       return null;
     }
@@ -21,13 +27,15 @@ async function loginUser(password,userName) {
 
 async function registerUser(userName, password) {
   try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const sqlUser = 'INSERT INTO users (userName) VALUES (?)';
     const [userResult] = await pool.execute(sqlUser, [userName]);
     const userId = userResult.insertId;
 
     const sqlPassword = 'INSERT INTO passwords (user_id, user_password) VALUES (?, ?)';
-    await pool.execute(sqlPassword, [userId, password]);
+    await pool.execute(sqlPassword, [userId, hashedPassword]);
 
     console.log('User registered successfully!');
     return { userCode: userId, userName: userName, role: 'user' };
