@@ -10,8 +10,6 @@ const HomePage = () => {
 
   return (
     <div>
-      
-      <NavBar/>
       <div className="home-container flex text-white mt-24">
         <h1 className="title text-4xl font-bold mb-8">Welcome Survey Management:)</h1>
         <div className="about">
